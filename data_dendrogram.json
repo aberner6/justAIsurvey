@@ -1,0 +1,508 @@
+{
+	"name": "",
+	"children": [
+		{"name": "identity",
+			"children": [
+				{"name": "ethicist",
+					"children":[
+						{"name":"according to self",
+							"children":[
+								{
+									"name":"yes",
+									"value":1
+								},
+								{
+									"name":"no",
+									"value":0
+								}
+							]
+						},
+						{"name":"according to others",
+							"children":[
+								{
+									"name":"yes",
+									"value":0
+								},
+								{
+									"name":"no",
+									"value":1
+								}
+							]
+						}
+					]
+				},
+				{"name": "funding",
+					"children": [{
+							"name": "funded",
+							"value": 1
+						},
+						{
+							"name": "not funded",
+							"value": 0
+						}
+					]
+				},
+				{"name": "education",
+					"children": [{
+							"name": "agriculture",
+							"value": 0
+						},
+						{
+							"name": "architecture",
+							"value": 0
+						},
+						{
+							"name": "biology",
+							"value": 0
+						},
+						{
+							"name": "business",
+							"value": 0
+						},
+						{
+							"name": "computer science",
+							"value": 0
+						},
+						{
+							"name": "data science",
+							"value": 1
+						},
+						{
+							"name": "design & art",
+							"value": 0
+						},
+						{
+							"name": "economics",
+							"value": 0
+						},
+						{
+							"name": "education",
+							"value": 0
+						},
+						{
+							"name": "engineering & technology",
+							"value": 0
+						},
+						{
+							"name": "health",
+							"value": 0
+						},
+						{
+							"name": "history",
+							"value": 0
+						},
+						{
+							"name": "information management",
+							"value": 0
+						},
+						{
+							"name": "languages",
+							"value": 0
+						},
+						{
+							"name": "law",
+							"value": 0
+						},
+						{
+							"name": "mathematics",
+							"value": 0
+						},
+						{
+							"name": "environment",
+							"value": 0
+						},
+						{
+							"name": "politics",
+							"value": 0
+						},
+						{
+							"name": "psychology",
+							"value": 1
+						},
+						{
+							"name": "philosophy",
+							"value": 0
+						},
+						{
+							"name": "social science",
+							"value": 0
+						},
+						{
+							"name": "sports",
+							"value": 0
+						},
+						{
+							"name": "other",
+							"value": 0
+						}
+					]
+				},
+				{"name": "career path",
+					"children": [{
+							"name": "undergraduate",
+							"value": 0
+						},
+						{
+							"name": "masters",
+							"value": 0
+						},
+						{
+							"name": "phd",
+							"value": 0
+						},
+						{
+							"name": "postdoc",
+							"value": 0
+						},
+						{
+							"name": "university faculty",
+							"value": 0
+						},
+						{
+							"name": "industry employee",
+							"value": 0
+						},
+						{
+							"name": "government employee",
+							"value": 0
+						},
+						{
+							"name": "nonprofit employee",
+							"value": 1
+						},
+						{
+							"name": "other",
+							"value": 0
+						}
+					]
+				}
+			]
+		},
+		{"name": "years",
+			"children": [{
+					"name": 1,
+					"value": 0
+				},
+				{
+					"name": 2,
+					"value": 0
+				},
+				{
+					"name": 3,
+					"value": 1
+				},
+				{
+					"name": 4,
+					"value": 0
+				},
+				{
+					"name": 5,
+					"value": 0
+				},
+				{
+					"name": 6,
+					"value": 0
+				},
+				{
+					"name": 7,
+					"value": 0
+				},
+				{
+					"name": 8,
+					"value": 0
+				},
+				{
+					"name": 9,
+					"value": 0
+				},
+				{
+					"name": 10,
+					"value": 0
+				}
+			]
+		},
+		{"name": "theme",
+			"children": [
+				{"name": "topics",
+					"children": [
+						{
+							"name": "bias",
+							"value": 0
+						},
+						{
+							"name": "fairness",
+							"value": 0
+						},
+						{
+							"name": "accountability",
+							"value": 0
+						},
+						{
+							"name": "transparency",
+							"value": 0
+						},
+						{
+							"name": "explainability",
+							"value": 0
+						},
+						{
+							"name": "other",
+							"value": 1
+						}
+					]
+				},
+				{"name": "domain",
+					"children": [
+						{
+							"name": "health",
+							"value": 0
+						},
+						{
+							"name": "finance",
+							"value": 0
+						},
+						{
+							"name": "urban dynamics",
+							"value": 0
+						},
+						{
+							"name": "transport",
+							"value": 0
+						},
+						{
+							"name": "military",
+							"value": 0
+						},
+						{
+							"name": "social media",
+							"value": 0
+						},
+						{
+							"name": "welfare and social care",
+							"value": 0
+						},
+						{
+							"name": "policing",
+							"value": 0
+						},
+						{
+							"name": "judicial system",
+							"value": 0
+						},
+						{
+							"name": "accessibility",
+							"value": 0
+						},
+						{
+							"name": "education",
+							"value": 0
+						},
+						{
+							"name": "other",
+							"value": 0
+						},						
+						{
+							"name": "n/a",
+							"value": 1
+						}				
+					]
+				},
+				{"name": "outputs",
+					"children":[
+						{
+							"name": "academic papers",
+							"value": 1
+						},
+						{
+							"name": "reports",
+							"value": 1
+						},
+						{
+							"name": "policy-papers",
+							"value": 0
+						},
+						{
+							"name": "policy briefing",
+							"value": 0
+						},
+						{
+							"name": "blog posts",
+							"value": 0
+						},
+						{
+							"name": "exhibitions",
+							"value": 0
+						},
+						{
+							"name": "events",
+							"value": 0
+						},
+						{
+							"name": "datasets",
+							"value": 0
+						},
+						{
+							"name": "website",
+							"value": 0
+						},
+						{
+							"name": "code repository",
+							"value": 0
+						},
+						{
+							"name": "software application",
+							"value": 1
+						},
+						{
+							"name": "other",
+							"value": 0
+						}
+					]
+				},
+
+				{"name": "audiences",
+					"children":[
+						{
+							"name": "internal audience",
+							"value": 0
+						},
+						{
+							"name": "academics",
+							"value": 1
+						},
+						{
+							"name": "think tanks",
+							"value": 1
+						},
+						{
+							"name": "NGOs",
+							"value": 1
+						},
+						{
+							"name": "government institutions",
+							"value": 1
+						},
+						{
+							"name": "artists",
+							"value": 0
+						},
+						{
+							"name": "designers",
+							"value": 1
+						},
+						{
+							"name": "industry",
+							"value": 1
+						},
+						{
+							"name": "community organizations",
+							"value": 1
+						},
+						{
+							"name": "general public",
+							"value": 0
+						},
+						{
+							"name": "other",
+							"value": 0
+						}
+					]
+				},
+
+				{"name": "collaboration",
+					"children": [
+						{"name": "type",
+							"children":[
+								{
+									"name": "within my organization",
+									"value": 0
+								},
+								{
+									"name": "with others outside my organization",
+									"value": 1
+								},
+								{
+									"name": "both within and outside my organization",
+									"value": 0
+								},
+								{
+									"name": "no",
+									"value": 0
+								}
+							]
+						},
+						{"name": "field",
+							"children":[
+								{
+									"name": "Researchers - Social Science Researchers",
+									"value": 0
+								},
+								{
+									"name": "Researchers - Humanities",
+									"value": 0
+								},
+								{
+									"name": "Researchers - Law",
+									"value": 0
+								},
+								{
+									"name": "Researchers - Medicine",
+									"value": 0
+								},
+								{
+									"name": "Researchers - Science",
+									"value": 0
+								},
+								{
+									"name": "Artists and creative practitioners",
+									"value": 1
+								},
+								{
+									"name": "Computer/Data Scientists",
+									"value": 0
+								},
+								{
+									"name": "Tech developers and Engineers",
+									"value": 1
+								},
+								{
+									"name": "General public",
+									"value": 1
+								},
+								{
+									"name": "Regulators",
+									"value": 0
+								},
+								{
+									"name": "NGOs",
+									"value": 0
+								},
+								{
+									"name": "Affected individuals",
+									"value": 1
+								},
+								{
+									"name": "Government officials",
+									"value": 0
+								},
+								{
+									"name": "Community organizations",
+									"value": 1
+								},
+								{
+									"name": "Industry representatives",
+									"value": 0
+								},
+								{
+									"name": "Others",
+									"value": 0
+								}
+							]
+						}
+
+					]
+				}
+			]
+		}
+	]
+}
