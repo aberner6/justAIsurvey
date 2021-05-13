@@ -77,6 +77,9 @@ d3.json("data_dendrogram.json").then(function(data) {
       .selectAll("circle")
       .data(root.descendants())
       .join("circle")
+      .filter(function(d){
+        return d.data.value>0;
+      })
         .attr("transform", d => `
           rotate(${d.x * 180 / Math.PI - 90})
           translate(${d.y},0)
@@ -98,15 +101,15 @@ d3.json("data_dendrogram.json").then(function(data) {
           if(d.data.name=="identity"){
             return "blue"
           }
-          if(d.data.value==undefined){
-            return "white"
-          }
+          // if(d.data.value==undefined){
+          //   return "white"
+          // }
           // if(d.children){
           //   return "pink"
           // } 
-          else{
-            return "white"
-          }
+          // else{
+          //   return "white"
+          // }
          })
         .attr("opacity", .7)
         .attr("r", 2.5);
@@ -125,6 +128,7 @@ d3.json("data_dendrogram.json").then(function(data) {
           rotate(${d.x >= Math.PI ? 180 : 0})
         `)
         .attr("dy", "0.31em")
+        // .attr("dy", "-0.9em")
         .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
         .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
         .attr("fill", function(d){
@@ -138,7 +142,7 @@ d3.json("data_dendrogram.json").then(function(data) {
         })
         .text(d => d.data.name)
       .clone(true).lower()
-        .attr("stroke", "white");      
+        // .attr("stroke", "white");      
 
 })
 
