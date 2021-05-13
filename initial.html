@@ -51,17 +51,23 @@ d3.json("data_dendrogram.json").then(function(data) {
         if(d.target.data.value==1){
           return "yellow";
         }
+        if(d.target.data.value==2){
+          return "pink";
+        }
+        if(d.target.data.value==12){
+          return "orange"
+        }
         if(d.target.data.name=="identity"){
           return "blue"
         }
-        if(d.target.data.value==undefined){
-          return "pink"
-        }
+        // if(d.target.data.value==undefined){
+        //   return ""
+        // }
         else{
           return "grey"
         }
       })
-
+      .attr("opacity", .7)
       .attr("d", d3.linkRadial()
           .angle(d => d.x)
           .radius(d => d.y));
@@ -76,9 +82,18 @@ d3.json("data_dendrogram.json").then(function(data) {
           translate(${d.y},0)
         `)
         .attr("fill", function(d){
-        console.log(d);
+          if(d.data.total){
+            console.log(d.data.total)
+          }
+        // console.log(d);
           if(d.data.value==1){
             return "yellow";
+          }
+          if(d.data.value==2){
+            return "pink";
+          }
+          if(d.data.value==12){
+            return "orange"
           }
           if(d.data.name=="identity"){
             return "blue"
@@ -93,6 +108,7 @@ d3.json("data_dendrogram.json").then(function(data) {
             return "white"
           }
          })
+        .attr("opacity", .7)
         .attr("r", 2.5);
 
     svg.append("g")
@@ -111,7 +127,15 @@ d3.json("data_dendrogram.json").then(function(data) {
         .attr("dy", "0.31em")
         .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
         .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
-        .attr("fill","none")
+        .attr("fill", function(d){
+          // if(d.children){
+          //   return "none"
+          // }
+          // if(!d.children){
+          //   return "none"
+          // }
+          return "none";
+        })
         .text(d => d.data.name)
       .clone(true).lower()
         .attr("stroke", "white");      

@@ -9,7 +9,8 @@
 							"children":[
 								{
 									"name":"yes",
-									"value":1
+									"value":1,
+									"total":5
 								},
 								{
 									"name":"no",
@@ -243,7 +244,7 @@
 						},
 						{
 							"name": "explainability",
-							"value": 0
+							"value": 2
 						},
 						{
 							"name": "other",
@@ -295,7 +296,7 @@
 						},
 						{
 							"name": "education",
-							"value": 0
+							"value": 2
 						},
 						{
 							"name": "other",
@@ -319,7 +320,7 @@
 						},
 						{
 							"name": "policy-papers",
-							"value": 0
+							"value": 2
 						},
 						{
 							"name": "policy briefing",
@@ -347,7 +348,7 @@
 						},
 						{
 							"name": "code repository",
-							"value": 0
+							"value": 2
 						},
 						{
 							"name": "software application",
@@ -364,7 +365,7 @@
 					"children":[
 						{
 							"name": "internal audience",
-							"value": 0
+							"value": 2
 						},
 						{
 							"name": "academics",
@@ -384,7 +385,7 @@
 						},
 						{
 							"name": "artists",
-							"value": 0
+							"value": 2
 						},
 						{
 							"name": "designers",
@@ -400,11 +401,11 @@
 						},
 						{
 							"name": "general public",
-							"value": 0
+							"value": 2
 						},
 						{
 							"name": "other",
-							"value": 0
+							"value": 2
 						}
 					]
 				},
@@ -423,7 +424,7 @@
 								},
 								{
 									"name": "both within and outside my organization",
-									"value": 0
+									"value": 2
 								},
 								{
 									"name": "no",
@@ -459,7 +460,7 @@
 								},
 								{
 									"name": "Computer/Data Scientists",
-									"value": 0
+									"value": 2
 								},
 								{
 									"name": "Tech developers and Engineers",
@@ -479,23 +480,23 @@
 								},
 								{
 									"name": "Affected individuals",
-									"value": 1
+									"value": 12
 								},
 								{
 									"name": "Government officials",
-									"value": 0
+									"value": 2
 								},
 								{
 									"name": "Community organizations",
-									"value": 1
+									"value": 12
 								},
 								{
 									"name": "Industry representatives",
-									"value": 0
+									"value": 12
 								},
 								{
 									"name": "Others",
-									"value": 0
+									"value": 2
 								}
 							]
 						}
