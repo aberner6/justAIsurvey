@@ -69,8 +69,8 @@ d3.json("data_dendrogram.json").then(function(data) {
       })
       .attr("opacity", .7)
       .attr("d", d3.linkRadial()
-          .angle(d => d.x)
-          .radius(d => d.y));
+          .angle(d => d.x) //could mess around here to make it more messy
+          .radius(d => d.y)); //could mess around here to make it more messy
 
 
   svg.append("g")
