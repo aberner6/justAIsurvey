@@ -1,18 +1,26 @@
 
 // set the dimensions and margins of the graph
-var width = 900
-var height = 1200
+
+
+var div = document.getElementById("my_dataviz");
+var rect = div.getBoundingClientRect();
+  x = rect.left;
+  y = rect.top;
+  width = rect.width;
+  height = rect.height;
 var radius = width / 2 // radius of the dendrogram
-var keySVG = d3.select("#my_dataviz").append("svg").attr("width",200).attr("height",100)
-.attr("transform","translate(" + (width+100) + ","+(20)+")");
+// var keySVG = d3.select("#my_dataviz").append("svg").attr("width",200).attr("height",100)
+// .attr("transform","translate(" + (width+100) + ","+(20)+")");
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
   .append("svg")
     .attr("width", width)
-    .attr("height", height).style("position","absolute")
+    .attr("height", height)
+    .attr("id","rsvg")
+    // .style("position","absolute")
   .append("g")
-    .attr("transform", "translate(" + (width/2) + "," + (radius+200) + ")");
+    .attr("transform", "translate(" + (radius) + "," + (radius) + ")");
 
 // var stratify = d3.tree()
 //   .size([Math.PI*2, radius])
@@ -30,6 +38,11 @@ var themeColors1 = ["#f768a1"]
 var themeColors2 = ["#c51b8a"]
 var themeColors3 = ["#7a0177"]
 var themeColors4 = ["#b582b2"]
+
+// const rsvg = document.getElementById('rsvg');
+// const rc = rough.svg(rsvg);
+
+
 
 
 
@@ -61,10 +74,34 @@ d3.json("data_dendrogram.json").then(function(data) {
 
   svg.append("g")
       .attr("fill", "none")
+      .attr("class","thedraw")
       // .attr("stroke", "#555")
     .selectAll("path")
     .data(root.links())
     .join("path")
+      .attr("class", "drawing")
+      .attr("stroke-opacity", function(d){
+        if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=3 && d.target.data.value!=12){
+          return .3
+        }else{
+          return .4
+        }
+      })
+      .attr("stroke-width", function(d){
+        if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=3 && d.target.data.value!=12){
+          return .5
+        }else{
+          return 1.5
+        }
+      })
+      .attr("d", d3.linkRadial()
+          .angle(function(d){
+            return d.x
+          })
+          .radius(function(d){
+            return d.y
+          })
+        )
       .attr("stroke", function(d){
         if(d.source.data.name=="identity"){
           console.log(d);
@@ -103,7 +140,6 @@ d3.json("data_dendrogram.json").then(function(data) {
             }
           }
         }
-
         if(d.source.data.name=="theme"){
           return "#fbb4b9"
         }
@@ -111,33 +147,26 @@ d3.json("data_dendrogram.json").then(function(data) {
         else{
           return "lightgrey"
         }
-      })
-      .attr("class", function(d){
-        return d.source.data.name+d.target.data.value;
-      })
-      .attr("stroke-opacity", function(d){
-        if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=3 && d.target.data.value!=12){
-          return .3
-        }else{
-          return .4
-        }
-      })
-      .attr("stroke-width", function(d){
-        if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=3 && d.target.data.value!=12){
-          return .5
-        }else{
-          return 1.5
-        }
-      })
+      });
 
-      .attr("d", d3.linkRadial()
-          .angle(function(d){
-            return d.x
-          })
-          .radius(function(d){
-            return d.y
-          })
-        ); 
+// d3.selectAll('.thedraw').each(function() {
+//     let gParent = this
+//     d3.select('svg').selectAll('path.drawing').each(function(d,i) {
+//       if(d.target.data.value==1){
+//         gParent.appendChild( rc.path(d3.select(this).node().getAttribute('d'), {
+//         stroke: 'yellow',
+//         fillStyle: 'hachure',
+//         strokeWidth: 1.55,
+//         roughness: 1.5,
+//           })
+//         )
+//       }
+//     })
+//   })
+
+  
+
+
 
 
   svg.append("g")
@@ -193,5 +222,8 @@ d3.json("data_dendrogram.json").then(function(data) {
         .text(d => d.data.name)
       .clone(true).lower()
         // .attr("stroke", "white");      
+
+
+
 
 })
