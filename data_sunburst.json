@@ -5,7 +5,7 @@
 			"children": [
 				{"name": "ethicist",
 					"children":[
-						{"name":"self",
+						{"name":"according to self",
 							"children":[
 								{
 									"name":"yes",
@@ -18,7 +18,7 @@
 								}
 							]
 						},
-						{"name":"others",
+						{"name":"according to others",
 							"children":[
 								{
 									"name":"yes",
@@ -468,7 +468,7 @@
 								},
 								{
 									"name": "General public",
-									"value": 12
+									"value": 10
 								},
 								{
 									"name": "Regulators",
@@ -476,7 +476,7 @@
 								},
 								{
 									"name": "NGOs",
-									"value": 12
+									"value": 10
 								},
 								{
 									"name": "Affected individuals",
