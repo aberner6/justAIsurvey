@@ -176,49 +176,49 @@
 							"value": 0
 						}
 					]
-				}
-			]
-		},
-		{"name": "years",
-			"children": [{
-					"name": 1,
-					"value": 0
 				},
-				{
-					"name": 2,
-					"value": 0
-				},
-				{
-					"name": 3,
-					"value": 1
-				},
-				{
-					"name": 4,
-					"value": 0
-				},
-				{
-					"name": 5,
-					"value": 0
-				},
-				{
-					"name": 6,
-					"value": 0
-				},
-				{
-					"name": 7,
-					"value": 0
-				},
-				{
-					"name": 8,
-					"value": 0
-				},
-				{
-					"name": 9,
-					"value": 0
-				},
-				{
-					"name": 10,
-					"value": 0
+				{"name": "years",
+					"children": [{
+							"name": 1,
+							"value": 0
+						},
+						{
+							"name": 0,
+							"value": 0
+						},
+						{
+							"name": 3,
+							"value": 1
+						},
+						{
+							"name": 4,
+							"value": 0
+						},
+						{
+							"name": 5,
+							"value": 0
+						},
+						{
+							"name": 6,
+							"value": 0
+						},
+						{
+							"name": 7,
+							"value": 0
+						},
+						{
+							"name": 8,
+							"value": 0
+						},
+						{
+							"name": 9,
+							"value": 0
+						},
+						{
+							"name": 0,
+							"value": 0
+						}
+					]
 				}
 			]
 		},
@@ -240,11 +240,11 @@
 						},
 						{
 							"name": "transparency",
-							"value": 0
+							"value": 2
 						},
 						{
 							"name": "explainability",
-							"value": 2
+							"value": 0
 						},
 						{
 							"name": "other",
@@ -260,7 +260,7 @@
 						},
 						{
 							"name": "finance",
-							"value": 0
+							"value": 2
 						},
 						{
 							"name": "urban dynamics",
@@ -296,7 +296,7 @@
 						},
 						{
 							"name": "education",
-							"value": 2
+							"value": 0
 						},
 						{
 							"name": "other",
@@ -348,7 +348,7 @@
 						},
 						{
 							"name": "code repository",
-							"value": 2
+							"value": 0
 						},
 						{
 							"name": "software application",
@@ -385,7 +385,7 @@
 						},
 						{
 							"name": "artists",
-							"value": 2
+							"value": 0
 						},
 						{
 							"name": "designers",
@@ -401,11 +401,11 @@
 						},
 						{
 							"name": "general public",
-							"value": 2
+							"value": 0
 						},
 						{
 							"name": "other",
-							"value": 2
+							"value": 0
 						}
 					]
 				},
@@ -416,7 +416,7 @@
 							"children":[
 								{
 									"name": "within my organization",
-									"value": 0
+									"value": 2
 								},
 								{
 									"name": "with others outside my organization",
@@ -424,7 +424,7 @@
 								},
 								{
 									"name": "both within and outside my organization",
-									"value": 2
+									"value": 0
 								},
 								{
 									"name": "no",
@@ -436,7 +436,7 @@
 							"children":[
 								{
 									"name": "Researchers - Social Science Researchers",
-									"value": 0
+									"value": 2
 								},
 								{
 									"name": "Researchers - Humanities",
@@ -460,7 +460,7 @@
 								},
 								{
 									"name": "Computer/Data Scientists",
-									"value": 2
+									"value": 0
 								},
 								{
 									"name": "Tech developers and Engineers",
@@ -468,7 +468,7 @@
 								},
 								{
 									"name": "General public",
-									"value": 1
+									"value": 12
 								},
 								{
 									"name": "Regulators",
@@ -476,27 +476,27 @@
 								},
 								{
 									"name": "NGOs",
-									"value": 0
+									"value": 12
 								},
 								{
 									"name": "Affected individuals",
-									"value": 12
+									"value": 0
 								},
 								{
 									"name": "Government officials",
-									"value": 2
+									"value": 0
 								},
 								{
 									"name": "Community organizations",
-									"value": 12
+									"value": 2
 								},
 								{
 									"name": "Industry representatives",
-									"value": 12
+									"value": 0
 								},
 								{
 									"name": "Others",
-									"value": 2
+									"value": 0
 								}
 							]
 						}

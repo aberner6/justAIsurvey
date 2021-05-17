@@ -2,6 +2,11 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 
+<style>
+  body{
+    /*background-color: black*/
+  }
+</style>
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
@@ -12,65 +17,215 @@
 <script>
 
 // set the dimensions and margins of the graph
-var width = 800
-var height = 800
+var width = 1100
+var height = 4000
 var radius = width / 2 // radius of the dendrogram
+var keySVG = d3.select("#my_dataviz").append("svg").attr("width",200).attr("height",100)
+.attr("transform","translate(" + (width+100) + ","+(20)+")");
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
   .append("svg")
     .attr("width", width)
-    .attr("height", height)
+    .attr("height", height).style("position","absolute")
   .append("g")
-    .attr("transform", "translate(" + (radius) + "," + (radius) + ")");
+    .attr("transform", "translate(" + (width/2) + "," + (radius+200) + ")");
 
 var stratify = d3.tree()
-  .size([2 * Math.PI, radius-100])
-  .separation((a, b) => (a.parent == b.parent ? 1 : 10) / a.depth)
-  
+  .size([Math.PI*2, radius])
+  .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth)
+
+var identityNames = ["ethicist","funding","education","career path","years","according to self","according to others"]
+var themeNames = ["topics","domain","outputs","audiences","type","field",""]
+
+// var themeColor = ["#5afeb0","#5afeb0","#5afeb0","#5afeb0","#5afeb0","#f597fa","#f597fa","#f597fa","#f597fa","#5699e2","#5699e2","#f597fa","#f597fa"]
+// var sourceNames = ["ethicist","funding","education","career path","years","according to self","according to others", "topics","domain","outputs","audiences","type","field"]
+// var idColors = ["#f0f9e8","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#08589e"];
+var themeColors1 = ["#f768a1"]
+var themeColors2 = ["#c51b8a"]
+var themeColors3 = ["#7a0177"]
+
+
+
+var idColors = ["#81bac7"]
+var idColorScale = d3.scaleOrdinal()
+  .domain(identityNames)
+  .range(idColors)
+
+var themeColorScale = d3.scaleOrdinal()
+  .domain(themeNames)
+  .range(themeColors1)
+var themeColorScale2 = d3.scaleOrdinal()
+  .domain(themeNames)
+  .range(themeColors2)
+var themeColorScale3 = d3.scaleOrdinal()
+  .domain(themeNames)
+  .range(themeColors3)
+
 // read json data
 d3.json("data_dendrogram.json").then(function(data) {
 
   var sortData = d3.hierarchy(data)
-    // .sort((a, b) => d3.ascending(a.data.name, b.data.name))
   console.log(sortData)
 
 
   var root = stratify(sortData)
   console.log(root);
 
+keySVG
+  .selectAll("circle1")
+  .data([1])
+  .join("circle")
+  .attr("cx", 5)
+  .attr("cy", 15)
+  .attr("r", 5)
+  .attr("fill", "#81bac7")
+keySVG
+  .selectAll("text1")
+  .data([1])
+  .join("text")
+  .attr("x", 15)
+  .attr("y", 20)
+  .attr("fill", "#81bac7")
+  .attr("font-family", "sans-serif")
+  .attr("font-size", 10)
+  .text("identity")
+
+keySVG
+  .selectAll("circle2")
+  .data([1])
+  .join("circle")
+  .attr("cx", 5)
+  .attr("cy", 30)
+  .attr("r", 5)
+  .attr("fill", "#f768a1")
+keySVG
+  .selectAll("text2")
+  .data([1])
+  .join("text")
+  .attr("x", 15)
+  .attr("y", 35)
+  .attr("fill", "#f768a1")
+  .attr("font-family", "sans-serif")
+  .attr("font-size", 10)
+  .text("theme 1")
+
+
+
+keySVG
+  .selectAll("circle3")
+  .data([1])
+  .join("circle")
+  .attr("cx", 5)
+  .attr("cy", 45)
+  .attr("r", 5)
+  .attr("fill", "#c51b8a")
+keySVG
+  .selectAll("text3")
+  .data([1])
+  .join("text")
+  .attr("x", 15)
+  .attr("y", 50)
+  .attr("fill", "#c51b8a")
+  .attr("font-family", "sans-serif")
+  .attr("font-size", 10)
+  .text("theme 2")
+
+
+keySVG
+  .selectAll("circle3")
+  .data([1])
+  .join("circle")
+  .attr("cx", 5)
+  .attr("cy", 60)
+  .attr("r", 5)
+  .attr("fill", "#7a0177")
+keySVG
+  .selectAll("text3")
+  .data([1])
+  .join("text")
+  .attr("x", 15)
+  .attr("y", 65)
+  .attr("fill", "#7a0177")
+  .attr("font-family", "sans-serif")
+  .attr("font-size", 10)
+  .text("theme 1+2")
+
+
+
+
   svg.append("g")
       .attr("fill", "none")
       // .attr("stroke", "#555")
-      .attr("stroke-opacity", 0.4)
-      .attr("stroke-width", 1.5)
     .selectAll("path")
     .data(root.links())
     .join("path")
       .attr("stroke", function(d){
-        if(d.target.data.value==1){
-          return "yellow";
+        if(d.source.data.name=="identity"){
+          console.log(d);
+          return "#819ec7"
         }
+        if(d.target.data.value==1){
+          for(i=0; i<identityNames.length; i++){
+            if(d.source.data.name==identityNames[i]){
+              return idColorScale(d.source.data.name)
+            }
+            if(d.source.data.name==themeNames[i]){
+              return themeColorScale(d.source.data.name)
+            }
+          }
+        } 
         if(d.target.data.value==2){
-          return "pink";
+          for(i=0; i<identityNames.length; i++){
+            if(d.source.data.name==themeNames[i]){
+              return themeColorScale2(d.source.data.name) //adjust so it is a darker scale of same colors
+            }
+          }
         }
         if(d.target.data.value==12){
-          return "orange"
+          console.log(themeColorScale3(d.source.data.name) )
+          for(i=0; i<identityNames.length; i++){
+            if(d.source.data.name==themeNames[i]){
+              return themeColorScale3(d.source.data.name) 
+            }
+          }
         }
-        if(d.target.data.name=="identity"){
-          return "blue"
+        if(d.source.data.name=="theme"){
+          return "#fbb4b9"
         }
-        // if(d.target.data.value==undefined){
-        //   return ""
+
+        // else{
+          return "lightgrey"
         // }
-        else{
-          return "grey"
+      })
+      .attr("class", function(d){
+        return d.source.data.name+d.target.data.value;
+      })
+      .attr("stroke-opacity", function(d){
+        // return .4
+        if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=12){
+          return .2
+        }else{
+          return .4
         }
       })
-      .attr("opacity", .7)
+      .attr("stroke-width", function(d){
+        // return 1
+        if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=12){
+          return .5
+        }else{
+          return 1.5
+        }
+      })
+
       .attr("d", d3.linkRadial()
-          .angle(d => d.x) //could mess around here to make it more messy
-          .radius(d => d.y)); //could mess around here to make it more messy
+          .angle(function(d){
+            return d.x
+          })
+          .radius(function(d){
+            return d.y
+          })
+        ); 
 
 
   svg.append("g")
@@ -88,40 +243,22 @@ d3.json("data_dendrogram.json").then(function(data) {
           if(d.data.total){
             console.log(d.data.total)
           }
-        // console.log(d);
-          if(d.data.value==1){
-            return "yellow";
-          }
-          if(d.data.value==2){
-            return "pink";
-          }
-          if(d.data.value==12){
-            return "orange"
-          }
-          if(d.data.name=="identity"){
-            return "blue"
-          }
-          // if(d.data.value==undefined){
-          //   return "white"
-          // }
-          // if(d.children){
-          //   return "pink"
-          // } 
-          // else{
-          //   return "white"
-          // }
+          return "none"
          })
         .attr("opacity", .7)
         .attr("r", 2.5);
 
     svg.append("g")
         .attr("font-family", "sans-serif")
-        .attr("font-size", 8)
+        .attr("font-size", 10)
         .attr("stroke-linejoin", "round")
         .attr("stroke-width", 3)
       .selectAll("text")
       .data(root.descendants())
       .join("text")
+      // .filter(function(d){
+        // return d.data.value>0 || d.children;
+      // })
         .attr("transform", d => `
           rotate(${d.x * 180 / Math.PI - 90}) 
           translate(${d.y},0) 
@@ -132,17 +269,19 @@ d3.json("data_dendrogram.json").then(function(data) {
         .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
         .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
         .attr("fill", function(d){
-          // if(d.children){
-          //   return "none"
-          // }
-          // if(!d.children){
-          //   return "none"
-          // }
-          return "none";
+          if(d.children){
+            return "grey"
+          }
+          if(!d.children){
+            return "grey"
+          }
+          // if(d.)
+          // return "grey";
+          // return "none";
         })
         .text(d => d.data.name)
       .clone(true).lower()
-        // .attr("stroke", "white");      
+        .attr("stroke", "white");      
 
 })
 
