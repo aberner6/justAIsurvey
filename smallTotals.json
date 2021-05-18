@@ -1,0 +1,14 @@
+{"section":"self",
+	"q1":[
+		{
+			"name":"yes",
+			"value":1,
+			"total":5
+		},
+		{
+			"name":"no",
+			"value":0,
+			"total":3
+		}
+	]
+}

@@ -8,7 +8,7 @@ var rect = div.getBoundingClientRect();
   y = rect.top;
   width = rect.width;
   height = rect.height;
-var radius = width / 2 // radius of the dendrogram
+var radius = width / 2;
 // var keySVG = d3.select("#my_dataviz").append("svg").attr("width",200).attr("height",100)
 // .attr("transform","translate(" + (width+100) + ","+(20)+")");
 
@@ -17,8 +17,6 @@ var svg = d3.select("#my_dataviz")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("id","rsvg")
-    // .style("position","absolute")
   .append("g")
     .attr("transform", "translate(" + (radius) + "," + (radius) + ")");
 
