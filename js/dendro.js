@@ -31,17 +31,10 @@ var stratify = d3.cluster().size([2 * Math.PI, radius - 100])
 var identityNames = ["ethicist","funding","education","career path","years","according to self","according to others"]
 var themeNames = ["topics","domain","outputs","audiences","type","field",""]
 
-// var themeColor = ["#5afeb0","#5afeb0","#5afeb0","#5afeb0","#5afeb0","#f597fa","#f597fa","#f597fa","#f597fa","#5699e2","#5699e2","#f597fa","#f597fa"]
-// var sourceNames = ["ethicist","funding","education","career path","years","according to self","according to others", "topics","domain","outputs","audiences","type","field"]
-// var idColors = ["#f0f9e8","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#08589e"];
 var themeColors1 = ["#f768a1"]
 var themeColors2 = ["#c51b8a"]
 var themeColors3 = ["#7a0177"]
 var themeColors4 = ["#b582b2"]
-
-// const rsvg = document.getElementById('rsvg');
-// const rc = rough.svg(rsvg);
-
 
 
 
@@ -149,26 +142,6 @@ d3.json("data_dendrogram.json").then(function(data) {
         }
       });
 
-// d3.selectAll('.thedraw').each(function() {
-//     let gParent = this
-//     d3.select('svg').selectAll('path.drawing').each(function(d,i) {
-//       if(d.target.data.value==1){
-//         gParent.appendChild( rc.path(d3.select(this).node().getAttribute('d'), {
-//         stroke: 'yellow',
-//         fillStyle: 'hachure',
-//         strokeWidth: 1.55,
-//         roughness: 1.5,
-//           })
-//         )
-//       }
-//     })
-//   })
-
-  
-
-
-
-
   svg.append("g")
       .selectAll("circle")
       .data(root.descendants())
@@ -222,8 +195,5 @@ d3.json("data_dendrogram.json").then(function(data) {
         .text(d => d.data.name)
       .clone(true).lower()
         // .attr("stroke", "white");      
-
-
-
 
 })
