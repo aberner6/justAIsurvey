@@ -1,0 +1,50 @@
+{
+	"name": "",
+	"children": [
+		{"name": "identity",
+			"children": [
+				{"name": "ethicist",
+					"children":[
+						{"name":"self",
+							"children":[
+								{
+									"name":"yes",
+									"value":1,
+									"total":5
+								},
+								{
+									"name":"no",
+									"value":0,
+									"total":3
+								}
+							]
+						},
+						{"name":"others",
+							"children":[
+								{
+									"name":"yes",
+									"value":0
+								},
+								{
+									"name":"no",
+									"value":1
+								}
+							]
+						}
+					]
+				},
+				{"name": "funding",
+					"children": [{
+							"name": "funded",
+							"value": 1
+						},
+						{
+							"name": "not funded",
+							"value": 0
+						}
+					]
+				}
+	]
+		}
+	]
+}

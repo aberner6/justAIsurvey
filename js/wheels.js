@@ -14,6 +14,9 @@ var svg = d3.select("#my_dataviz")
 	.append("g")
     .attr("transform", "translate(" + (radius) + "," + (radius) + ")");
 var stratify = d3.cluster().size([2 * Math.PI, radius - 100])
+// var stratify = d3.tree()
+//   .size([Math.PI*2, radius])
+//   .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth)
 
 d3.json("data_dendrogram.json").then(function(data) {
 	
@@ -36,10 +39,12 @@ d3.json("data_dendrogram.json").then(function(data) {
 	    .attr("fill", function(d){
 	      "grey"
 	     })
+	    .attr("class",function(d){
+	    	return d.data.name;
+	    })
+	    // .attr("x",-2.5)
 	    .attr("opacity", .7)
-	    .attr("r", 2.5);
-
-
+	    .attr("r", 6);
 
 //make it using the path but do it as a rect and then only go so far as you should
   svg.append("g")
@@ -51,36 +56,55 @@ d3.json("data_dendrogram.json").then(function(data) {
     // })
       .attr("stroke","grey")
 	    .attr("width",1)
-	    .attr("fill", function(d){
-	      "grey"
-	     })
-	    .attr("opacity", .7)
+	    .attr("opacity", .4)
+	    .attr("class",function(d){
+	    	console.log(d);
+	    	// return d.data.name;
+	    })
 	    // .attr("transform", d => `
 	    //   rotate(${d.target.x * 180 / Math.PI - 90})
 	    //   translate(${d.source.y},0)
+	    // `)
+	    // .attr("transform", d => `
+	    //   rotate(${d.target.x * 180 / Math.PI - 90})
+	    //   translate(0,${d.source.y})
 	    // `)
 	    .attr("transform", d => `
 	      rotate(${d.target.x * 180 / Math.PI - 90})
 	      translate(0,${d.source.y})
 	    `)
-
-	    .attr("x", 0)
+	    // .attr("x", 0)
 	    // 	function(d){
-	    // 	return d.target.x - (d.target.data.value*100)
+	    // 	return d.source.x //- (d.target.data.value*100)
 	    // })
-	    .attr("y",0)
+	    // .attr("y",0) 
 	    	// function(d){
 	    	// return d.source.y;
 	    // })
 	    .attr("height", function(d){
-	    	if(d.target.data.value>=0){
-	    		// console.log(d.target.data.value)
-		    	// return d.source.y - (d.target.data.value*100)	    		
-		    	return 1+(d.target.data.value*50)	    		
-	    	}else{
-	    		return 0;
-	    	}
+	    	// if(d.target.data.value>0){
+	    		return 50
+	    	// }	    		
+		    // 	return 1+(d.target.data.value*50)	    		
+	    	// }else{
+	    	// 	return 0;
+	    	// }
 	    })
+
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -101,21 +125,6 @@ d3.json("data_dendrogram.json").then(function(data) {
 	//       "grey"
 	//      })
 	//     .attr("opacity", .7)
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -158,7 +158,11 @@ d3.json("data_dendrogram.json").then(function(data) {
           return "white"
          })
         .attr("opacity", .7)
-        .attr("r", 2.5);
+        .attr("r", 2.5)
+        .attr("class", function(d){
+          console.log(d.data.name)
+          return d.data.name;
+        })
 
     svg.append("g")
         .attr("font-family", "sans-serif")
