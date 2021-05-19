@@ -51,16 +51,36 @@ d3.json("data_dendrogram.json").then(function(data) {
     .selectAll("rect")
     .data(root.links())
     .join("rect")
-    // .filter(function(d){
-    // 	return d.target.data.value > 0;
-    // })
+    .filter(function(d){
+    	return d.target.data.value > 0;
+    })
       .attr("stroke","grey")
 	    .attr("width",1)
 	    .attr("opacity", .4)
-	    .attr("class",function(d){
-	    	console.log(d);
-	    	// return d.data.name;
+	    // .attr("class",function(d){
+	    // 	console.log(d);
+	    // 	// return d.data.name;
+	    // })
+	    .attr("transform", function(d){
+	    	return `
+			rotate(${d.target.x * 180 / Math.PI - 90})
+	        translate(${d.source.y},${d.source.x})
+	    	`
 	    })
+	 //    .attr("transform", function(d){ 
+	 //    	return `rotate(${d.source.x * 180 / Math.PI - 90})`
+		// })
+
+	    // .attr("transform", d => `
+	    //   rotate(${d.target.x * 180 / Math.PI - 90})
+	    //   translate(${d.source.y},${d.source.x})
+	    // `)
+
+
+	    .attr("height", 10)
+//then need to rotate because this will just go directly out
+
+
 	    // .attr("transform", d => `
 	    //   rotate(${d.target.x * 180 / Math.PI - 90})
 	    //   translate(${d.source.y},0)
@@ -69,31 +89,6 @@ d3.json("data_dendrogram.json").then(function(data) {
 	    //   rotate(${d.target.x * 180 / Math.PI - 90})
 	    //   translate(0,${d.source.y})
 	    // `)
-	    .attr("transform", d => `
-	      rotate(${d.target.x * 180 / Math.PI - 90})
-	      translate(0,${d.source.y})
-	    `)
-	    // .attr("x", 0)
-	    // 	function(d){
-	    // 	return d.source.x //- (d.target.data.value*100)
-	    // })
-	    // .attr("y",0) 
-	    	// function(d){
-	    	// return d.source.y;
-	    // })
-	    .attr("height", function(d){
-	    	// if(d.target.data.value>0){
-	    		return 50
-	    	// }	    		
-		    // 	return 1+(d.target.data.value*50)	    		
-	    	// }else{
-	    	// 	return 0;
-	    	// }
-	    })
-
-
-
-
 })
 
 
