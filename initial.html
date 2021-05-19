@@ -17,8 +17,8 @@
 <script>
 
 // set the dimensions and margins of the graph
-var width = 1100
-var height = 4000
+var width = 1000
+var height = width+100;
 var radius = width / 2 // radius of the dendrogram
 var keySVG = d3.select("#my_dataviz").append("svg").attr("width",200).attr("height",100)
 .attr("transform","translate(" + (width+100) + ","+(20)+")");
@@ -29,11 +29,11 @@ var svg = d3.select("#my_dataviz")
     .attr("width", width)
     .attr("height", height).style("position","absolute")
   .append("g")
-    .attr("transform", "translate(" + (width/2) + "," + (radius+200) + ")");
+    .attr("transform", "translate(" + (width/2) + "," + (width/2+100) + ")");
 
-var stratify = d3.tree()
+var stratify = d3.cluster()
   .size([Math.PI*2, radius])
-  .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth)
+  // .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth)
 
 var identityNames = ["ethicist","funding","education","career path","years","according to self","according to others"]
 var themeNames = ["topics","domain","outputs","audiences","type","field",""]
@@ -227,14 +227,14 @@ d3.json("data_dendrogram.json").then(function(data) {
         }
 
         // else{
-          return "lightgrey"
+          return "grey"
         // }
       })
       .attr("class", function(d){
         return d.source.data.name+d.target.data.value;
       })
       .attr("stroke-opacity", function(d){
-        return .3
+        return .4
         // if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=3 && d.target.data.value!=12){
         //   return .2
         // }else{
@@ -242,7 +242,7 @@ d3.json("data_dendrogram.json").then(function(data) {
         // }
       })
       .attr("stroke-width", function(d){
-        return 1
+        return 8;
         // if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=3 && d.target.data.value!=12){
         //   return .5
         // }else{
