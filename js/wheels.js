@@ -1,145 +1,113 @@
 var div = document.getElementById("my_dataviz");
 var rect = div.getBoundingClientRect();
-  x = rect.left;
-  y = rect.top;
   width = rect.width;
   height = rect.height;
 
-var radius = width / 2;
+var leftMargin = 100;
+var topMargin = leftMargin;
 
 var svg = d3.select("#my_dataviz")
 	.append("svg")
 	.attr("width", width)
 	.attr("height", height)
-	.append("g")
-    .attr("transform", "translate(" + (radius) + "," + (radius) + ")");
-var stratify = d3.cluster().size([2 * Math.PI, radius - 100])
-// var stratify = d3.tree()
-//   .size([Math.PI*2, radius])
-//   .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth)
+var sdata;
 
-d3.json("data_dendrogram.json").then(function(data) {
-	
-	sortData = d3.hierarchy(data);
-	var root = stratify(sortData);
 
-	console.log(root);
+var numRows = 6;
+var numCols = 6;
+const row = d3.scaleBand()
+  .domain(d3.range(numRows))
+  .range([leftMargin, width-leftMargin])
+  .padding(0.05);
 
-	svg.append("g")
-	  .selectAll("circle")
-	  .data(root.descendants())
-	  .join("circle")
-	  .filter(function(d){
-	    return d.data.value>0;
-	  })
-	    .attr("transform", d => `
-	      rotate(${d.x * 180 / Math.PI - 90})
-	      translate(${d.y},0)
-	    `)
-	    .attr("fill", function(d){
-	      "grey"
-	     })
-	    .attr("class",function(d){
-	    	return d.data.name;
+const col = d3.scaleBand()
+  .domain(d3.range(numCols))
+  .range([topMargin, height-topMargin])
+  .padding(0.05);
+
+d3.json("data_totals.json").then(function(data) {
+
+	console.log(data);
+	sdata = data.children;
+
+	var gid = svg.selectAll("g")
+		.data(sdata[0].children)
+		.join("g")
+		.attr("class", function(d){
+			console.log(d);
+			return d.name;
+		})
+		.attr('transform', function(d,i){ 
+			console.log(i); 
+			return `translate(${row(i)}, ${col(i)})` 
+			// return `translate(${col(i)}, ${row(i)})` 
+			// return `translate(${row(i)}, ${topMargin})` 
+		});
+
+	gid.append('text')
+		.attr('font-size', 6)
+		.attr('font-family', 'sans-serif')
+		.attr('x', 0)
+		.attr('y', 0)
+		.text(d => d.name);
+
+
+
+var originX = 0;
+var originY = 0;
+var outerCircleRadius = 60;
+var chairOriginX = originX + ((outerCircleRadius) * Math.sin(0));
+var chairOriginY = originY - ((outerCircleRadius) * Math.cos(0));
+
+	var outerCircle = gid
+		.append("circle")
+		.attr("cx",originX)
+		.attr("cy",originY)
+		.attr("r",outerCircleRadius)
+		.attr("fill","none")
+		.attr("stroke","lightgrey")
+
+var chairWidth = 20;
+  	gid.selectAll('rectID')
+		.data(d => d.children)
+		.join('rect')
+		.attr("width",5)
+		.attr("fill","pink")
+		.attr("stroke","blue")
+		.attr("height", function(d,i){
+			return 1+d.value*20;
+		})
+	    .attr("x", function(d,i){
+	    	return chairOriginX - (chairWidth / 2) //(i*10)+
 	    })
-	    // .attr("x",-2.5)
-	    .attr("opacity", .7)
-	    .attr("r", 6);
-
-//make it using the path but do it as a rect and then only go so far as you should
-  svg.append("g")
-    .selectAll("rect")
-    .data(root.links())
-    .join("rect")
-    .filter(function(d){
-    	return d.target.data.value > 0;
-    })
-      .attr("stroke","grey")
-	    .attr("width",1)
-	    .attr("opacity", .4)
-	    // .attr("class",function(d){
-	    // 	console.log(d);
-	    // 	// return d.data.name;
-	    // })
-	    .attr("transform", function(d){
-	    	return `
-			rotate(${d.target.x * 180 / Math.PI - 90})
-	        translate(${d.source.y},${d.source.x})
-	    	`
-	    })
-	 //    .attr("transform", function(d){ 
-	 //    	return `rotate(${d.source.x * 180 / Math.PI - 90})`
-		// })
-
-	    // .attr("transform", d => `
-	    //   rotate(${d.target.x * 180 / Math.PI - 90})
-	    //   translate(${d.source.y},${d.source.x})
-	    // `)
+	    .attr("y", chairOriginY - (chairWidth / 2))
+		.attr("transform", function(d,i){
+			// calculate angle more smartly
+			return "rotate("+(10*i)+", 0, 0)";
+		}) 
 
 
-	    .attr("height", 10)
-//then need to rotate because this will just go directly out
 
-
-	    // .attr("transform", d => `
-	    //   rotate(${d.target.x * 180 / Math.PI - 90})
-	    //   translate(${d.source.y},0)
-	    // `)
-	    // .attr("transform", d => `
-	    //   rotate(${d.target.x * 180 / Math.PI - 90})
-	    //   translate(0,${d.source.y})
-	    // `)
+// x = ((150 + radius) * Math.cos(angle)) + (width / 2) + offset; // Calculate the x position of the element.
+// y = ((150 + radius) * Math.sin(angle)) + (width / 2) + offset; // Calculate the y position of the element.
 })
 
 
 
 
+	// var outline = gid.selectAll(".node").append('rect').attr("class", "node")
+	// 	.attr('width', col.bandwidth())
+	// 	.attr('height', row.bandwidth())
+	// 	.attr('fill', 'white')
+	// 	.attr('stroke', 'red');
 
 
-
-
-
-
-
-
-
-	// svg.append("g")
-	//   .selectAll("rect")
-	//   .data(root.descendants())
-	//   .join("rect")
-	//   .filter(function(d){
-	//     return d.data.value>0;
-	//   })
-	//     .attr("transform", d => `
-	//       rotate(${d.x * 180 / Math.PI - 90})
-	//       translate(${d.y},0)
-	//     `)
-	//     .attr("width",1)
-	//     .attr("height", 10)
-	//     .attr("fill", function(d){
-	//       "grey"
-	//      })
-	//     .attr("opacity", .7)
-
-
-
-
-
-	// svg.append("g")
-	// 	.selectAll("rect")
-	// 	.data(sortData.descendants())
-	// 	.join("rect")
-	// 	.filter(function(d){
-	// 		return d.data.total //return those that have a data value
-	// 	})
-	// 	.attr("x", function(d,i){
-	// 		//this should be scaled
-	// 		return width/2+(10*i);
-	// 	})
-	// 	.attr("y", height/2)
-	// 	.attr("width",1)
-	// 	.attr("height",function(d){
-	// 		//this should be scaled
-	// 		return height/2-(d.data.total*10);
-	// 	})
-	// 	.attr("stroke","black")
+	// gid.selectAll('text')
+	// 	.data(d => d.children)
+	// 	.join('text')
+	// 	  .attr('font-size', 15)
+	// 	  .attr('font-family', 'sans-serif')
+	// 	  .attr('dominant-baseline', 'hanging')
+	// 	  .attr('x', 5)
+	// 	  .attr('y', (d, i) => i * 15 + 2)
+	// 	  .text(d => d.value);

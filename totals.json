@@ -1,0 +1,16 @@
+{"section":"id",
+	"q1":[
+		{
+			"yes":10,
+			"no":8,
+			"total":18
+		}
+	],
+	"q2":[
+		{
+			"name":"no",
+			"value":0,
+			"total":3
+		}
+	]
+}
