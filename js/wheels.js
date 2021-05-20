@@ -51,13 +51,11 @@ d3.json("data_totals.json").then(function(data) {
 		.attr('y', 0)
 		.text(d => d.name);
 
-
-
-var originX = 0;
-var originY = 0;
-var outerCircleRadius = 60;
-var chairOriginX = originX + ((outerCircleRadius) * Math.sin(0));
-var chairOriginY = originY - ((outerCircleRadius) * Math.cos(0));
+	var originX = 0;
+	var originY = 0;
+	var outerCircleRadius = 30; //scaled to page?
+	var chairOriginX = originX + ((outerCircleRadius) * Math.sin(0));
+	var chairOriginY = originY - ((outerCircleRadius) * Math.cos(0));
 
 	var outerCircle = gid
 		.append("circle")
@@ -67,7 +65,6 @@ var chairOriginY = originY - ((outerCircleRadius) * Math.cos(0));
 		.attr("fill","none")
 		.attr("stroke","lightgrey")
 
-var chairWidth = 20;
   	gid.selectAll('rectID')
 		.data(d => d.children)
 		.join('rect')
@@ -75,21 +72,16 @@ var chairWidth = 20;
 		.attr("fill","pink")
 		.attr("stroke","blue")
 		.attr("height", function(d,i){
-			return 1+d.value*20;
+			return 1+(d.value*outerCircleRadius/2); //scale this to min and max and outer radius size
 		})
-	    .attr("x", function(d,i){
-	    	return chairOriginX - (chairWidth / 2) //(i*10)+
-	    })
-	    .attr("y", chairOriginY - (chairWidth / 2))
+	    .attr("x", chairOriginX ) //- (chairWidth / 2)
+	    .attr("y", chairOriginY ) //- (chairWidth / 2)
 		.attr("transform", function(d,i){
 			// calculate angle more smartly
+			// 
 			return "rotate("+(10*i)+", 0, 0)";
 		}) 
 
-
-
-// x = ((150 + radius) * Math.cos(angle)) + (width / 2) + offset; // Calculate the x position of the element.
-// y = ((150 + radius) * Math.sin(angle)) + (width / 2) + offset; // Calculate the y position of the element.
 })
 
 
@@ -100,8 +92,6 @@ var chairWidth = 20;
 	// 	.attr('height', row.bandwidth())
 	// 	.attr('fill', 'white')
 	// 	.attr('stroke', 'red');
-
-
 	// gid.selectAll('text')
 	// 	.data(d => d.children)
 	// 	.join('text')
