@@ -35,8 +35,8 @@ const col = d3.scaleBand()
 var originX = 0;
 var originY = 0;
 var outerCircleRadius = (height/2)/numRows; //scaled to page?
-var chairOriginX = originX + ((outerCircleRadius) * Math.sin(0));
-var chairOriginY = originY - ((outerCircleRadius) * Math.cos(0));
+var chairOriginX = originX + ((outerCircleRadius/2) * Math.sin(0));
+var chairOriginY = originY + ((outerCircleRadius/2) * Math.cos(0));
 
 var idVals = [];
 var theVals = [];
@@ -44,7 +44,8 @@ var maxTotal = 0;
 var maxTheme, maxId = 0;
 var barScale = d3.scaleLinear()
 	.domain([0, maxTotal]) //minimum, maximum incoming total
-	.range([0, outerCircleRadius/2])
+	.range([1, outerCircleRadius])
+
 d3.json("data_totals.json").then(function(data) {
 
 	console.log(data);
@@ -108,7 +109,7 @@ d3.json("data_totals.json").then(function(data) {
 		.data(d => d.children)
 		.join('rect')
 		.attr("class",function(d){
-			idVals.push(d.value);
+			idVals.push(d.total);
 			return "rectID";
 		})
 		.attr("width",5)
@@ -117,7 +118,7 @@ d3.json("data_totals.json").then(function(data) {
 	    .attr("x", chairOriginX )
 	    .attr("y", chairOriginY )
 		.attr("transform", function(d,i){
-			return "rotate("+(10*i)+", 0, 0)";
+			return "rotate("+(180+10*i)+", 0, 0)";
 		}) 
 		.attr("height",0);
 	maxId = d3.max(idVals);
@@ -125,7 +126,7 @@ d3.json("data_totals.json").then(function(data) {
 		.data(d => d.children)
 		.join('rect')
 		.attr("class",function(d){
-			theVals.push(d.value);
+			theVals.push(d.total);
 			return "rectTHE"
 		})
 		.attr("width",5)
@@ -134,7 +135,7 @@ d3.json("data_totals.json").then(function(data) {
 	    .attr("x", chairOriginX ) //- (chairWidth / 2)
 	    .attr("y", chairOriginY ) //- (chairWidth / 2)
 		.attr("transform", function(d,i){
-			return "rotate("+(10*i)+", 0, 0)";// calculate angle more smartly
+			return "rotate("+(180+10*i)+", 0, 0)";// calculate angle more smartly
 		}) 
 		.attr("height",0);
 	maxTheme = d3.max(theVals);
@@ -156,13 +157,13 @@ d3.json("data_totals.json").then(function(data) {
 		// console.log(maxTotal)
 		rectIdentity.transition().duration(4000).attr("height", function(d,i){
 			// console.log(d.value)
-			console.log(barScale(d.value))
-			return barScale(d.value);
+			// console.log(barScale(d.value))
+			return barScale(d.total);
 			// return 1+(d.value*outerCircleRadius/2); //scale this to min and max and outer radius size
 		})
 		rectTheme.transition().duration(4000).attr("height", function(d,i){
-			console.log(barScale(d.value))
-			return barScale(d.value);
+			// console.log(barScale(d.value))
+			return barScale(d.total);
 			// return 1+(d.value*outerCircleRadius/2); //scale this to min and max and outer radius size
 		})
 	}

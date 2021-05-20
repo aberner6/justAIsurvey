@@ -7,11 +7,13 @@
 					"children":[
 						{
 							"name":"yes",
-							"value":18								
+							"value":1,
+							"total":10
 						},
 						{
 							"name":"no",
-							"value":0
+							"value":0,
+							"total":14
 						}
 					]
 				},
@@ -19,132 +21,163 @@
 					"children":[
 						{
 							"name":"yes",
-							"value":0
+							"value":0,
+							"total":8
 						},
 						{
 							"name":"no",
-							"value":1
+							"value":1,
+							"total":12
 						}
 					]
 				},
 				{"name": "funding",
 					"children": [{
 							"name": "funded",
-							"value": 1
+							"value": 1,
+							"total":18
 						},
 						{
 							"name": "not funded",
-							"value": 0
+							"value": 0,
+							"total":10
 						}
 					]
 				},
 				{"name": "education",
 					"children": [{
 							"name": "agriculture",
-							"value": 0
+							"value": 0,
+							"total":3
 						},
 						{
 							"name": "architecture",
-							"value": 0
+							"value": 0,
+							"total":22
 						},
 						{
 							"name": "biology",
-							"value": 0
+							"value": 0,
+							"total":28
+
 						},
 						{
 							"name": "business",
-							"value": 0
+							"value": 0,
+							"total":10
 						},
 						{
 							"name": "computer science",
-							"value": 0
+							"value": 0,
+							"total":12
 						},
 						{
 							"name": "data science",
-							"value": 1
+							"value": 1,
+							"total":18
 						},
 						{
 							"name": "design & art",
-							"value": 0
+							"value": 0,
+							"total":7
 						},
 						{
 							"name": "economics",
-							"value": 0
+							"value": 0,
+							"total":20
 						},
 						{
 							"name": "education",
-							"value": 0
+							"value": 0,
+							"total":19
 						},
 						{
 							"name": "engineering & technology",
-							"value": 0
+							"value": 0,
+							"total":30
 						},
 						{
 							"name": "health",
-							"value": 0
+							"value": 0,
+							"total":38
 						},
 						{
 							"name": "history",
-							"value": 0
+							"value": 0,
+							"total":40
 						},
 						{
 							"name": "information management",
-							"value": 0
+							"value": 0,
+							"total":20
 						},
 						{
 							"name": "languages",
-							"value": 0
+							"value": 0,
+							"total":10
 						},
 						{
 							"name": "law",
-							"value": 0
+							"value": 0,
+							"total":7
 						},
 						{
 							"name": "mathematics",
-							"value": 0
+							"value": 0,
+							"total":9
 						},
 						{
 							"name": "environment",
-							"value": 0
+							"value": 0,
+							"total":10
 						},
 						{
 							"name": "politics",
-							"value": 0
+							"value": 0,
+							"total":8
 						},
 						{
 							"name": "psychology",
-							"value": 1
+							"value": 1,
+							"total":21
 						},
 						{
 							"name": "philosophy",
-							"value": 0
+							"value": 0,
+							"total":28
 						},
 						{
 							"name": "social science",
-							"value": 0
+							"value": 0,
+							"total":70
 						},
 						{
 							"name": "sports",
-							"value": 0
+							"value": 0,
+							"total":1
 						},
 						{
 							"name": "other",
-							"value": 0
+							"value": 0,
+							"total":18
 						}
 					]
 				},
 				{"name": "career path",
 					"children": [{
 							"name": "undergraduate",
-							"value": 0
+							"value": 0,
+							"total":10
 						},
 						{
 							"name": "masters",
-							"value": 0
+							"value": 0,
+							"total":10
 						},
 						{
 							"name": "phd",
-							"value": 0
+							"value": 0,
+							"total":10
 						},
 						{
 							"name": "postdoc",
@@ -164,7 +197,8 @@
 						},
 						{
 							"name": "nonprofit employee",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "other",
@@ -183,7 +217,8 @@
 						},
 						{
 							"name": 0,
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": 4,
@@ -307,11 +342,13 @@
 					"children":[
 						{
 							"name": "academic papers",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "reports",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "policy-papers",
@@ -347,7 +384,8 @@
 						},
 						{
 							"name": "software application",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "other",
@@ -364,19 +402,23 @@
 						},
 						{
 							"name": "academics",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "think tanks",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "NGOs",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "government institutions",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "artists",
@@ -384,7 +426,8 @@
 						},
 						{
 							"name": "designers",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "industry",
@@ -392,7 +435,8 @@
 						},
 						{
 							"name": "community organizations",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "general public",
@@ -412,7 +456,8 @@
 						},
 						{
 							"name": "with others outside my organization",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "both within and outside my organization",
@@ -448,7 +493,8 @@
 						},
 						{
 							"name": "Artists and creative practitioners",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "Computer/Data Scientists",
@@ -456,11 +502,13 @@
 						},
 						{
 							"name": "Tech developers and Engineers",
-							"value": 1
+							"value": 1,
+							"total":31
 						},
 						{
 							"name": "General public",
-							"value": 12
+							"value": 12,
+							"total":8
 						},
 						{
 							"name": "Regulators",
@@ -468,7 +516,8 @@
 						},
 						{
 							"name": "NGOs",
-							"value": 12
+							"value": 12,
+							"total":8
 						},
 						{
 							"name": "Affected individuals",
