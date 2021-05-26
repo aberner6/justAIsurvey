@@ -95,16 +95,22 @@ var cnctLine = [posID[0],posTh[0]];
 var originX = 0;
 var originY = 0;
 
-var normOriginX = originX + ((outerCircleRadius) * Math.sin(0));
-var normOriginY = originY + ((outerCircleRadius) * Math.cos(0));
+//CHANGING HERE CAREFUL!
+//also changed spacing of space out of bars
+//SOMEHOW SCALED THE WHOLE THING - ZOOM IN
+//MOUSEOVER
+var innerCircRad = outerCircleRadius/1.5;
+var normOriginX = originX + (innerCircRad * Math.sin(0));
+var normOriginY = originY + (innerCircRad * Math.cos(0));
 
 var idVals = [];
 var theVals = [];
 var maxTotal = 0;
 var maxTheme, maxId = 0;
+var maxBar = outerCircleRadius*2-innerCircRad;
 var barScale = d3.scaleLinear()
 	.domain([0, maxTotal]) 
-	.range([1, outerCircleRadius])
+	.range([1, maxBar])
 var yearsMax = 0;
 var yearScale = d3.scaleLinear()
 	.domain([0, yearsMax]) 
@@ -141,11 +147,9 @@ d3.json("totals_variation.json").then(function(data) {
 			}
 			return `translate(${posID[i].x}, ${posID[i].y}), rotate(${posID[i].rot},0,0)` 
 		});
-	var outerCircle = gid
+	var innerCirc = gid
 		.append("circle")
-		.attr("class", function(d){
-			return d.name;
-		})
+		.attr("class", "innerCirc")
 		.attr("cx",0)
 		.attr("cy",0)
 		.attr("r", function(d){
@@ -153,11 +157,26 @@ d3.json("totals_variation.json").then(function(data) {
 				yearsRadius = radScale(yearsMax);
 				return yearsRadius;
 			}else{
-				return outerCircleRadius
+				return innerCircRad;
 			} 
 		}) 
 		.attr("fill","none")
 		.attr("stroke","lightgrey");
+
+
+//NOTE: ADDITION		
+	var outerCirc = gid
+		.append("circle")
+		.attr("class", "outerCirc")
+		.attr("cx",0)
+		.attr("cy",0)
+		.attr("r", maxBar+innerCircRad)
+		.attr("fill","none")
+		.attr("stroke-dasharray",(1, 4))
+		.attr("stroke","lightgrey");
+
+
+
 	gid.append('text')
 		.attr('font-size', 6)
 		.attr('font-family', 'sans-serif')
@@ -174,13 +193,26 @@ d3.json("totals_variation.json").then(function(data) {
 			return `translate(${posTh[i].x}, ${posTh[i].y}), rotate(${posTh[i].rot},0,0)` 
 			// return `translate(${rowT(i)}, ${col(i)})` 
 		});
-	var outerCircle = gthe
+	var innerCircTheme = gthe
 		.append("circle")
+		.attr("class", "innerCircTheme")
 		.attr("cx",originX)
 		.attr("cy",originY)
-		.attr("r",outerCircleRadius) 
+		.attr("r",innerCircRad) 
 		.attr("fill","none")
 		.attr("stroke","lightgrey");
+//NOTE: ADDITION		
+	var outerCircTheme = gthe
+		.append("circle")
+		.attr("class", "outerCircTheme")
+		.attr("cx",0)
+		.attr("cy",0)
+		.attr("r", maxBar+innerCircRad)
+		.attr("fill","none")
+		.attr("stroke-dasharray",(1, 4))
+		.attr("stroke","lightgrey");
+
+
 	gthe.append('text')
 		.attr('font-size', 6)
 		.attr('font-family', 'sans-serif')
@@ -209,20 +241,12 @@ d3.json("totals_variation.json").then(function(data) {
 				return "grey"
 			}
 			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
-				return "red"
+				return "#46AAB3"
 			}
 			else{
-				return "white"
+				return "lightgrey"
 			}
 		}) 
-		.attr("stroke",function(d){
-			if(d.name=="space"){
-				return "grey"
-			}
-			else{
-				return "blue"
-			}
-		})
 	    .attr("x", function(d){
 	    	if(d.q=="years" && (barwide*yearsMax>outerCircleRadius*2)){
 	    		return originX+(yearsRadius*Math.sin(0));
@@ -241,7 +265,7 @@ d3.json("totals_variation.json").then(function(data) {
 			if(d.q=="years" && (barwide*yearsMax>outerCircleRadius*2)){
 				return "rotate("+(yearScale(i))+", 0, 0)";
 			}else{
-				return "rotate("+(180+10*i)+", 0, 0)";
+				return "rotate("+(180+(barwide*3)*i)+", 0, 0)";
 			}
 		}) 
 		.attr("height",0);
@@ -260,21 +284,17 @@ d3.json("totals_variation.json").then(function(data) {
 		})
 		.attr("width", barwide)
 		.attr("fill",function(d){
-			if(d.name=="space"){
-				return "grey"
-			}
 			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
-				return "red"
+				return "#46AAB3"
 			}
 			else{
-				return "white"
+				return "lightgrey"
 			}
 		}) 
-		.attr("stroke","blue")
 	    .attr("x", normOriginX ) 
 	    .attr("y", normOriginY )
 		.attr("transform", function(d,i){
-			return "rotate("+(180+10*i)+", 0, 0)";// calculate angle more smartly
+			return "rotate("+(180+(barwide*3)*i)+", 0, 0)";// calculate angle more smartly
 		}) 
 		.attr("height",0);
 	maxTheme = d3.max(theVals);
@@ -309,19 +329,16 @@ svg.append("path")
   .data([idLine])
   .attr("class", "lineID")
   .attr("d", valueline)
-  .attr("stroke","steelblue");
 svg.append("path")
   .data([themeLine])
   .attr("class", "lineTH")
   .attr("d", valueline)
-  .attr("stroke","steelblue");
 svg.append("path")
   .data([cnctLine])
   .attr("class", "lineCN")
   .attr("d", valueline)
-  .attr("stroke","steelblue");
-  d3.selectAll("path").attr("fill","none")
+d3.selectAll("path").attr("fill","none").attr("stroke","lightgrey")
   .style("stroke-dasharray", ("1,4"))
   .style("stroke-width", 1)
-
+d3.selectAll("circle").attr("stroke-width",.3)
 })
