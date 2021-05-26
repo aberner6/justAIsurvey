@@ -13,63 +13,12 @@ var svg = d3.select("#my_dataviz")
 	// .attr("transform",`translate(${width/2}, ${height/2})`)
 var sdata;
 
-
-var numRows = 6; //this is how many question types there are for both sections
-var numCols = 6;
-
-const row = d3.scaleBand()
-	.domain(d3.range(numRows))
-	.range([width/2, width-leftMargin])
-	.padding(0.05);
-
-const rowT = d3.scaleBand()
-	.domain(d3.range(numRows))
-	.range([leftMargin, width/2])
-	.padding(0.05);
-
-const col = d3.scaleBand()
-	.domain(d3.range(numCols))
-	.range([topMargin, height-topMargin])
-	.padding(0.05);
-
-var outerCircleRadius = (width/8)/3; //scaled to page?
 var figDepth = 3;
-// var posG = [
-// 	{
-// 		"x":outerCircleRadius*2,
-// 		"y":outerCircleRadius-outerCircleRadius/3,
-// 		"rot":0,
-// 		"id":"ethicist"
-// 	},
-// 	{
-// 		"x":outerCircleRadius*2+outerCircleRadius/5,
-// 		"y":outerCircleRadius-outerCircleRadius/5,
-// 		"rot":75,
-// 		"id":"funding"
-// 	},
-// 	{
-// 		"x":outerCircleRadius,
-// 		"y":outerCircleRadius*2,
-// 		"rot":0,
-// 		"id":"years in field"
-// 	},
-// 	{
-// 		"x":outerCircleRadius-outerCircleRadius/5,
-// 		"y":outerCircleRadius*3,
-// 		"rot":85,
-// 		"id":"education"
-// 	},
-// 	{
-// 		"x":0,
-// 		"y":0,
-// 		"rot":250,
-// 		"id":"career path"
-// 	}
-// ]
+var outerCircleRadius = (width/8)/figDepth; //scaled to page?
 var centerEX = width/2;
 var centerEH = height/2;
 var smallMarg = outerCircleRadius/4;
-var posGID = [
+var posID = [
 	{
 		"x":centerEX,
 		"y":centerEH,
@@ -101,7 +50,7 @@ var posGID = [
 		"id":"career path"
 	}
 ]
-var posGTh = [
+var posTh = [
 	{
 		"x":centerEX+outerCircleRadius*4,
 		"y":centerEH-outerCircleRadius-smallMarg*2,
@@ -139,6 +88,9 @@ var posGTh = [
 		"id":"collab field"
 	}
 ]
+var idLine = [posID[4],posID[0],posID[1],posID[2],posID[3]]
+var themeLine = [posTh[5],posTh[4],posTh[0],posTh[1],posTh[2],posTh[3]]
+var cnctLine = [posID[0],posTh[0]];
 
 var originX = 0;
 var originY = 0;
@@ -167,16 +119,18 @@ var widthScale = d3.scaleLinear()
 	.range([5, 5])
 var barwide = 5;
 var yearsRadius = outerCircleRadius;
+
 d3.json("totals_variation.json").then(function(data) {
 
 	console.log(data);
 	sdata = data.children;
 
+
 	var gid = svg.selectAll(".gID")
 		.data(sdata[0].children)
 		.join("g")
 		.attr("class", function(d,i){
-			return d.name+posGID[i].id;
+			return d.name+posID[i].id;
 		})
 		.attr('transform', function(d,i){ 
 			console.log(i);
@@ -185,7 +139,7 @@ d3.json("totals_variation.json").then(function(data) {
 				yearsMax = d.children.length;
 				yearScale.domain([0, yearsMax])
 			}
-			return `translate(${posGID[i].x}, ${posGID[i].y}), rotate(${posGID[i].rot},0,0)` 
+			return `translate(${posID[i].x}, ${posID[i].y}), rotate(${posID[i].rot},0,0)` 
 		});
 	var outerCircle = gid
 		.append("circle")
@@ -217,7 +171,7 @@ d3.json("totals_variation.json").then(function(data) {
 			return d.name;
 		})
 		.attr('transform', function(d,i){ 
-			return `translate(${posGTh[i].x}, ${posGTh[i].y}), rotate(${posGTh[i].rot},0,0)` 
+			return `translate(${posTh[i].x}, ${posTh[i].y}), rotate(${posTh[i].rot},0,0)` 
 			// return `translate(${rowT(i)}, ${col(i)})` 
 		});
 	var outerCircle = gthe
@@ -342,6 +296,30 @@ d3.json("totals_variation.json").then(function(data) {
 			return barScale(d.total);
 		})
 	}
+
 d3.selectAll("text").attr("fill","none")
+
+var valueline =  d3.line()
+    .x(function(d) { return d.x; })
+    .y(function(d) { return d.y; })    
+// .curve(d3.curveCardinal.tension(0));
+    .curve(d3.curveCatmullRom.alpha(0.5));
+
+svg.append("path")
+  .data([idLine])
+  .attr("class", "lineID")
+  .attr("d", valueline)
+  .attr("stroke","steelblue");
+svg.append("path")
+  .data([themeLine])
+  .attr("class", "lineTH")
+  .attr("d", valueline)
+  .attr("stroke","steelblue");
+svg.append("path")
+  .data([cnctLine])
+  .attr("class", "lineCN")
+  .attr("d", valueline)
+  .attr("stroke","steelblue");
+  d3.selectAll("path").attr("fill","none")
 
 })
