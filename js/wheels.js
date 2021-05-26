@@ -321,5 +321,7 @@ svg.append("path")
   .attr("d", valueline)
   .attr("stroke","steelblue");
   d3.selectAll("path").attr("fill","none")
+  .style("stroke-dasharray", ("1,4"))
+  .style("stroke-width", 1)
 
 })
