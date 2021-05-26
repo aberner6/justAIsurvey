@@ -69,7 +69,7 @@ var figDepth = 3;
 var centerEX = width/2;
 var centerEH = height/2;
 var smallMarg = outerCircleRadius/4;
-var posG = [
+var posGID = [
 	{
 		"x":centerEX,
 		"y":centerEH,
@@ -99,6 +99,44 @@ var posG = [
 		"y":centerEH-outerCircleRadius-smallMarg,
 		"rot":250,
 		"id":"career path"
+	}
+]
+var posGTh = [
+	{
+		"x":centerEX+outerCircleRadius*4,
+		"y":centerEH-outerCircleRadius-smallMarg*2,
+		"rot":0,
+		"id":"topics"
+	},
+	{
+		"x":centerEX+outerCircleRadius*4+smallMarg*2,
+		"y":centerEH-outerCircleRadius+smallMarg*2,
+		"rot":115,
+		"id":"domain"
+	},
+	{
+		"x":centerEX+outerCircleRadius*6,
+		"y":centerEH+outerCircleRadius*3,
+		"rot":50,
+		"id":"outputs"
+	},
+	{
+		"x":centerEX+outerCircleRadius*7,
+		"y":centerEH+outerCircleRadius*3.5,
+		"rot":60,
+		"id":"audiences"
+	},
+	{
+		"x":centerEX+outerCircleRadius*8,
+		"y":centerEH-outerCircleRadius-smallMarg,
+		"rot":280,
+		"id":"collab type"
+	},
+	{
+		"x":centerEX+outerCircleRadius*9,
+		"y":centerEH-outerCircleRadius-smallMarg*2,
+		"rot":45,
+		"id":"collab field"
 	}
 ]
 
@@ -138,7 +176,7 @@ d3.json("totals_variation.json").then(function(data) {
 		.data(sdata[0].children)
 		.join("g")
 		.attr("class", function(d,i){
-			return d.name+posG[i].id;
+			return d.name+posGID[i].id;
 		})
 		.attr('transform', function(d,i){ 
 			console.log(i);
@@ -147,14 +185,7 @@ d3.json("totals_variation.json").then(function(data) {
 				yearsMax = d.children.length;
 				yearScale.domain([0, yearsMax])
 			}
-
-
-			// else{
-				return `translate(${posG[i].x}, ${posG[i].y}), rotate(${posG[i].rot},0,0)` 
-
-				// return `translate(${posG[i].x}, ${posG[i].y}), rotate(${posG[i].rot},0,0)` 
-				// return `translate(${row(i)}, ${col(i)})` 
-			// }
+			return `translate(${posGID[i].x}, ${posGID[i].y}), rotate(${posGID[i].rot},0,0)` 
 		});
 	var outerCircle = gid
 		.append("circle")
@@ -186,21 +217,22 @@ d3.json("totals_variation.json").then(function(data) {
 			return d.name;
 		})
 		.attr('transform', function(d,i){ 
-			return `translate(${rowT(i)}, ${col(i)})` 
+			return `translate(${posGTh[i].x}, ${posGTh[i].y}), rotate(${posGTh[i].rot},0,0)` 
+			// return `translate(${rowT(i)}, ${col(i)})` 
 		});
-	// var outerCircle = gthe
-	// 	.append("circle")
-	// 	.attr("cx",originX)
-	// 	.attr("cy",originY)
-	// 	.attr("r",outerCircleRadius) 
-	// 	.attr("fill","none")
-	// 	.attr("stroke","lightgrey");
-	// gthe.append('text')
-	// 	.attr('font-size', 6)
-	// 	.attr('font-family', 'sans-serif')
-	// 	.attr('x', 0)
-	// 	.attr('dy', -40)
-	// 	.text(d => d.name);
+	var outerCircle = gthe
+		.append("circle")
+		.attr("cx",originX)
+		.attr("cy",originY)
+		.attr("r",outerCircleRadius) 
+		.attr("fill","none")
+		.attr("stroke","lightgrey");
+	gthe.append('text')
+		.attr('font-size', 6)
+		.attr('font-family', 'sans-serif')
+		.attr('x', 0)
+		.attr('dy', -40)
+		.text(d => d.name);
 
 
   	var rectIdentity = gid.selectAll('.rectID')
@@ -272,25 +304,25 @@ d3.json("totals_variation.json").then(function(data) {
 			theVals.push(d.total);
 			return "rectTHE"
 		})
-	// 	.attr("width", barwide)
-	// 	.attr("fill",function(d){
-	// 		if(d.name=="space"){
-	// 			return "grey"
-	// 		}
-	// 		if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
-	// 			return "red"
-	// 		}
-	// 		else{
-	// 			return "white"
-	// 		}
-	// 	}) 
-	// 	.attr("stroke","blue")
-	//     .attr("x", normOriginX ) 
-	//     .attr("y", normOriginY )
-	// 	.attr("transform", function(d,i){
-	// 		return "rotate("+(180+10*i)+", 0, 0)";// calculate angle more smartly
-	// 	}) 
-	// 	.attr("height",0);
+		.attr("width", barwide)
+		.attr("fill",function(d){
+			if(d.name=="space"){
+				return "grey"
+			}
+			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
+				return "red"
+			}
+			else{
+				return "white"
+			}
+		}) 
+		.attr("stroke","blue")
+	    .attr("x", normOriginX ) 
+	    .attr("y", normOriginY )
+		.attr("transform", function(d,i){
+			return "rotate("+(180+10*i)+", 0, 0)";// calculate angle more smartly
+		}) 
+		.attr("height",0);
 	maxTheme = d3.max(theVals);
 
 	if(maxId>0 && maxTheme>0){
