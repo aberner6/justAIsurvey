@@ -118,13 +118,13 @@ var yearScale = d3.scaleLinear()
 
 var radScale = d3.scaleLinear()
 	.domain([0, 100])
-	.range([outerCircleRadius/2, outerCircleRadius*2])
+	.range([outerCircleRadius, outerCircleRadius/2])
 
 var widthScale = d3.scaleLinear()
 	.domain([0, 100])
-	.range([5, 5])
+	.range([5, .5])
 var barwide = 5;
-var yearsRadius = outerCircleRadius;
+var yearsRadius = 10;
 
 d3.json("totals_variation.json").then(function(data) {
 
@@ -147,13 +147,19 @@ d3.json("totals_variation.json").then(function(data) {
 			}
 			return `translate(${posID[i].x}, ${posID[i].y}), rotate(${posID[i].rot},0,0)` 
 		});
+
+
+	//FOCUS POINT
+	//when you transition from a line to a circle, is the circumference the same? 
+	//if you roll a circumference out flat, what does it become?
+	//what is happening with PI basically???
 	var innerCirc = gid
 		.append("circle")
 		.attr("class", "innerCirc")
 		.attr("cx",0)
 		.attr("cy",0)
 		.attr("r", function(d){
-			if(d.name=="years in field"){
+			if(d.name=="years in field" && (barwide*yearsMax>(2*Math.PI)*innerCircRad)){
 				yearsRadius = radScale(yearsMax);
 				return yearsRadius;
 			}else{
@@ -162,19 +168,6 @@ d3.json("totals_variation.json").then(function(data) {
 		}) 
 		.attr("fill","none")
 		.attr("stroke","lightgrey");
-
-
-//NOTE: ADDITION		
-	var outerCirc = gid
-		.append("circle")
-		.attr("class", "outerCirc")
-		.attr("cx",0)
-		.attr("cy",0)
-		.attr("r", maxBar+innerCircRad)
-		.attr("fill","none")
-		.attr("stroke-dasharray",(1, 4))
-		.attr("stroke","lightgrey");
-
 
 
 	gid.append('text')
@@ -201,17 +194,6 @@ d3.json("totals_variation.json").then(function(data) {
 		.attr("r",innerCircRad) 
 		.attr("fill","none")
 		.attr("stroke","lightgrey");
-//NOTE: ADDITION		
-	var outerCircTheme = gthe
-		.append("circle")
-		.attr("class", "outerCircTheme")
-		.attr("cx",0)
-		.attr("cy",0)
-		.attr("r", maxBar+innerCircRad)
-		.attr("fill","none")
-		.attr("stroke-dasharray",(1, 4))
-		.attr("stroke","lightgrey");
-
 
 	gthe.append('text')
 		.attr('font-size', 6)
@@ -219,6 +201,48 @@ d3.json("totals_variation.json").then(function(data) {
 		.attr('x', 0)
 		.attr('dy', -40)
 		.text(d => d.name);
+
+
+  // 	var rectMaxID = gid.selectAll('.rectMaxID')
+		// .data(d => d.children)
+		// .join('rect')
+		// .attr("class", "rectMaxID")
+		// .attr("width",function(d,i){
+		// 	if(d.q=="years" && (widthScale(yearsMax)*yearsMax>(2*Math.PI)*radScale(yearsMax))){
+		// 		return widthScale(yearsMax);			
+		// 	}
+		// 	else{
+		// 		return barwide;
+		// 	}
+		// })
+		// .attr("height", maxBar)
+	 //    .attr("x", function(d,i){
+		// 	if(d.q=="years" && yearsRadius>0){//(widthScale(yearsMax)*yearsMax>2*Math.PI*radScale(yearsMax))){
+	 //    		return originX+(yearsRadius*Math.sin(0));
+	 //    	}else{
+		//     	return normOriginX;
+	 //    	}
+	 //    })
+	 //    .attr("y", function(d){
+		// 	if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax>2*Math.PI*radScale(yearsMax))){
+	 //    		return originY+(yearsRadius*Math.cos(0)); 
+	 //    	}else{
+		//     	return normOriginY;
+	 //    	}
+	 //    })
+		// .attr("transform", function(d,i){
+		// 	if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax>2*Math.PI*radScale(yearsMax))){
+		// 	// if(d.q=="years" && (barwide*yearsMax>outerCircleRadius*2)){
+		// 		return "rotate("+(yearScale(i))+", 0, 0)";
+		// 	}else{
+		// 		return "rotate("+(180+(barwide*3)*i)+", 0, 0)";
+		// 	}
+		// })
+		// .attr("fill","none")	
+		// .style("stroke-dasharray","1, 4")
+		// .attr("stroke","lightgrey")
+		// .attr("stroke-width",.3)
+
 
 
   	var rectIdentity = gid.selectAll('.rectID')
@@ -229,8 +253,8 @@ d3.json("totals_variation.json").then(function(data) {
 			return "rectID"+i;
 		})
 		.attr("width",function(d,i){
-			if(d.q=="years" && (barwide*yearsMax>outerCircleRadius*2)){
-				return widthScale(yearsMax);			
+			if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax*2>2*Math.PI*radScale(yearsMax))){
+				return barwide; //widthScale(yearsMax);			
 			}
 			else{
 				return barwide;
@@ -247,23 +271,23 @@ d3.json("totals_variation.json").then(function(data) {
 				return "lightgrey"
 			}
 		}) 
-	    .attr("x", function(d){
-	    	if(d.q=="years" && (barwide*yearsMax>outerCircleRadius*2)){
-	    		return originX+(yearsRadius*Math.sin(0));
+	    .attr("x", function(d,i){
+			if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax*2>2*Math.PI*radScale(yearsMax))){
+	    		return i*(widthScale(yearsMax))//originX+(yearsRadius*Math.sin(0));
 	    	}else{
 		    	return normOriginX;
 	    	}
 	    })
 	    .attr("y", function(d){
-	    	if(d.q=="years" && (barwide*yearsMax>outerCircleRadius*2)){
-	    		return originY+(yearsRadius*Math.cos(0)); 
+			if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax*2>2*Math.PI*radScale(yearsMax))){
+	    		return 0//originY+(yearsRadius*Math.cos(0)); 
 	    	}else{
 		    	return normOriginY;
 	    	}
 	    })
 		.attr("transform", function(d,i){
-			if(d.q=="years" && (barwide*yearsMax>outerCircleRadius*2)){
-				return "rotate("+(yearScale(i))+", 0, 0)";
+			if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax*2>2*Math.PI*radScale(yearsMax))){
+				// return "rotate("+(yearScale(i))+", 0, 0)";
 			}else{
 				return "rotate("+(180+(barwide*3)*i)+", 0, 0)";
 			}
