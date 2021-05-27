@@ -21,14 +21,14 @@ var smallMarg = outerCircleRadius/4;
 var posID = [
 	{
 		"x":centerEX,
-		"y":centerEH,
-		"rot":0,
+		"y":centerEH-outerCircleRadius,
+		"rot":340,
 		"id":"ethicist"
 	},
 	{
 		"x":centerEX+smallMarg,
-		"y":centerEH+smallMarg,
-		"rot":75,
+		"y":centerEH-outerCircleRadius+smallMarg,
+		"rot":45,
 		"id":"funding"
 	},
 	{
@@ -39,7 +39,7 @@ var posID = [
 	},
 	{
 		"x":centerEX-outerCircleRadius-smallMarg,
-		"y":centerEH+outerCircleRadius*6,
+		"y":centerEH+outerCircleRadius*6+smallMarg,
 		"rot":85,
 		"id":"education"
 	},
@@ -54,13 +54,13 @@ var posTh = [
 	{
 		"x":centerEX+outerCircleRadius*4,
 		"y":centerEH-outerCircleRadius-smallMarg*2,
-		"rot":0,
+		"rot":320,
 		"id":"topics"
 	},
 	{
 		"x":centerEX+outerCircleRadius*4+smallMarg*2,
 		"y":centerEH-outerCircleRadius+smallMarg*2,
-		"rot":115,
+		"rot":75,
 		"id":"domain"
 	},
 	{
@@ -70,21 +70,21 @@ var posTh = [
 		"id":"outputs"
 	},
 	{
-		"x":centerEX+outerCircleRadius*7,
-		"y":centerEH+outerCircleRadius*3.5,
-		"rot":60,
+		"x":centerEX+outerCircleRadius*7+smallMarg,
+		"y":centerEH+outerCircleRadius*4.5,
+		"rot":65,
 		"id":"audiences"
 	},
 	{
-		"x":centerEX+outerCircleRadius*8,
-		"y":centerEH-outerCircleRadius-smallMarg,
-		"rot":280,
+		"x":centerEX+outerCircleRadius*8+smallMarg,
+		"y":centerEH-outerCircleRadius-smallMarg*4,
+		"rot":300,
 		"id":"collab type"
 	},
 	{
 		"x":centerEX+outerCircleRadius*9,
 		"y":centerEH-outerCircleRadius-smallMarg*2,
-		"rot":45,
+		"rot":15,
 		"id":"collab field"
 	}
 ]
@@ -111,20 +111,17 @@ var maxBar = outerCircleRadius*2-innerCircRad;
 var barScale = d3.scaleLinear()
 	.domain([0, maxTotal]) 
 	.range([1, maxBar])
-var yearsMax = 0;
+
+var yearsMax = 52;
 var yearScale = d3.scaleLinear()
 	.domain([0, yearsMax]) 
 	.range([0,360])
-
-var radScale = d3.scaleLinear()
-	.domain([0, 100])
-	.range([outerCircleRadius, outerCircleRadius/2])
 
 var widthScale = d3.scaleLinear()
 	.domain([0, 100])
 	.range([5, .5])
 var barwide = 5;
-var yearsRadius = 10;
+var yearsRadius = outerCircleRadius;
 
 d3.json("totals_variation.json").then(function(data) {
 
@@ -140,11 +137,6 @@ d3.json("totals_variation.json").then(function(data) {
 		})
 		.attr('transform', function(d,i){ 
 			console.log(i);
-			if(d.name=="years in field"){ 
-				console.log(d.children.length);
-				yearsMax = d.children.length;
-				yearScale.domain([0, yearsMax])
-			}
 			return `translate(${posID[i].x}, ${posID[i].y}), rotate(${posID[i].rot},0,0)` 
 		});
 
@@ -159,8 +151,7 @@ d3.json("totals_variation.json").then(function(data) {
 		.attr("cx",0)
 		.attr("cy",0)
 		.attr("r", function(d){
-			if(d.name=="years in field" && (barwide*yearsMax>(2*Math.PI)*innerCircRad)){
-				yearsRadius = radScale(yearsMax);
+			if(d.name=="years in field"){// && (barwide*yearsMax>2*Math.PI*innerCircRad)){
 				return yearsRadius;
 			}else{
 				return innerCircRad;
@@ -202,59 +193,13 @@ d3.json("totals_variation.json").then(function(data) {
 		.attr('dy', -40)
 		.text(d => d.name);
 
-
-  // 	var rectMaxID = gid.selectAll('.rectMaxID')
-		// .data(d => d.children)
-		// .join('rect')
-		// .attr("class", "rectMaxID")
-		// .attr("width",function(d,i){
-		// 	if(d.q=="years" && (widthScale(yearsMax)*yearsMax>(2*Math.PI)*radScale(yearsMax))){
-		// 		return widthScale(yearsMax);			
-		// 	}
-		// 	else{
-		// 		return barwide;
-		// 	}
-		// })
-		// .attr("height", maxBar)
-	 //    .attr("x", function(d,i){
-		// 	if(d.q=="years" && yearsRadius>0){//(widthScale(yearsMax)*yearsMax>2*Math.PI*radScale(yearsMax))){
-	 //    		return originX+(yearsRadius*Math.sin(0));
-	 //    	}else{
-		//     	return normOriginX;
-	 //    	}
-	 //    })
-	 //    .attr("y", function(d){
-		// 	if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax>2*Math.PI*radScale(yearsMax))){
-	 //    		return originY+(yearsRadius*Math.cos(0)); 
-	 //    	}else{
-		//     	return normOriginY;
-	 //    	}
-	 //    })
-		// .attr("transform", function(d,i){
-		// 	if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax>2*Math.PI*radScale(yearsMax))){
-		// 	// if(d.q=="years" && (barwide*yearsMax>outerCircleRadius*2)){
-		// 		return "rotate("+(yearScale(i))+", 0, 0)";
-		// 	}else{
-		// 		return "rotate("+(180+(barwide*3)*i)+", 0, 0)";
-		// 	}
-		// })
-		// .attr("fill","none")	
-		// .style("stroke-dasharray","1, 4")
-		// .attr("stroke","lightgrey")
-		// .attr("stroke-width",.3)
-
-
-
-  	var rectIdentity = gid.selectAll('.rectID')
+  	var rectMaxID = gid.selectAll('.rectMaxID')
 		.data(d => d.children)
 		.join('rect')
-		.attr("class",function(d,i){
-			idVals.push(d.total);
-			return "rectID"+i;
-		})
+		.attr("class", "rectMaxID")
 		.attr("width",function(d,i){
-			if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax*2>2*Math.PI*radScale(yearsMax))){
-				return barwide; //widthScale(yearsMax);			
+			if(d.q=="years" && yearsRadius>0){
+				return widthScale(yearsMax);			
 			}
 			else{
 				return barwide;
@@ -272,22 +217,76 @@ d3.json("totals_variation.json").then(function(data) {
 			}
 		}) 
 	    .attr("x", function(d,i){
-			if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax*2>2*Math.PI*radScale(yearsMax))){
-	    		return i*(widthScale(yearsMax))//originX+(yearsRadius*Math.sin(0));
+			if(d.q=="years" && yearsRadius>0){
+	    		return originX+(yearsRadius*Math.sin(0));
 	    	}else{
 		    	return normOriginX;
 	    	}
 	    })
 	    .attr("y", function(d){
-			if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax*2>2*Math.PI*radScale(yearsMax))){
-	    		return 0//originY+(yearsRadius*Math.cos(0)); 
+			if(d.q=="years" && yearsRadius>0){
+	    		return originY+(yearsRadius*Math.cos(0)); 
 	    	}else{
 		    	return normOriginY;
 	    	}
 	    })
 		.attr("transform", function(d,i){
-			if(d.q=="years" && yearsRadius>0){ //(widthScale(yearsMax)*yearsMax*2>2*Math.PI*radScale(yearsMax))){
-				// return "rotate("+(yearScale(i))+", 0, 0)";
+			if(d.q=="years" && yearsRadius>0){ 
+				return "rotate("+(yearScale(i))+", 0, 0)";
+			}else{
+				return "rotate("+(180+(barwide*3)*i)+", 0, 0)";
+			}
+		}) 
+		.attr("fill","none")	
+		.style("stroke-dasharray","1, 4")
+		.attr("stroke","lightgrey")
+		.attr("stroke-width",.3)
+		.attr("height", maxBar);
+
+
+  	var rectIdentity = gid.selectAll('.rectID')
+		.data(d => d.children)
+		.join('rect')
+		.attr("class",function(d,i){
+			idVals.push(d.total);
+			return "rectID"+i;
+		})
+		.attr("width",function(d,i){
+			if(d.q=="years" && yearsRadius>0){
+				return widthScale(yearsMax);			
+			}
+			else{
+				return barwide;
+			}
+		})
+		.attr("fill",function(d){
+			if(d.name=="space"){
+				return "grey"
+			}
+			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
+				return "#46AAB3"
+			}
+			else{
+				return "lightgrey"
+			}
+		}) 
+	    .attr("x", function(d,i){
+			if(d.q=="years" && yearsRadius>0){
+	    		return originX+(yearsRadius*Math.sin(0));
+	    	}else{
+		    	return normOriginX;
+	    	}
+	    })
+	    .attr("y", function(d){
+			if(d.q=="years" && yearsRadius>0){
+	    		return originY+(yearsRadius*Math.cos(0)); 
+	    	}else{
+		    	return normOriginY;
+	    	}
+	    })
+		.attr("transform", function(d,i){
+			if(d.q=="years" && yearsRadius>0){ 
+				return "rotate("+(yearScale(i))+", 0, 0)";
 			}else{
 				return "rotate("+(180+(barwide*3)*i)+", 0, 0)";
 			}
@@ -298,7 +297,55 @@ d3.json("totals_variation.json").then(function(data) {
 
 
 
-
+ 	var rectMaxTH = gthe.selectAll('.rectMaxTH')
+		.data(d => d.children)
+		.join('rect')
+		.attr("class", "rectMaxTH")
+		.attr("width",function(d,i){
+			if(d.q=="years" && yearsRadius>0){
+				return widthScale(yearsMax);			
+			}
+			else{
+				return barwide;
+			}
+		})
+		.attr("fill",function(d){
+			if(d.name=="space"){
+				return "grey"
+			}
+			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
+				return "#46AAB3"
+			}
+			else{
+				return "lightgrey"
+			}
+		}) 
+	    .attr("x", function(d,i){
+			if(d.q=="years" && yearsRadius>0){
+	    		return originX+(yearsRadius*Math.sin(0));
+	    	}else{
+		    	return normOriginX;
+	    	}
+	    })
+	    .attr("y", function(d){
+			if(d.q=="years" && yearsRadius>0){
+	    		return originY+(yearsRadius*Math.cos(0)); 
+	    	}else{
+		    	return normOriginY;
+	    	}
+	    })
+		.attr("transform", function(d,i){
+			if(d.q=="years" && yearsRadius>0){ 
+				return "rotate("+(yearScale(i))+", 0, 0)";
+			}else{
+				return "rotate("+(180+(barwide*3)*i)+", 0, 0)";
+			}
+		}) 
+		.attr("fill","none")	
+		.style("stroke-dasharray","1, 4")
+		.attr("stroke","lightgrey")
+		.attr("stroke-width",.3)
+		.attr("height", maxBar)
   	var rectTheme = gthe.selectAll('.rectTHE')
 		.data(d => d.children)
 		.join('rect')
