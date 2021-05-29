@@ -8,16 +8,21 @@ var topMargin = leftMargin;
 
 var svg = d3.select("#my_dataviz")
 	.append("svg")
-    .attr("viewBox", [0, 0, width, height]);
-// viewBox="50 50 100 100">
+	.attr("width",width)
+	.attr("height",height)
+    .attr("viewBox", [0, 0, width, height])
 
 var sdata;
 
 var figDepth = 3;
-var outerCircleRadius = (width/8)/figDepth; //scaled to page?
-var centerEX = width/2;
-var centerEH = height/2;
+// var outerCircleRadius = (width/8)/figDepth; 
+var outerCircleRadius = (width/6)/figDepth; 
+var centerEX = width/3;
+var centerEH = height/2-outerCircleRadius;
 var smallMarg = outerCircleRadius/4;
+var innerCircRad = outerCircleRadius/1.5;
+// var maxBar = outerCircleRadius*2-innerCircRad;
+
 var posID = [
 	{
 		"x":centerEX,
@@ -97,7 +102,6 @@ var originY = 0;
 
 //CHANGES HERE: CAREFUL!
 //also changed spacing of space out of bars
-var innerCircRad = outerCircleRadius/1.5;
 var normOriginX = originX + (innerCircRad * Math.sin(0));
 var normOriginY = originY + (innerCircRad * Math.cos(0));
 
@@ -397,25 +401,31 @@ d3.json("totals_variation.json").then(function(data) {
 	}
 
 
-var zoom = d3.zoom()
-  .extent([[0, 0], [width, height]])
-  .scaleExtent([1, 8])
-  .on("zoom", zoomed);
+// var zoom = d3.zoom()
+//   .extent([[0, 0], [width, height]])
+//   .scaleExtent([-4, 8])
+//   .on("zoom", zoomed);
 
-svg.call(zoom);
-svg.on("click", reset);
+// svg
+// 	.call(zoom)
+	// .call(zoom.scaleBy, .1)
+	// .attr("transform",`translate(${0}, ${0})`) 
 
-function zoomed({transform}) {
-	svg.attr("transform", transform);
-}
 
-function reset() {
-	svg.transition().duration(750).call(
-	  zoom.transform,
-	  d3.zoomIdentity,
-	  d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
-	);
-}
+// svg.on("click", reset);
+
+// function zoomed({transform}) {
+// 	svg.attr("transform", transform);
+// }
+
+// function reset() {
+// 	svg.transition().duration(750).call(
+// 	  zoom.transform,
+// 	  d3.zoomIdentity,
+// 	  d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
+// 	);
+// }
+
 
 d3.selectAll("text").attr("fill","none")
 
