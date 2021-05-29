@@ -27,11 +27,14 @@ var themeColors = ["#CB99CC","#FFCC9A","#D360D5","#D66B6E","#EB9C84","#E996B8","
 var themeNums = [0,1,2,3,12,23, 13, 123]
 var strokeHighlight = .5;
 var strokeNormal = .2;
+var strokeMin = .1;
 
 var colID = d3.scaleOrdinal()
 	.domain(idNames)
 	.range(idColors);
-
+var colTHEME = d3.scaleOrdinal()
+	.domain(themeNums)
+	.range(themeColors);
 var posID = [
 	{
 		"x":centerEX,
@@ -235,14 +238,13 @@ d3.json("totals_variation.json").then(function(data) {
 		.style("stroke-dasharray","1, 4")
 		.attr("stroke",function(d){
 			if(d.value==1){
-				console.log(colID(d.parent))
 				return colID(d.parent);
 			}
 			else{
 				return "lightgrey"
 			}
 		})
-		.attr("stroke-width",.3)
+		.attr("stroke-width",strokeMin)
 		.attr("height", maxBar);
 
 
@@ -322,17 +324,7 @@ d3.json("totals_variation.json").then(function(data) {
 				return barwide;
 			}
 		})
-		.attr("fill",function(d){
-			if(d.name=="space"){
-				return "grey"
-			}
-			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
-				return "#46AAB3"
-			}
-			else{
-				return "lightgrey"
-			}
-		}) 
+		.attr("fill","none")
 	    .attr("x", function(d,i){
 			if(d.q=="years" && yearsRadius>0){
 	    		return originX+(yearsRadius*Math.sin(0));
@@ -356,8 +348,15 @@ d3.json("totals_variation.json").then(function(data) {
 		}) 
 		.attr("fill","none")	
 		.style("stroke-dasharray","1, 4")
-		.attr("stroke","lightgrey")
-		.attr("stroke-width",.3)
+		.attr("stroke",function(d){
+			if(d.value>0){
+				return colTHEME(d.value);
+			}
+			else{
+				return "lightgrey"
+			}
+		})
+		.attr("stroke-width",strokeMin)
 		.attr("height", maxBar)
   	var rectTheme = gthe.selectAll('.rectTHE')
 		.data(d => d.children)
@@ -367,20 +366,31 @@ d3.json("totals_variation.json").then(function(data) {
 			return "rectTHE"
 		})
 		.attr("width", barwide)
-		.attr("fill",function(d){
-			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
-				return "#46AAB3"
+		.attr("stroke",function(d){
+			return colTHEME(d.value);
+		})
+		.attr("fill", function(d){
+			if(d.value>0){
+				return colTHEME(d.value);
 			}
 			else{
-				return "lightgrey"
+				return "none"
 			}
-		}) 
+		})
 	    .attr("x", normOriginX ) 
 	    .attr("y", normOriginY )
 		.attr("transform", function(d,i){
 			return "rotate("+(180+(barwide*3)*i)+", 0, 0)";
 		}) 
-		.attr("height",0);
+		.attr("height",0)
+		.attr("stroke-width", function(d){
+			if(d.value==1){
+				return strokeHighlight;
+			}
+			else{
+				return strokeNormal;
+			}
+		});
 	maxTheme = d3.max(theVals);
 
 	if(maxId>0 && maxTheme>0){

@@ -632,22 +632,22 @@
 						},
 						{
 							"name": "fairness",
-							"value": 1,
+							"value": 2,
 							"total": 9
 						},
 						{
 							"name": "accountability",
-							"value": 0,
+							"value": 3,
 							"total": 1
 						},
 						{
 							"name": "transparency",
-							"value": 0,
+							"value": 12,
 							"total": 4
 						},
 						{
 							"name": "explainability",
-							"value": 0,
+							"value": 13,
 							"total": 18
 						},
 						{
@@ -666,17 +666,17 @@
 						},
 						{
 							"name": "finance",
-							"value": 0,
+							"value": 2,
 							"total": 19
 						},
 						{
 							"name": "urban dynamics",
-							"value": 1,
+							"value": 3,
 							"total": 20
 						},
 						{
 							"name": "transport",
-							"value": 0,
+							"value": 12,
 							"total": 35
 						},
 						{
@@ -686,7 +686,7 @@
 						},
 						{
 							"name": "social media",
-							"value": 1,
+							"value": 23,
 							"total": 49
 						},
 						{
@@ -696,7 +696,7 @@
 						},
 						{
 							"name": "policing",
-							"value": 0,
+							"value": 13,
 							"total": 9
 						},
 						{
@@ -745,7 +745,7 @@
 						},
 						{
 							"name": "policy briefing",
-							"value": 0,
+							"value": 12,
 							"total": 9
 						},
 						{
@@ -765,7 +765,7 @@
 						},
 						{
 							"name": "datasets",
-							"value": 0,
+							"value": 3,
 							"total": 9
 						},
 						{
@@ -785,7 +785,7 @@
 						},
 						{
 							"name": "other",
-							"value": 0,
+							"value": 3,
 							"total": 9
 						}
 					]
@@ -805,7 +805,7 @@
 						},
 						{
 							"name": "think tanks",
-							"value": 1,
+							"value": 13,
 							"total":31
 						},
 						{
@@ -835,7 +835,7 @@
 						},
 						{
 							"name": "community organizations",
-							"value": 1,
+							"value": 12,
 							"total":31
 						},
 						{
@@ -859,12 +859,12 @@
 						},
 						{
 							"name": "with others outside my organization",
-							"value": 1,
+							"value": 2,
 							"total":31
 						},
 						{
 							"name": "both within and outside my organization",
-							"value": 0,
+							"value": 13,
 							"total": 9
 						},
 						{
@@ -893,7 +893,7 @@
 						},
 						{
 							"name": "Researchers - Medicine",
-							"value": 0,
+							"value": 123,
 							"total": 9
 						},
 						{
@@ -923,7 +923,7 @@
 						},
 						{
 							"name": "Regulators",
-							"value": 0,
+							"value": 23,
 							"total": 9
 						},
 						{
