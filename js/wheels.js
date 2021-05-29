@@ -21,6 +21,17 @@ var centerEH = height/figDepth;
 var smallMarg = outerCircleRadius/4;
 var innerCircRad = outerCircleRadius/1.5;
 
+var idColors = ["#4EA8BA","#46AAB3","#7B9FE3","#9A99FF","#65A4CF"] 
+var idNames = ["ethicist","funding","years in field","education","career path"]
+var themeColors = ["#CB99CC","#FFCC9A","#D360D5","#D66B6E","#EB9C84","#E996B8","#D466A2","#CB99CC"]
+var themeNums = [0,1,2,3,12,23, 13, 123]
+var strokeHighlight = .5;
+var strokeNormal = .2;
+
+var colID = d3.scaleOrdinal()
+	.domain(idNames)
+	.range(idColors);
+
 var posID = [
 	{
 		"x":centerEX,
@@ -199,17 +210,6 @@ d3.json("totals_variation.json").then(function(data) {
 				return barwide;
 			}
 		})
-		.attr("fill",function(d){
-			if(d.name=="space"){
-				return "grey"
-			}
-			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
-				return "#46AAB3"
-			}
-			else{
-				return "lightgrey"
-			}
-		}) 
 	    .attr("x", function(d,i){
 			if(d.q=="years" && yearsRadius>0){
 	    		return originX+(yearsRadius*Math.sin(0));
@@ -233,7 +233,15 @@ d3.json("totals_variation.json").then(function(data) {
 		}) 
 		.attr("fill","none")	
 		.style("stroke-dasharray","1, 4")
-		.attr("stroke","lightgrey")
+		.attr("stroke",function(d){
+			if(d.value==1){
+				console.log(colID(d.parent))
+				return colID(d.parent);
+			}
+			else{
+				return "lightgrey"
+			}
+		})
 		.attr("stroke-width",.3)
 		.attr("height", maxBar);
 
@@ -253,28 +261,23 @@ d3.json("totals_variation.json").then(function(data) {
 				return barwide;
 			}
 		})
-		.attr("fill",function(d){
-			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
-				return "#46AAB3"
-			}
-			else{
-				return "lightgrey"
-			}
-		}) 
-		.attr("stroke", function(d){
-			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
-				return "yellow"
+		.attr("fill", function(d){
+			if(d.value==1){
+				return colID(d.parent);
 			}
 			else{
 				return "none"
 			}
 		})
+		.attr("stroke", function(d){
+			return colID(d.parent);
+		})
 		.attr("stroke-width", function(d){
-			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
-				return .5;
+			if(d.value==1){
+				return strokeHighlight;
 			}
 			else{
-				return 0;
+				return strokeNormal;
 			}
 		})
 	    .attr("x", function(d,i){

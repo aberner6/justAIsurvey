@@ -9,25 +9,29 @@
 							"q":"do you identify as an ethicist?",
 							"name":"yes",
 							"value":1,
-							"total":10
+							"total":10,
+							"parent":"ethicist"
 						},
 						{
 							"q":"do you identify as an ethicist?",
 							"name":"no",
 							"value":0,
-							"total":14
+							"total":14,
+							"parent":"ethicist"
 						},
 						{
 							"q":"do others identify you as an ethicist?",
 							"name":"yes",
 							"value":0,
-							"total":8
+							"total":8,
+							"parent":"ethicist"
 						},
 						{
 							"q":"do others identify you as an ethicist?",
 							"name":"no",
 							"value":1,
-							"total":12
+							"total":12,
+							"parent":"ethicist"
 						}
 					]
 				},
@@ -37,13 +41,15 @@
 							"q":"are you funded?",
 							"name": "yes",
 							"value": 1,
-							"total":18
+							"total":18,
+							"parent":"funding"
 						},
 						{
 							"q":"are you funded?",
 							"name": "no",
 							"value": 0,
-							"total":10
+							"total":10,
+							"parent":"funding"
 						}
 					]
 				},
@@ -53,313 +59,365 @@
 							"q":"years",
 							"name": 0,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},						
 						{
 							"q":"years",
 							"name": 1,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 2,
 							"value": 0,
-							"total": 14
+							"total": 14,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 3,
 							"value": 0,
-							"total": 8
+							"total": 8,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 4,
 							"value": 0,
-							"total": 3
+							"total": 3,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 5,
 							"value": 0,
-							"total": 1
+							"total": 1,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 6,
 							"value": 0,
-							"total": 8
+							"total": 8,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 7,
 							"value": 0,
-							"total": 3
+							"total": 3,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 8,
 							"value": 0,
-							"total": 15
+							"total": 15,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 9,
 							"value": 0,
-							"total": 5
+							"total": 5,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 10,
 							"value": 0,
-							"total": 17
+							"total": 17,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 11,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 12,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},						
 						{
 							"q":"years",
 							"name": 13,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 14,
 							"value": 0,
-							"total": 14
+							"total": 14,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 15,
 							"value": 0,
-							"total": 8
+							"total": 8,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 16,
 							"value": 0,
-							"total": 3
+							"total": 3,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 17,
 							"value": 0,
-							"total": 1
+							"total": 1,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 18,
 							"value": 0,
-							"total": 8
+							"total": 8,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 19,
 							"value": 0,
-							"total": 3
+							"total": 3,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 20,
 							"value": 0,
-							"total": 15
+							"total": 15,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 21,
 							"value": 0,
-							"total": 5
+							"total": 5,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 22,
 							"value": 0,
-							"total": 17
+							"total": 17,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 23,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 24,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},						
 						{
 							"q":"years",
 							"name": 25,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 26,
 							"value": 0,
-							"total": 14
+							"total": 14,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 27,
 							"value": 0,
-							"total": 8
+							"total": 8,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 28,
 							"value": 0,
-							"total": 3
+							"total": 3,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 29,
 							"value": 0,
-							"total": 1
+							"total": 1,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 30,
 							"value": 0,
-							"total": 8
+							"total": 8,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 31,
 							"value": 0,
-							"total": 3
+							"total": 3,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 32,
 							"value": 0,
-							"total": 15
+							"total": 15,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 33,
 							"value": 0,
-							"total": 5
+							"total": 5,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 34,
 							"value": 0,
-							"total": 17
+							"total": 17,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 35,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 36,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},						
 						{
 							"q":"years",
 							"name": 37,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 38,
 							"value": 0,
-							"total": 14
+							"total": 14,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 39,
 							"value": 0,
-							"total": 8
+							"total": 8,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 40,
 							"value": 0,
-							"total": 3
+							"total": 3,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 41,
 							"value": 0,
-							"total": 1
+							"total": 1,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 42,
 							"value": 0,
-							"total": 8
+							"total": 8,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 43,
 							"value": 0,
-							"total": 3
+							"total": 3,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 44,
 							"value": 1,
-							"total": 15
+							"total": 15,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 45,
 							"value": 0,
-							"total": 5
+							"total": 5,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 46,
 							"value": 0,
-							"total": 17
+							"total": 17,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 47,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 48,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 49,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": 50,
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						},
 						{
 							"q":"years",
 							"name": "50+",
 							"value": 0,
-							"total": 10
+							"total": 10,
+							"parent":"years in field"
 						}
 					]
 				},
@@ -367,118 +425,140 @@
 					"children": [{
 							"name": "agriculture",
 							"value": 0,
-							"total":3
+							"total":3,
+							"parent":"education"
 						},
 						{
 							"name": "architecture",
 							"value": 0,
-							"total":22
+							"total":22,
+							"parent":"education"
 						},
 						{
 							"name": "biology",
 							"value": 0,
-							"total":28
-
+							"total":28,
+							"parent":"education"
 						},
 						{
 							"name": "business",
 							"value": 0,
-							"total":10
+							"total":10,
+							"parent":"education"
 						},
 						{
 							"name": "computer science",
 							"value": 0,
-							"total":12
+							"total":12,
+							"parent":"education"
 						},
 						{
 							"name": "data science",
 							"value": 1,
-							"total":18
+							"total":18,
+							"parent":"education"
 						},
 						{
 							"name": "design & art",
 							"value": 0,
-							"total":7
+							"total":7,
+							"parent":"education"
 						},
 						{
 							"name": "economics",
 							"value": 0,
-							"total":20
+							"total":20,
+							"parent":"education"
 						},
 						{
 							"name": "education",
 							"value": 0,
-							"total":19
+							"total":19,
+							"parent":"education"
 						},
 						{
 							"name": "engineering & technology",
 							"value": 0,
-							"total":30
+							"total":30,
+							"parent":"education"
 						},
 						{
 							"name": "health",
 							"value": 0,
-							"total":38
+							"total":38,
+							"parent":"education"
 						},
 						{
 							"name": "history",
 							"value": 0,
-							"total":40
+							"total":40,
+							"parent":"education"
 						},
 						{
 							"name": "information management",
 							"value": 0,
-							"total":20
+							"total":20,
+							"parent":"education"
 						},
 						{
 							"name": "languages",
 							"value": 0,
-							"total":10
+							"total":10,
+							"parent":"education"
 						},
 						{
 							"name": "law",
 							"value": 0,
-							"total":7
+							"total":7,
+							"parent":"education"
 						},
 						{
 							"name": "mathematics",
 							"value": 0,
-							"total":9
+							"total":9,
+							"parent":"education"
 						},
 						{
 							"name": "environment",
 							"value": 0,
-							"total":10
+							"total":10,
+							"parent":"education"
 						},
 						{
 							"name": "politics",
 							"value": 0,
-							"total":8
+							"total":8,
+							"parent":"education"
 						},
 						{
 							"name": "psychology",
 							"value": 1,
-							"total":21
+							"total":21,
+							"parent":"education"
 						},
 						{
 							"name": "philosophy",
 							"value": 0,
-							"total":28
+							"total":28,
+							"parent":"education"
 						},
 						{
 							"name": "social science",
 							"value": 0,
-							"total":70
+							"total":70,
+							"parent":"education"
 						},
 						{
 							"name": "sports",
 							"value": 0,
-							"total":1
+							"total":1,
+							"parent":"education"
 						},
 						{
 							"name": "other",
 							"value": 0,
-							"total":18
+							"total":18,
+							"parent":"education"
 						}
 					]
 				},
@@ -486,47 +566,56 @@
 					"children": [{
 							"name": "undergraduate",
 							"value": 0,
-							"total":10
+							"total":10,
+							"parent":"career path"
 						},
 						{
 							"name": "masters",
 							"value": 0,
-							"total":10
+							"total":10,
+							"parent":"career path"
 						},
 						{
 							"name": "phd",
 							"value": 0,
-							"total":10
+							"total":10,
+							"parent":"career path"
 						},
 						{
 							"name": "postdoc",
 							"value": 0,
-							"total": 9
+							"total": 9,
+							"parent":"career path"
 						},
 						{
 							"name": "university faculty",
 							"value": 0,
-							"total": 9
+							"total": 9,
+							"parent":"career path"
 						},
 						{
 							"name": "industry employee",
 							"value": 0,
-							"total": 9
+							"total": 9,
+							"parent":"career path"
 						},
 						{
 							"name": "government employee",
 							"value": 0,
-							"total": 9
+							"total": 9,
+							"parent":"career path"
 						},
 						{
 							"name": "nonprofit employee",
 							"value": 1,
-							"total":31
+							"total":31,
+							"parent":"career path"
 						},
 						{
 							"name": "other",
 							"value": 0,
-							"total": 9
+							"total": 9,
+							"parent":"career path"
 						}
 					]
 				}
