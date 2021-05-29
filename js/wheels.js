@@ -408,27 +408,14 @@ svg.on("click", reset);
 function zoomed({transform}) {
 	svg.attr("transform", transform);
 }
-// function reset() {
-// 	svg.transition().duration(750).call(
-// 	  zoom.transform,
-// 	  d3.zoomIdentity,
-// 	  d3.zoomTransform(svg.transition().call(zoom.scaleBy, 0.5).invert([width / 2, height / 2]));
-// }
-// document.getElementById("zoomin").onclick = zoomIn();
 
- // function zoomIn() {
- //    svg.transition().duration(750).call(
- //      (zoom.scaleBy, 2)
- //      // d3.zoomIdentity,
- //    );
- //  }
- function reset() {
-    svg.transition().duration(750).call(
-      zoom.transform,
-      d3.zoomIdentity,
-      d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
-    );
-  }
+function reset() {
+	svg.transition().duration(750).call(
+	  zoom.transform,
+	  d3.zoomIdentity,
+	  d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
+	);
+}
 
 d3.selectAll("text").attr("fill","none")
 
