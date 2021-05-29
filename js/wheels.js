@@ -15,14 +15,11 @@ var svg = d3.select("#my_dataviz")
 var sdata;
 
 var figDepth = 3;
-// var outerCircleRadius = (width/8)/figDepth; 
 var outerCircleRadius = (width/6.5)/figDepth; 
 var centerEX = width/figDepth;
-var centerEH = height/figDepth //-outerCircleRadius;
+var centerEH = height/figDepth;
 var smallMarg = outerCircleRadius/4;
 var innerCircRad = outerCircleRadius/1.5;
-// var maxBar = outerCircleRadius*2-innerCircRad;
-//max bar = height/8;
 
 var posID = [
 	{
