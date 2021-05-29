@@ -16,12 +16,13 @@ var sdata;
 
 var figDepth = 3;
 // var outerCircleRadius = (width/8)/figDepth; 
-var outerCircleRadius = (width/6)/figDepth; 
-var centerEX = width/3;
-var centerEH = height/2-outerCircleRadius;
+var outerCircleRadius = (width/6.5)/figDepth; 
+var centerEX = width/figDepth;
+var centerEH = height/figDepth //-outerCircleRadius;
 var smallMarg = outerCircleRadius/4;
 var innerCircRad = outerCircleRadius/1.5;
 // var maxBar = outerCircleRadius*2-innerCircRad;
+//max bar = height/8;
 
 var posID = [
 	{
@@ -109,7 +110,7 @@ var idVals = [];
 var theVals = [];
 var maxTotal = 0;
 var maxTheme, maxId = 0;
-var maxBar = outerCircleRadius*2-innerCircRad;
+var maxBar = innerCircRad*2//outerCircleRadius*2-innerCircRad;
 var barScale = d3.scaleLinear()
 	.domain([0, maxTotal]) 
 	.range([1, maxBar])
