@@ -8,9 +8,9 @@ var topMargin = leftMargin;
 
 var svg = d3.select("#my_dataviz")
 	.append("svg")
-	.attr("width", width)
-	.attr("height", height)
-	// .attr("transform",`translate(${width/2}, ${height/2})`)
+    .attr("viewBox", [0, 0, width, height]);
+// viewBox="50 50 100 100">
+
 var sdata;
 
 var figDepth = 3;
@@ -95,10 +95,8 @@ var cnctLine = [posID[0],posTh[0]];
 var originX = 0;
 var originY = 0;
 
-//CHANGING HERE CAREFUL!
+//CHANGES HERE: CAREFUL!
 //also changed spacing of space out of bars
-//SOMEHOW SCALED THE WHOLE THING - ZOOM IN
-//MOUSEOVER
 var innerCircRad = outerCircleRadius/1.5;
 var normOriginX = originX + (innerCircRad * Math.sin(0));
 var normOriginY = originY + (innerCircRad * Math.cos(0));
@@ -140,18 +138,13 @@ d3.json("totals_variation.json").then(function(data) {
 			return `translate(${posID[i].x}, ${posID[i].y}), rotate(${posID[i].rot},0,0)` 
 		});
 
-
-	//FOCUS POINT
-	//when you transition from a line to a circle, is the circumference the same? 
-	//if you roll a circumference out flat, what does it become?
-	//what is happening with PI basically???
 	var innerCirc = gid
 		.append("circle")
 		.attr("class", "innerCirc")
 		.attr("cx",0)
 		.attr("cy",0)
 		.attr("r", function(d){
-			if(d.name=="years in field"){// && (barwide*yearsMax>2*Math.PI*innerCircRad)){
+			if(d.name=="years in field"){
 				return yearsRadius;
 			}else{
 				return innerCircRad;
@@ -175,7 +168,6 @@ d3.json("totals_variation.json").then(function(data) {
 		})
 		.attr('transform', function(d,i){ 
 			return `translate(${posTh[i].x}, ${posTh[i].y}), rotate(${posTh[i].rot},0,0)` 
-			// return `translate(${rowT(i)}, ${col(i)})` 
 		});
 	var innerCircTheme = gthe
 		.append("circle")
@@ -249,7 +241,7 @@ d3.json("totals_variation.json").then(function(data) {
 		.join('rect')
 		.attr("class",function(d,i){
 			idVals.push(d.total);
-			return "rectID"+i;
+			return "rectID";
 		})
 		.attr("width",function(d,i){
 			if(d.q=="years" && yearsRadius>0){
@@ -260,9 +252,6 @@ d3.json("totals_variation.json").then(function(data) {
 			}
 		})
 		.attr("fill",function(d){
-			if(d.name=="space"){
-				return "grey"
-			}
 			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
 				return "#46AAB3"
 			}
@@ -270,6 +259,22 @@ d3.json("totals_variation.json").then(function(data) {
 				return "lightgrey"
 			}
 		}) 
+		.attr("stroke", function(d){
+			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
+				return "yellow"
+			}
+			else{
+				return "none"
+			}
+		})
+		.attr("stroke-width", function(d){
+			if(d.value==1 || d.value ==2 || d.value==12 || d.value == 3 || d.value == 123 || d.value == 23 || d.value==13){
+				return .5;
+			}
+			else{
+				return 0;
+			}
+		})
 	    .attr("x", function(d,i){
 			if(d.q=="years" && yearsRadius>0){
 	    		return originX+(yearsRadius*Math.sin(0));
@@ -292,6 +297,9 @@ d3.json("totals_variation.json").then(function(data) {
 			}
 		}) 
 		.attr("height",0);
+	rectIdentity
+		.append("title")
+      	.text((d) => `${d.name}`)
 	maxId = d3.max(idVals);
 
 
@@ -365,7 +373,7 @@ d3.json("totals_variation.json").then(function(data) {
 	    .attr("x", normOriginX ) 
 	    .attr("y", normOriginY )
 		.attr("transform", function(d,i){
-			return "rotate("+(180+(barwide*3)*i)+", 0, 0)";// calculate angle more smartly
+			return "rotate("+(180+(barwide*3)*i)+", 0, 0)";
 		}) 
 		.attr("height",0);
 	maxTheme = d3.max(theVals);
@@ -388,12 +396,45 @@ d3.json("totals_variation.json").then(function(data) {
 		})
 	}
 
+
+var zoom = d3.zoom()
+  .extent([[0, 0], [width, height]])
+  .scaleExtent([1, 8])
+  .on("zoom", zoomed);
+
+svg.call(zoom);
+svg.on("click", reset);
+
+function zoomed({transform}) {
+	svg.attr("transform", transform);
+}
+// function reset() {
+// 	svg.transition().duration(750).call(
+// 	  zoom.transform,
+// 	  d3.zoomIdentity,
+// 	  d3.zoomTransform(svg.transition().call(zoom.scaleBy, 0.5).invert([width / 2, height / 2]));
+// }
+// document.getElementById("zoomin").onclick = zoomIn();
+
+ // function zoomIn() {
+ //    svg.transition().duration(750).call(
+ //      (zoom.scaleBy, 2)
+ //      // d3.zoomIdentity,
+ //    );
+ //  }
+ function reset() {
+    svg.transition().duration(750).call(
+      zoom.transform,
+      d3.zoomIdentity,
+      d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
+    );
+  }
+
 d3.selectAll("text").attr("fill","none")
 
 var valueline =  d3.line()
     .x(function(d) { return d.x; })
     .y(function(d) { return d.y; })    
-// .curve(d3.curveCardinal.tension(0));
     .curve(d3.curveCatmullRom.alpha(0.5));
 
 svg.append("path")
