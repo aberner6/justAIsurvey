@@ -46,7 +46,7 @@ var posID = [
 	{
 		"x":centerEX+outerCircleRadius+smallMarg*3,
 		"y":centerEH-outerCircleRadius-smallMarg,
-		"rot":30,
+		"rot":0,
 		"id":"self-ethicist"
 	},
 	{
@@ -58,7 +58,7 @@ var posID = [
 	{
 		"x":centerEX+outerCircleRadius,
 		"y":centerEH-smallMarg,
-		"rot":135,
+		"rot":80,
 		"id":"funding"
 	},
 	{
@@ -69,7 +69,7 @@ var posID = [
 	},
 	{ 
 		"x":centerEX+outerCircleRadius+smallMarg,
-		"y":centerEH+outerCircleRadius*3,
+		"y":centerEH+outerCircleRadius*2,
 		"rot":85,
 		"id":"education"
 	},
@@ -82,37 +82,37 @@ var posID = [
 ]
 var posTh = [
 	{
-		"x":centerEX+outerCircleRadius*4,
+		"x":centerEX+outerCircleRadius*3,
 		"y":centerEH-outerCircleRadius-smallMarg*2,
 		"rot":320,
 		"id":"topics"
 	},
 	{
-		"x":centerEX+outerCircleRadius*4+smallMarg*2,
-		"y":centerEH-outerCircleRadius+smallMarg*2,
-		"rot":75,
+		"x":centerEX+outerCircleRadius*3.5+smallMarg,
+		"y":centerEH-outerCircleRadius+smallMarg,
+		"rot":60,
 		"id":"domain"
 	},
 	{
-		"x":centerEX+outerCircleRadius*6,
-		"y":centerEH+outerCircleRadius*2-smallMarg*2,
+		"x":centerEX+outerCircleRadius*4.5,
+		"y":centerEH+outerCircleRadius,
 		"rot":50,
 		"id":"outputs"
 	},
 	{
-		"x":centerEX+outerCircleRadius*7+smallMarg,
-		"y":centerEH+outerCircleRadius*3.5,
+		"x":centerEX+outerCircleRadius*5.5+smallMarg,
+		"y":centerEH+outerCircleRadius*2,
 		"rot":65,
 		"id":"audiences"
 	},
 	{
-		"x":centerEX+outerCircleRadius*7+smallMarg,
+		"x":centerEX+outerCircleRadius*5.5+smallMarg,
 		"y":centerEH-outerCircleRadius-smallMarg*4,
 		"rot":300,
 		"id":"collab type"
 	},
 	{
-		"x":centerEX+outerCircleRadius*8,
+		"x":centerEX+outerCircleRadius*6.5,
 		"y":centerEH-outerCircleRadius-smallMarg*2,
 		"rot":0,
 		"id":"collab field"
