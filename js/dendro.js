@@ -2,7 +2,7 @@
 // set the dimensions and margins of the graph
 
 
-var div = document.getElementById("my_dataviz");
+var div = document.getElementById("dataviz1");
 var rect = div.getBoundingClientRect();
   x = rect.left;
   y = rect.top;
@@ -13,7 +13,7 @@ var radius = width / 2;
 // .attr("transform","translate(" + (width+100) + ","+(20)+")");
 
 // append the svg object to the body of the page
-var svg = d3.select("#my_dataviz")
+var svg = d3.select("#dataviz1")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -172,10 +172,10 @@ d3.json("data_dendrogram.json").then(function(data) {
       .selectAll("text")
       .data(root.descendants())
       .join("text")
-      .filter(function(d){
+      // .filter(function(d){
         // return 0;
-        return d.data.value>0 || d.children;
-      })
+        // return d.data.value>0 || d.children;
+      // })
         .attr("transform", d => `
           rotate(${d.x * 180 / Math.PI - 90}) 
           translate(${d.y},0) 
@@ -192,7 +192,7 @@ d3.json("data_dendrogram.json").then(function(data) {
           // if(!d.children){
             // return "lightgrey"
           // }
-          return "none";
+          return "lightgrey";
         })
         .text(d => d.data.name)
       .clone(true).lower()
