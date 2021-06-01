@@ -26,23 +26,11 @@ var svg = d3.select("#dataviz1")
 
 var stratify = d3.cluster().size([2 * Math.PI, radius - 100])
 
-var identityNames = ["ethicist","funding","education","career path","years","according to self","according to others"]
-var themeNames = ["topics","domain","outputs","audiences","type","field",""]
-
-var themeColors1 = ["#f768a1"]
-var themeColors2 = ["#c51b8a"]
-var themeColors3 = ["#7a0177"]
-var themeColors4 = ["#b582b2"]
-
-
-
-
-
-
 var idColors = ["#4EA8BA","#4EA8BA","#46AAB3","#7B9FE3","#9A99FF","#65A4CF"] 
 var idNames = ["self-ethicist","others-ethicist","funding","years in field","education","career path"]
 var themeColors = ["#CB99CC","#FFCC9A","#D360D5","#D66B6E","#EB9C84","#E996B8","#D466A2","#CB99CC"]
 var themeNums = [0,1,2,3,12,23, 13, 123]
+var themeNames = ["topics","domain","outputs","audiences","collab type","collab field"]
 
 var colID = d3.scaleOrdinal()
   .domain(idNames)
@@ -50,26 +38,13 @@ var colID = d3.scaleOrdinal()
 var colTHEME = d3.scaleOrdinal()
   .domain(themeNums)
   .range(themeColors);
-// var idColors = ["#81bac7"]
-// var idColorScale = d3.scaleOrdinal()
-//   .domain(identityNames)
-//   .range(idColors)
-// var themeColorScale = d3.scaleOrdinal()
-//   .domain(themeNames)
-//   .range(themeColors1)
-// var themeColorScale2 = d3.scaleOrdinal()
-//   .domain(themeNames)
-//   .range(themeColors2)
-// var themeColorScale3 = d3.scaleOrdinal()
-//   .domain(themeNames)
-//   .range(themeColors3)
-// var themeColorScale4 = d3.scaleOrdinal()
-//   .domain(themeNames)
-//   .range(themeColors4)
+
+var sdata;
 // read json data
 d3.json("totals_variation.json").then(function(data) {
 
-  var sortData = d3.hierarchy(data)
+  data.children.pop();
+  sortData = d3.hierarchy(data)
   console.log(sortData)
 
 
@@ -79,92 +54,46 @@ d3.json("totals_variation.json").then(function(data) {
   svg.append("g")
       .attr("fill", "none")
       .attr("class","thedraw")
-      // .attr("stroke", "#555")
     .selectAll("path")
     .data(root.links())
     .join("path")
       .attr("class", "drawing")
-      .attr("stroke-opacity", function(d){
-        if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=3 && d.target.data.value!=12){
-          return .3
-        }else{
-          return .4
-        }
-      })
       .attr("stroke-width", function(d){
         if(d.target.data.value!=undefined && d.target.data.value!=1 && d.target.data.value!=2 && d.target.data.value!=3 && d.target.data.value!=12){
-          return .5
+          return 1;
         }else{
-          return 1.5
+          return 1.5;
         }
       })
       .attr("d", d3.linkRadial()
           .angle(function(d){
-            return d.x
+            return d.x;
           })
           .radius(function(d){
-            return d.y
+            return d.y;
           })
         )
       .attr("stroke-opacity",function(d){
         if(d.target.data.value>0){
           return 1;
         }else{
-          return .3;
+          return .5;
         }
       })
       .attr("stroke", function(d){
-        // if(d.source.data.name=="identity"){
-          // for(var i=0; i<d.source.data.children.length; i++){
-            // console.log(d.source.data.children[i].name);
-            // if(d.source.data.children[i].name!=undefined){
-              // return colID(d.source.data.children[i].name);
-            // }
-          // }
-          // return colID(d.source.data.children[i].name);
-        // }
-        // if(d.target.data.value==1){
-        //   for(i=0; i<identityNames.length; i++){
-        //     if(d.source.data.name==identityNames[i]){
-        //       return idColorScale(d.source.data.name)
-        //     }
-        //     if(d.source.data.name==themeNames[i]){
-        //       return themeColorScale(d.source.data.name)
-        //     }
-        //   }
-        // } 
-        // if(d.target.data.value==2){
-        //   for(i=0; i<identityNames.length; i++){
-        //     if(d.source.data.name==themeNames[i]){
-        //       return themeColorScale2(d.source.data.name) //adjust so it is a darker scale of same colors
-        //     }
-        //   }
-        // }
-        // if(d.target.data.value==12){
-        //   console.log(themeColorScale3(d.source.data.name) )
-        //   for(i=0; i<identityNames.length; i++){
-        //     if(d.source.data.name==themeNames[i]){
-        //       return themeColorScale3(d.source.data.name) 
-        //     }
-        //   }
-        // }
-        // if(d.target.data.value==3){
-        //   console.log(themeColorScale3(d.source.data.name) )
-        //   for(i=0; i<identityNames.length; i++){
-        //     if(d.source.data.name==themeNames[i]){
-        //       return themeColorScale4(d.source.data.name) 
-        //     }
-        //   }
-        // }
-        // console.log(d.source.data.name)
-        if(d.source.data.name!=undefined){
-          if(d.source.data.name=="theme"){
-            console.log(d)
-          // return colTHEME(d.target.data.value);
-          return "#fbb4b9"
+        if(d.target.data.value>=0){
+          for(i=0; i<idNames.length; i++){ 
+            if(d.source.data.name==idNames[i]){
+              return colID(d.source.data.name)
+            }
           }
-        }
-
+          for(j=0; j<idNames.length; j++){ 
+            if(d.source.data.name==themeNames[j]){
+              console.log(d.target.data.value)
+              return colTHEME(d.target.data.value)
+            }
+          }
+        } 
         else{
           return "lightgrey"
         }
@@ -181,16 +110,10 @@ d3.json("totals_variation.json").then(function(data) {
           rotate(${d.x * 180 / Math.PI - 90})
           translate(${d.y},0)
         `)
-        .attr("fill", function(d){
-          if(d.data.total){
-            // console.log(d.data.total)
-          }
-          return "white"
-         })
+        .attr("fill","white")
         .attr("opacity", .7)
         .attr("r", 2.5)
         .attr("class", function(d){
-          // console.log(d.data.name)
           return d.data.name;
         })
 
