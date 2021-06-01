@@ -15,30 +15,24 @@ var svg = d3.select("#dataviz2")
 var g = svg.append("g");
 
 var sdata;
-var figDepth = 2;
-var paddingX = width/15; 
-var paddingY = height/14; 
-// var outerCircleRadius = height/10;
+var figDepth = 2.6;
+var outerCircleRadius = (height/10); 
 
-var centerEX = width/2-paddingX*2; //width/3.3;
+// var outerCircleRadius = (width/6.5)/figDepth; 
+var centerEX = width/figDepth;
 var centerEH = height/figDepth;
-
-var innerCircRad = width/40;
-var smallMarg = innerCircRad/2;//outerCircleRadius/4;
-//CHANGES HERE: CAREFUL!
-var maxRad = 40;// (height/10); 
-var minRad = 7.5;
-var maxBar = minRad*4;
-
-
-
+var smallMarg = outerCircleRadius/4;
+var innerCircRad = outerCircleRadius/1.5;
+var maxBar = innerCircRad*2//outerCircleRadius*2-innerCircRad;
+var barwide = 3;
+var barSpace = 6;
 var idColors = ["#4EA8BA","#4EA8BA","#46AAB3","#7B9FE3","#9A99FF","#65A4CF"] 
 var idNames = ["self-ethicist","others-ethicist","funding","years in field","education","career path"]
 var themeColors = ["#CB99CC","#FFCC9A","#D360D5","#D66B6E","#EB9C84","#E996B8","#D466A2","#CB99CC"]
 var themeNums = [0,1,2,3,12,23, 13, 123]
 var strokeHighlight = .5;
 var strokeNormal = .2;
-var strokeMin = .2;
+var strokeMin = .1;
 
 var colID = d3.scaleOrdinal()
 	.domain(idNames)
@@ -48,86 +42,91 @@ var colTHEME = d3.scaleOrdinal()
 	.range(themeColors);
 var posID = [
 	{
-		"x":centerEX+paddingX+smallMarg*3,
-		"y":centerEH-paddingY-smallMarg,
-		"rot":15,
+		"x":centerEX+smallMarg*2,
+		"y":centerEH-outerCircleRadius,
+		"rot":30,
 		"id":"self-ethicist"
 	},
 	{
-		"x":centerEX+paddingX-smallMarg*2,
-		"y":centerEH-paddingY-smallMarg*3,
-		"rot":350,
+		"x":centerEX-10,
+		"y":centerEH-outerCircleRadius-smallMarg*2,
+		"rot":330,
 		"id":"others-ethicist"
 	},
 	{
-		"x":centerEX+paddingX+smallMarg*2,
+		"x":centerEX+outerCircleRadius,
 		"y":centerEH-smallMarg,
-		"rot":80,
+		"rot":135,
 		"id":"funding"
 	},
 	{
-		"x":centerEX-paddingX/2,
-		"y":centerEH+paddingY/2-smallMarg,
-		"rot":180,
+		"x":centerEX-outerCircleRadius,
+		"y":centerEH+outerCircleRadius*2,
+		"rot":0,
 		"id":"years in field"
 	},
-	{ 
-		"x":centerEX+paddingX*2,
-		"y":centerEH+paddingY,
-		"rot":60,
+	{
+		"x":centerEX-outerCircleRadius-smallMarg,
+		"y":centerEH+outerCircleRadius*6+smallMarg,
+		"rot":85,
 		"id":"education"
 	},
 	{
-		"x":centerEX-paddingX,
-		"y":centerEH-paddingY-smallMarg*2,
+		"x":centerEX-outerCircleRadius*3,
+		"y":centerEH-outerCircleRadius-smallMarg,
 		"rot":250,
 		"id":"career path"
 	}
 ]
 var posTh = [
 	{
-		"x":centerEX+paddingX*3,
-		"y":centerEH-paddingY-smallMarg*3,
-		"rot":280,
+		"x":centerEX+outerCircleRadius*4,
+		"y":centerEH-outerCircleRadius-smallMarg*2,
+		"rot":320,
 		"id":"topics"
 	},
 	{
-		"x":centerEX+paddingX*3+smallMarg,
-		"y":centerEH-paddingY,
-		"rot":60,
+		"x":centerEX+outerCircleRadius*4+smallMarg*2,
+		"y":centerEH-outerCircleRadius+smallMarg*2,
+		"rot":75,
 		"id":"domain"
 	},
 	{
-		"x":centerEX+paddingX*4.5,
-		"y":centerEH+paddingY/2,
-		"rot":65,
+		"x":centerEX+outerCircleRadius*6,
+		"y":centerEH+outerCircleRadius*2-smallMarg*2,
+		"rot":50,
 		"id":"outputs"
 	},
 	{
-		"x":centerEX+paddingX*4.9,
-		"y":centerEH+paddingY/2+maxBar*2,
-		"rot":70,
+		"x":centerEX+outerCircleRadius*7+smallMarg,
+		"y":centerEH+outerCircleRadius*3.5,
+		"rot":65,
 		"id":"audiences"
 	},
 	{
-		"x":centerEX+paddingX*4+smallMarg,
-		"y":centerEH-paddingY-smallMarg*4,
+		"x":centerEX+outerCircleRadius*8+smallMarg,
+		"y":centerEH-outerCircleRadius-smallMarg*4,
 		"rot":300,
 		"id":"collab type"
 	},
 	{
-		"x":centerEX+paddingX*5,
-		"y":centerEH-paddingY-smallMarg*2,
-		"rot":40,
+		"x":centerEX+outerCircleRadius*9,
+		"y":centerEH-outerCircleRadius-smallMarg*2,
+		"rot":15,
 		"id":"collab field"
 	}
 ]
-var idLine = [posID[5],posID[1],posID[0],posID[2],posID[4]]
+var idLine = [posID[5],posID[1],posID[0],posID[2],posID[3],posID[4]]
 var themeLine = [posTh[5],posTh[4],posTh[0],posTh[1],posTh[2],posTh[3]]
 var cnctLine = [posID[0],posTh[0]];
-var yearLine = [posID[3],posID[0]]
+
 var originX = 0;
 var originY = 0;
+
+//CHANGES HERE: CAREFUL!
+//also changed spacing of space out of bars
+// var normOriginX = originX + (innerCircRad * Math.sin(0));
+// var normOriginY = originY + (innerCircRad * Math.cos(0));
 
 var idVals = [];
 var theVals = [];
@@ -146,27 +145,13 @@ var widthScale = d3.scaleLinear()
 	.domain([0, 100])
 	.range([5, .5])
 
-// var radiusScale = d3.scaleLinear()
-// 	.domain([2, 52])
-// 	.range([innerCircRad/2, outerCircleRadius])
 var radiusScale = d3.scaleLinear()
 	.domain([2, 52])
-	.range([minRad, maxRad])
+	.range([innerCircRad/2, outerCircleRadius])
 
-var barwide = 3;
-var barSpaceSm = minRad+2;
-var barSpace = 3;
-
-var barSpaceEd = 3;
-var barSpaceCo = 4;
-var barSpaceCa = 6;
-var barSpaceCd = 5;
-var barSpaceTo = minRad;
-
-var yearsRadius = maxRad/1.8;
+var yearsRadius = outerCircleRadius/2;
 var lengths = [];
 var ft = 10;
-
 function measureText(string, fontSize = ft) {
   const widths = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.278125,0.278125,0.35625,0.55625,0.55625,0.890625,0.6671875,0.1921875,0.334375,0.334375,0.390625,0.584375,0.278125,0.334375,0.278125,0.303125,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.278125,0.278125,0.5859375,0.584375,0.5859375,0.55625,1.015625,0.6671875,0.6671875,0.7234375,0.7234375,0.6671875,0.6109375,0.778125,0.7234375,0.278125,0.5,0.6671875,0.55625,0.834375,0.7234375,0.778125,0.6671875,0.778125,0.7234375,0.6671875,0.6109375,0.7234375,0.6671875,0.9453125,0.6671875,0.6671875,0.6109375,0.278125,0.35625,0.278125,0.478125,0.55625,0.334375,0.55625,0.55625,0.5,0.55625,0.55625,0.278125,0.55625,0.55625,0.2234375,0.2421875,0.5,0.2234375,0.834375,0.55625,0.55625,0.55625,0.55625,0.334375,0.5,0.278125,0.55625,0.5,0.7234375,0.5,0.5,0.5,0.35625,0.2609375,0.3546875,0.590625]
   const avg = 0.5293256578947368
@@ -185,13 +170,11 @@ d3.json("totals_variation.json").then(function(data) {
 		.data(sdata[0].children)
 		.join("g")
 		.attr("class", function(d,i){
-			return d.name;
-			// posID[i].id;
+			return d.name+posID[i].id;
 		})
-		.attr('transform', function(d,i){ 		
-			if(posID[i].id==d.name){
-				return `translate(${posID[i].x}, ${posID[i].y}), rotate(${posID[i].rot},0,0)` 
-			}
+		.attr('transform', function(d,i){ 
+			console.log(i);
+			return `translate(${posID[i].x}, ${posID[i].y}), rotate(${posID[i].rot},0,0)` 
 		});
 	var idText = gid.append('text')
 		.attr("class", "idText")
@@ -298,17 +281,7 @@ d3.json("totals_variation.json").then(function(data) {
 		.attr("transform", function(d,i){
 			if(d.q=="years" && yearsRadius>0){ 
 				return "rotate("+(yearScale(i))+", 0, 0)";
-			}
-			if(d.parent=="education"){ 
-				return "rotate("+(180+(barwide*barSpaceEd)*i)+", 0, 0)";
-			}
-			if(d.parent=="career path"){ 
-				return "rotate("+(180+(barwide*barSpaceCa)*i)+", 0, 0)";
-			}
-			if(d.parent=="self-ethicist"||d.parent=="others-ethicist"||d.parent=="funding"){ 
-				return "rotate("+(180+(barwide*barSpaceSm)*i)+", 0, 0)";
-			}
-			else{
+			}else{
 				return "rotate("+(180+(barwide*barSpace)*i)+", 0, 0)";
 			}
 		}) 
@@ -363,8 +336,7 @@ d3.json("totals_variation.json").then(function(data) {
 	    	}
 			if(d.q=="years" && yearsRadius>0){
 	    		return originX+(yearsRadius*Math.sin(0)); 
-	    	}
-	    	else{
+	    	}else{
 		    	return originX+radiusHere*Math.sin(0);
 	    	}
 	    })
@@ -383,17 +355,7 @@ d3.json("totals_variation.json").then(function(data) {
 		.attr("transform", function(d,i){
 			if(d.q=="years" && yearsRadius>0){ 
 				return "rotate("+(yearScale(i))+", 0, 0)";
-			}
-			if(d.parent=="education"){ 
-				return "rotate("+(180+(barwide*barSpaceEd)*i)+", 0, 0)";
-			}
-			if(d.parent=="career path"){ 
-				return "rotate("+(180+(barwide*barSpaceCa)*i)+", 0, 0)";
-			}
-			if(d.parent=="self-ethicist"||d.parent=="others-ethicist"||d.parent=="funding"){ 
-				return "rotate("+(180+(barwide*barSpaceSm)*i)+", 0, 0)";
-			}
-			else{
+			}else{
 				return "rotate("+(180+(barwide*barSpace)*i)+", 0, 0)";
 			}
 		}) 
@@ -434,18 +396,7 @@ d3.json("totals_variation.json").then(function(data) {
 	    	return originX+radiusHere*Math.cos(0);
 	    })
 		.attr("transform", function(d,i){
-			if(d.parent=="collab field"){ 
-				return "rotate("+(180+(barwide*barSpaceCo)*i)+", 0, 0)";
-			}
-			if(d.parent=="domain" || d.parent=="outputs" || d.parent=="audiences"){
-				return "rotate("+(180+(barwide*barSpaceCd)*i)+", 0, 0)";
-			}
-			if(d.parent=="topics"||d.parent=="collab type"){ 
-				return "rotate("+(180+(barwide*barSpaceTo)*i)+", 0, 0)";
-			}
-			else{
-				return "rotate("+(180+(barwide*barSpace)*i)+", 0, 0)";
-			}
+			return "rotate("+(180+(barwide*barSpace)*i)+", 0, 0)";
 		}) 
 		.attr("fill","none")	
 		.style("stroke-dasharray","1, 4")
@@ -490,18 +441,7 @@ d3.json("totals_variation.json").then(function(data) {
 	    	return originX+radiusHere*Math.cos(0);
 	    })
 		.attr("transform", function(d,i){
-			if(d.parent=="collab field"){ 
-				return "rotate("+(180+(barwide*barSpaceCo)*i)+", 0, 0)";
-			}
-			if(d.parent=="domain" || d.parent=="outputs" || d.parent=="audiences"){
-				return "rotate("+(180+(barwide*barSpaceCd)*i)+", 0, 0)";
-			}
-			if(d.parent=="topics"||d.parent=="collab type"){ 
-				return "rotate("+(180+(barwide*barSpaceTo)*i)+", 0, 0)";
-			}
-			else{
-				return "rotate("+(180+(barwide*barSpace)*i)+", 0, 0)";
-			}
+			return "rotate("+(180+(barwide*barSpace)*i)+", 0, 0)";
 		}) 
 		.attr("height",0)
 		.attr("stroke-width", function(d){
@@ -542,13 +482,15 @@ var zoom = d3.zoom()
 
 svg
 	.call(zoom)
-	.call(zoom.scaleBy, 1.7)
+	// .attr("transform",`translate(${0}, ${0})`) 
 
 
 svg.on("click", reset);
 
 function zoomed({transform}) {
+    // const {transform} = event;
     g.attr("transform", transform);
+	// svg.attr("transform", transform);
 }
 
 function reset() {
@@ -564,15 +506,11 @@ function reset() {
 var valueline =  d3.line()
     .x(function(d) { return d.x; })
     .y(function(d) { return d.y; })    
-	.curve(d3.curveCatmullRom.alpha(0));
+    .curve(d3.curveCatmullRom.alpha(0.5));
 
 g.append("path")
   .data([idLine])
   .attr("class", "lineID")
-  .attr("d", valueline)
-g.append("path")
-  .data([yearLine])
-  .attr("class", "yearID")
   .attr("d", valueline)
 g.append("path")
   .data([themeLine])
@@ -584,8 +522,6 @@ g.append("path")
   .attr("d", valueline)
 d3.selectAll("path").attr("fill","none").attr("stroke","lightgrey")
   .style("stroke-dasharray", ("1,4"))
-  .style("stroke-width", .5)
+  .style("stroke-width", 1)
 d3.selectAll("circle").attr("stroke-width",.3)
-d3.selectAll("text").attr("fill","none")
-
 })
