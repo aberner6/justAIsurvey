@@ -11,7 +11,30 @@
 // Q51/144/160 - Types of audiences
 // Q7 - Number of years in the field? this is a free-form response I think and has to be converted to numbers
 
-export default function (data) {
-    console.log(data)
-    return data
+export function getSelfEthicist(data) {
+    // Possible values, text has to match the options
+    const values = {
+        Yes: 1,
+        No: 0,
+    }
+    const template = {
+        q: 'do you identify as an ethicist?',
+        parent: 'self-ethicist',
+    }
+
+    return data.map(({ answer, count }) => {
+        const val = values[answer]
+        if (typeof val === 'undefined') {
+            throw new Error(
+                'Missing value type, make sure to add all possible values. (it has to match exactly)'
+            )
+        }
+
+        return {
+            ...template,
+            value: val,
+            name: answer,
+            total: count,
+        }
+    })
 }

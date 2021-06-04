@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { config } from 'dotenv'
-import reshapeData from './reshape-data.js'
+import { getSelfEthicist } from './reshape-data.js'
 
 config()
 const api = createClient(
@@ -9,31 +9,31 @@ const api = createClient(
 )
 
 const main = async () => {
-    let {
+    const {
         data: data,
-        error,
+        error: err1,
         count,
-    } = await api
-        .from('data')
-        .select(
-            `id,response_id, created, email, q7,q70,q71,q65,q9,q30,q133,q149,q33,q139,q155,q35,q141,q157,q36,q142,q158,q14,q37,q143,q159,q51,q144,q160`,
-            { count: 'exact' }
-        )
+    } = await api.from('data').select(`id`, { count: 'exact' })
+
+    const { data: q70, error: err2 } = await api.from('group_by_q70').select()
+
+    const error = err1 | err2
 
     if (error) {
         console.error('API-ERROR:\n', error)
         return
     }
 
-    const reshapedArr = data.map(reshapeData)
-
+    // const reshapedArr = data.map(reshapeData)
+    const selfEthicist = getSelfEthicist(q70) // :: Array
+    console.log(selfEthicist)
     const result = {
         name: '',
         children: [
             {
                 name: 'identity',
                 children: [
-                    { name: 'self-ethicist', children: [] },
+                    { name: 'self-ethicist', children: selfEthicist },
                     { name: 'others-ethicist', children: [] },
                     { name: 'funding', children: [] },
                     { name: 'years in field', children: [] },
