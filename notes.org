@@ -1,19 +1,20 @@
 #+TITLE: Notes
 
 * Work schedule log
-** 8h - Creation of database and testing sending data to backend
+** Creation of database and testing sending data to backend
 :LOGBOOK:
 CLOCK: [2021-06-02 Wed 9:00]--[2021-06-02 Wed 17:00] =>  8:00
 :END:
-To alter database run sql
+To alter database run sql in file alter.sql
 
 ** Setting up hook on survey to plug get data to database
 :LOGBOOK:
 CLOCK: [2021-06-03 Thu 09:00]--[2021-06-03 Thu 17:00] =>  8:00
 :END:
 If the question has #other option, instead of returning text what user wrote, it just returns you the #other keyword. ask about if we need to handle that, check for this.
+  - Annelie Berner  1 hour ago
+    we don’t use the value text, no
 
-from the json we do have these options, so we need clarification!!
 
 ** Forming data from API to graph format
    :LOGBOOK:

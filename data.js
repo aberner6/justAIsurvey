@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { config } from 'dotenv'
-import { getSelfEthicist } from './reshape-data.js'
+import { getSelfEthicist, getOthersEthicist } from './reshape-data.js'
 
 config()
 const api = createClient(
@@ -9,15 +9,17 @@ const api = createClient(
 )
 
 const main = async () => {
-    const {
-        data: data,
-        error: err1,
-        count,
-    } = await api.from('data').select(`id`, { count: 'exact' })
+    // fire up promises
+    const countP = api.from('data').select(`id`, { count: 'exact' })
+    const q70P = api.from('group_by_q70').select()
+    const q71P = api.from('group_by_q71').select()
 
-    const { data: q70, error: err2 } = await api.from('group_by_q70').select()
+    // await the promises
+    const { data: data, error: err1, count } = await countP
+    const { data: q70, error: err2 } = await q70P
+    const { data: q71, error: err3 } = await q71P
 
-    const error = err1 | err2
+    const error = err1 || err2 || err3
 
     if (error) {
         console.error('API-ERROR:\n', error)
@@ -26,7 +28,8 @@ const main = async () => {
 
     // const reshapedArr = data.map(reshapeData)
     const selfEthicist = getSelfEthicist(q70) // :: Array
-    console.log(selfEthicist)
+    const othersEthicist = getOthersEthicist(q71) // :: Array
+
     const result = {
         name: '',
         children: [
@@ -34,7 +37,7 @@ const main = async () => {
                 name: 'identity',
                 children: [
                     { name: 'self-ethicist', children: selfEthicist },
-                    { name: 'others-ethicist', children: [] },
+                    { name: 'others-ethicist', children: othersEthicist },
                     { name: 'funding', children: [] },
                     { name: 'years in field', children: [] },
                     { name: 'education', children: [] },
@@ -56,7 +59,7 @@ const main = async () => {
         ],
     }
 
-    console.log(result)
+    console.dir(result, { depth: null })
 }
 
 main().catch(console.error)
