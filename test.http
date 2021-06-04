@@ -1,0 +1,37 @@
+# ---- ENVIRONMENTS ---- #
+# :http = https
+:host := (replace-regexp-in-string "\n$" "" (shell-command-to-string "grep SUPABASE_URL .env | awk -F'=' -v ORS='\n' '{print $2}'"))
+:appkey := (replace-regexp-in-string "\n$" "" (shell-command-to-string "grep SUPABASE_PUBLIC_KEY .env | awk -F'=' '{print $2}'"))
+
+:api = :host/rest/v1
+
+:header = <<
+Content-Type: application/json
+#
+#
+#
+:anon = <<
+apikey: :appkey
+Content-Type: application/json
+#
+
+#ping test
+GET :api/
+:anon
+
+
+#POST test
+POST :api/data
+:anon
+{
+  "raw_data": {"test": "test"}
+}
+
+
+#GET data
+GET :api/data
+:anon
+
+#GET get exact data
+GET :api/data?select=q7,q70,q71,q65,q9,q30,q133,q149,q33,q139,q155,q35,q141,q157,q36,q142,q158,q14,q37,q143,q159,q51,q144,q160
+:anon

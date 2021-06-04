@@ -1,0 +1,35 @@
+{
+    "name": "justaisurvey",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "serve -l 3000"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aberner6/justAIsurvey.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/aberner6/justAIsurvey/issues"
+    },
+    "homepage": "https://github.com/aberner6/justAIsurvey#readme",
+    "dependencies": {
+        "@supabase/supabase-js": "^1.13.1",
+        "dotenv": "^10.0.0"
+    },
+    "devDependencies": {
+        "prettier": "^2.3.0",
+        "serve": "^11.3.2"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "semi": false,
+        "singleQuote": true,
+        "bracketSpacing": true
+    }
+}
