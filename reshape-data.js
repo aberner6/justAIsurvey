@@ -22,13 +22,17 @@ export function getSelfEthicist(data) {
         parent: 'self-ethicist',
     }
 
-    return data.map(({ answer, count }) => {
+    let needDefault = Object.keys(values)
+
+    const generated = data.map(({ answer, count }) => {
         const val = values[answer]
         if (typeof val === 'undefined') {
             throw new Error(
                 'Missing value type, make sure to add all possible values. (it has to match exactly)'
             )
         }
+        // removing values which are taken from db
+        needDefault = needDefault.filter((it) => it !== answer)
 
         return {
             ...template,
@@ -37,4 +41,16 @@ export function getSelfEthicist(data) {
             total: count,
         }
     })
+
+    // In the situation where there are not even 1 answer for certain option,
+    // we need to add default for this option which is not in db
+
+    const defaultOptions = needDefault.map((it) => ({
+        ...template,
+        value: values[it],
+        name: it,
+        total: 0,
+    }))
+
+    return [...generated, ...defaultOptions]
 }
