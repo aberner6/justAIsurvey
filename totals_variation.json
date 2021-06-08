@@ -8,14 +8,14 @@
 						{
 							"q":"do you identify as an ethicist?",
 							"name":"yes",
-							"value":1,
+							"value":-1,
 							"total":10,
 							"parent":"self-ethicist"
 						},
 						{
 							"q":"do you identify as an ethicist?",
 							"name":"no",
-							"value":0,
+							"value":-1,
 							"total":14,
 							"parent":"self-ethicist"
 						}
@@ -26,14 +26,14 @@
 						{
 							"q":"do others identify you as an ethicist?",
 							"name":"yes",
-							"value":0,
+							"value":-1,
 							"total":8,
 							"parent":"others-ethicist"
 						},
 						{
 							"q":"do others identify you as an ethicist?",
 							"name":"no",
-							"value":1,
+							"value":-1,
 							"total":12,
 							"parent":"others-ethicist"
 						}
@@ -631,14 +631,14 @@
 					"children": [
 						{
 							"name": "bias",
-							"value": 1,
-							"total": 18,
+							"value": 12, 
+							"total": 8,
 							"parent":"topics"
 						},
 						{
 							"name": "fairness",
-							"value": 2,
-							"total": 9,
+							"value": 3,
+							"total": 10,
 							"parent":"topics"
 						},
 						{

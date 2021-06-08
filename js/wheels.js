@@ -34,7 +34,7 @@ var maxBar = minRad*4;
 
 var idColors = ["#4EA8BA","#4EA8BA","#46AAB3","#7B9FE3","#9A99FF","#65A4CF"] 
 var idNames = ["self-ethicist","others-ethicist","funding","years in field","education","career path"]
-var themeColors = ["#CB99CC","#FFCC9A","#D360D5","#D66B6E","#EB9C84","#E996B8","#D466A2","#CB99CC"]
+var themeColors = ["#CB9AC6","#FDCC9A","#B668AA","#D66B6E","#DC9AA2","#8B6BAA","#EB9C84","#CB9AC6"]
 var themeNums = [0,1,2,3,12,23, 13, 123]
 var strokeHighlight = .5;
 var strokeNormal = .2;
@@ -48,13 +48,13 @@ var colTHEME = d3.scaleOrdinal()
 	.range(themeColors);
 var posID = [
 	{
-		"x":centerEX+paddingX+smallMarg*3,
+		"x":centerEX+paddingX+smallMarg*2,
 		"y":centerEH-paddingY-smallMarg,
 		"rot":15,
 		"id":"self-ethicist"
 	},
 	{
-		"x":centerEX+paddingX-smallMarg*2,
+		"x":centerEX+paddingX-smallMarg,
 		"y":centerEH-paddingY-smallMarg*3,
 		"rot":350,
 		"id":"others-ethicist"
@@ -74,12 +74,12 @@ var posID = [
 	{ 
 		"x":centerEX+paddingX*2,
 		"y":centerEH+paddingY,
-		"rot":60,
+		"rot":80,
 		"id":"education"
 	},
 	{
-		"x":centerEX-paddingX,
-		"y":centerEH-paddingY-smallMarg*2,
+		"x":centerEX-paddingX/2,
+		"y":centerEH-paddingY-smallMarg*3,
 		"rot":250,
 		"id":"career path"
 	}
@@ -88,13 +88,13 @@ var posTh = [
 	{
 		"x":centerEX+paddingX*3,
 		"y":centerEH-paddingY-smallMarg*3,
-		"rot":280,
+		"rot":300,
 		"id":"topics"
 	},
 	{
 		"x":centerEX+paddingX*3+smallMarg,
-		"y":centerEH-paddingY,
-		"rot":60,
+		"y":centerEH-paddingY-smallMarg,
+		"rot":80,
 		"id":"domain"
 	},
 	{
@@ -105,23 +105,24 @@ var posTh = [
 	},
 	{
 		"x":centerEX+paddingX*4.9,
-		"y":centerEH+paddingY/2+maxBar*2,
+		"y":centerEH+paddingY/2+maxBar*1.5,
 		"rot":70,
 		"id":"audiences"
 	},
 	{
-		"x":centerEX+paddingX*4+smallMarg,
+		"x":centerEX+paddingX*4.6,
 		"y":centerEH-paddingY-smallMarg*4,
 		"rot":300,
 		"id":"collab type"
 	},
 	{
 		"x":centerEX+paddingX*5,
-		"y":centerEH-paddingY-smallMarg*2,
+		"y":centerEH-paddingY-smallMarg*3,
 		"rot":40,
 		"id":"collab field"
 	}
 ]
+
 var idLine = [posID[5],posID[1],posID[0],posID[2],posID[4]]
 var themeLine = [posTh[5],posTh[4],posTh[0],posTh[1],posTh[2],posTh[3]]
 var cnctLine = [posID[0],posTh[0]];
@@ -165,7 +166,7 @@ var barSpaceTo = minRad;
 
 var yearsRadius = maxRad/1.8;
 var lengths = [];
-var ft = 10;
+var ft = 8;
 
 function measureText(string, fontSize = ft) {
   const widths = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.278125,0.278125,0.35625,0.55625,0.55625,0.890625,0.6671875,0.1921875,0.334375,0.334375,0.390625,0.584375,0.278125,0.334375,0.278125,0.303125,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.55625,0.278125,0.278125,0.5859375,0.584375,0.5859375,0.55625,1.015625,0.6671875,0.6671875,0.7234375,0.7234375,0.6671875,0.6109375,0.778125,0.7234375,0.278125,0.5,0.6671875,0.55625,0.834375,0.7234375,0.778125,0.6671875,0.778125,0.7234375,0.6671875,0.6109375,0.7234375,0.6671875,0.9453125,0.6671875,0.6671875,0.6109375,0.278125,0.35625,0.278125,0.478125,0.55625,0.334375,0.55625,0.55625,0.5,0.55625,0.55625,0.278125,0.55625,0.55625,0.2234375,0.2421875,0.5,0.2234375,0.834375,0.55625,0.55625,0.55625,0.55625,0.334375,0.5,0.278125,0.55625,0.5,0.7234375,0.5,0.5,0.5,0.35625,0.2609375,0.3546875,0.590625]
@@ -197,15 +198,14 @@ d3.json("totals_variation.json").then(function(data) {
 		.attr("class", "idText")
 		.attr('font-size', ft)
 		.attr('font-family', 'sans-serif')
-		.attr("x",function(d,i){
-			return -1*measureText(d.name)/2;
-		})
-		.attr("y",0)
+		.attr("x",0)
+		.attr("y",2)
+		.attr("text-anchor","middle")
 		.attr('transform', function(d,i){ 
 			return `rotate(${-posID[i].rot},0,0)` 
 		})
 		.attr("fill","white")
-		.text(d => d.name);
+		.text(function(d,i){ return 1+i; })// => d.name);
 
 	var innerCirc = gid
 		.append("circle")
@@ -236,15 +236,14 @@ d3.json("totals_variation.json").then(function(data) {
 		.attr("class", "themeText")
 		.attr('font-size', ft)
 		.attr('font-family', 'sans-serif')
-		.attr('x', function(d,i){
-			return -1*measureText(d.name)/2;
-		})
-		.attr('y', 0)
+		.attr('x', 0)
+		.attr('y', 2)
+		.attr("text-anchor","middle")
 		.attr('transform', function(d,i){ 
 			return `rotate(${-posTh[i].rot},0,0)` 
 		})
 		.attr("fill","white")
-		.text(d => d.name);
+		.text(function(d,i){ return 7+i });
 	var innerCircTheme = gthe
 		.append("circle")
 		.attr("class", "innerCircTheme")
@@ -473,22 +472,22 @@ d3.json("totals_variation.json").then(function(data) {
 				return "none"
 			}
 		})
-	    .attr("x", function(d){
-	    	for(i=0; i<lengths.length; i++){
-				if(d.parent==lengths[i].name){
-					radiusHere = radiusScale(lengths[i].num)
-				}
-	    	}
-	    	return originX+radiusHere*Math.sin(0);
-	    })
-	    .attr("y", function(d){
-	    	for(i=0; i<lengths.length; i++){
-				if(d.parent==lengths[i].name){
-					radiusHere = radiusScale(lengths[i].num)
-				}
-	    	}
-	    	return originX+radiusHere*Math.cos(0);
-	    })
+    .attr("x", function(d){
+    	for(i=0; i<lengths.length; i++){
+			if(d.parent==lengths[i].name){
+				radiusHere = radiusScale(lengths[i].num)
+			}
+    	}
+    	return originX+radiusHere*Math.sin(0);
+    })
+    .attr("y", function(d){
+    	for(i=0; i<lengths.length; i++){
+			if(d.parent==lengths[i].name){
+				radiusHere = radiusScale(lengths[i].num)
+			}
+    	}
+    	return originX+radiusHere*Math.cos(0);
+    })
 		.attr("transform", function(d,i){
 			if(d.parent=="collab field"){ 
 				return "rotate("+(180+(barwide*barSpaceCo)*i)+", 0, 0)";
@@ -552,11 +551,13 @@ function zoomed({transform}) {
 }
 
 function reset() {
-	svg.transition().duration(750).call(
+	svg.transition().duration(750)
+	.call(
 	  zoom.transform,
 	  d3.zoomIdentity,
 	  d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
-	);
+	)
+
 }
 
 
@@ -586,6 +587,61 @@ d3.selectAll("path").attr("fill","none").attr("stroke","lightgrey")
   .style("stroke-dasharray", ("1,4"))
   .style("stroke-width", .5)
 d3.selectAll("circle").attr("stroke-width",.3)
-d3.selectAll("text").attr("fill","none")
+// d3.selectAll("text").attr("fill","none")
+
+
+function gridData() {
+	var data = new Array();
+	var xpos = rect.width/4; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
+	var ypos = 1;
+	var width = 50;
+	var height = 50;
+	var margin = 100;	
+	// iterate for rows	
+	for (var row = 0; row < 3; row++) {
+		data.push( new Array() );
+		
+		// iterate for cells/columns inside rows
+		for (var column = 0; column < 4; column++) {
+			data[row].push({
+				x: xpos,
+				y: ypos,
+				width: width,
+				height: height
+			})
+			// increment the x position. I.e. move it over by 50 (width variable)
+			xpos += margin;
+		}
+		// reset the x position after a row is complete
+		xpos = 1;
+		// increment the y position for the next row. Move it down 50 (height variable)
+		ypos += margin;	
+	}
+	return data;
+}
+
+var gridData = gridData();	
+console.log(gridData);
+
+var grid = d3.select("#dataviz2")
+	.append("svg")
+	.attr("width",rect.width)
+	.attr("height","510px");
+	
+var row = grid.selectAll(".row")
+	.data(gridData)
+	.enter().append("g")
+	.attr("class", "row");
+	
+var column = row.selectAll(".square")
+	.data(function(d) { return d; })
+	.enter().append("rect")
+	.attr("class","square")
+	.attr("x", function(d) { return d.x; })
+	.attr("y", function(d) { return d.y; })
+	.attr("width", function(d) { return d.width; })
+	.attr("height", function(d) { return d.height; })
+	.style("fill", "#fff")
+	.style("stroke", "#222")
 
 })

@@ -28,7 +28,8 @@ var stratify = d3.cluster().size([2 * Math.PI, radius - 100])
 
 var idColors = ["#4EA8BA","#4EA8BA","#46AAB3","#7B9FE3","#9A99FF","#65A4CF"] 
 var idNames = ["self-ethicist","others-ethicist","funding","years in field","education","career path"]
-var themeColors = ["#CB99CC","#FFCC9A","#D360D5","#D66B6E","#EB9C84","#E996B8","#D466A2","#CB99CC"]
+
+var themeColors = ["#CB9AC6","#FDCC9A","#B668AA","#D66B6E","#DC9AA2","#8B6BAA","#EB9C84","#CB9AC6"]
 var themeNums = [0,1,2,3,12,23, 13, 123]
 var themeNames = ["topics","domain","outputs","audiences","collab type","collab field"]
 
@@ -45,11 +46,9 @@ d3.json("totals_variation.json").then(function(data) {
 
   data.children.pop();
   sortData = d3.hierarchy(data)
-  console.log(sortData)
 
 
   var root = stratify(sortData)
-  console.log(root);
 
   svg.append("g")
       .attr("fill", "none")
@@ -89,7 +88,6 @@ d3.json("totals_variation.json").then(function(data) {
           }
           for(j=0; j<idNames.length; j++){ 
             if(d.source.data.name==themeNames[j]){
-              console.log(d.target.data.value)
               return colTHEME(d.target.data.value)
             }
           }
@@ -118,17 +116,17 @@ d3.json("totals_variation.json").then(function(data) {
         })
 
     svg.append("g")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 10)
+        // .attr("font-family", "sans-serif")
+        .attr("font-size", 8)
         .attr("stroke-linejoin", "round")
         .attr("stroke-width", 3)
       .selectAll("text")
       .data(root.descendants())
       .join("text")
-      // .filter(function(d){
+      .filter(function(d){
         // return 0;
-        // return d.data.value>0 || d.children;
-      // })
+        return d.children; //d.data.value>0 || 
+      })
         .attr("transform", d => `
           rotate(${d.x * 180 / Math.PI - 90}) 
           translate(${d.y},0) 
@@ -139,13 +137,13 @@ d3.json("totals_variation.json").then(function(data) {
         .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
         .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
         .attr("fill", function(d){
-          // if(d.children){
-          //   return "grey"
-          // }
+          if(d.children){
+            return "white"
+          }
           // if(!d.children){
             // return "lightgrey"
           // }
-          return "none";
+          // return "none";
         })
         .text(d => d.data.name)
       .clone(true).lower()
