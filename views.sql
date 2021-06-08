@@ -5,8 +5,7 @@ create view group_by_35 as SELECT q35 as answer, count(q35) as count from data w
 create view group_by_141 as SELECT q141 as answer, count(q141) as count from data where q141 <> '' group by q141;
 create view group_by_157 as SELECT q157 as answer, count(q157) as count from data where q157 <> '' group by q157;
 create view group_by_14 as SELECT q14 as answer, count(q14) as count from data where q14 <> '' group by q14;
-create view group_by_7 as SELECT q7 as answer, count(q7) as count from data where q7 <> '' group by q7;
-
+create view group_by_7 as SELECT q7 as answer, count(q7) as count from data where q7 <> '' and q7::int < 51 group by q7 UNION SELECT '50+' constantvalue, count(1) as count from data where q7 <> '' and q7::int >=50;
 CREATE VIEW group_by_15 AS SELECT jsonb_array_elements(data.q15) AS answer, COUNT(1) AS count FROM data GROUP BY answer;
 CREATE VIEW group_by_9 AS SELECT jsonb_array_elements(data.q9) AS answer, COUNT(1) AS count FROM data GROUP BY answer;
 CREATE VIEW group_by_32 AS SELECT jsonb_array_elements(data.q32) AS answer, COUNT(1) AS count FROM data GROUP BY answer;

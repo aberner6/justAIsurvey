@@ -4,6 +4,7 @@ import {
     getSelfEthicist,
     getOthersEthicist,
     getFunding,
+    getYearsInField,
 } from './reshape-data.js'
 
 config() // load env
@@ -25,6 +26,7 @@ const main = async () => {
     const q71P = api.from('group_by_71').select()
     const q65P = api.from('group_by_65').select()
     const q14P = api.from('group_by_14').select()
+    const q7P = api.from('group_by_7').select()
 
     // await the promises
     const { data: data, error: err } = await dataP
@@ -33,18 +35,20 @@ const main = async () => {
     const { data: q71, error: err3 } = await q71P
     const { data: q65, error: err4 } = await q65P
     const { data: q14, error: err5 } = await q14P
+    const { data: q7, error: err6 } = await q7P
 
-    const error = err || err1 || err2 || err3 || err4 || err5
+    const error = err || err1 || err2 || err3 || err4 || err5 || err6
 
     if (error) {
         console.error('API-ERROR:\n', error)
         return
     }
-    // console.log(data)
+    console.log(data)
 
     const selfEthicist = getSelfEthicist(data, q70) // :: Array
     const othersEthicist = getOthersEthicist(data, q71) // :: Array
     const funding = getFunding(data, q14) // :: Array
+    const yearsInField = getYearsInField(data, q7) // :: Array
 
     const result = {
         name: '',
@@ -55,7 +59,7 @@ const main = async () => {
                     { name: 'self-ethicist', children: selfEthicist },
                     { name: 'others-ethicist', children: othersEthicist },
                     { name: 'funding', children: funding },
-                    { name: 'years in field', children: [] },
+                    { name: 'years in field', children: yearsInField },
                     { name: 'education', children: [] },
                     { name: 'career path', children: [] },
                 ],
