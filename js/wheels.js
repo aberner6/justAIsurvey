@@ -197,7 +197,6 @@ d3.json("totals_variation.json").then(function(data) {
 	var idText = gid.append('text')
 		.attr("class", "idText")
 		.attr('font-size', ft)
-		.attr('font-family', 'sans-serif')
 		.attr("x",0)
 		.attr("y",2)
 		.attr("text-anchor","middle")
@@ -235,7 +234,6 @@ d3.json("totals_variation.json").then(function(data) {
 	var themeText = gthe.append('text')
 		.attr("class", "themeText")
 		.attr('font-size', ft)
-		.attr('font-family', 'sans-serif')
 		.attr('x', 0)
 		.attr('y', 2)
 		.attr("text-anchor","middle")
@@ -540,11 +538,11 @@ var zoom = d3.zoom()
   .on("zoom", zoomed);
 
 svg
-	.call(zoom)
+	// .call(zoom)
 	.call(zoom.scaleBy, 1.7)
 
 
-svg.on("click", reset);
+// svg.on("click", reset);
 
 function zoomed({transform}) {
     g.attr("transform", transform);
@@ -590,15 +588,20 @@ d3.selectAll("circle").attr("stroke-width",.3)
 // d3.selectAll("text").attr("fill","none")
 
 
+var xmargin = 80;//rect.width/4;
+var ymargin = 33;
+var gridH = 400;
+var widthBox = 85;
+var heightBox = 22;
+// var margin = 
 function gridData() {
 	var data = new Array();
-	var xpos = rect.width/4; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
-	var ypos = 1;
-	var width = 50;
-	var height = 50;
-	var margin = 100;	
+	var xpos = 0; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
+
+	var ypos = heightBox;
+	var index = 0;
 	// iterate for rows	
-	for (var row = 0; row < 3; row++) {
+	for (var row = 0; row < 4; row++) {
 		data.push( new Array() );
 		
 		// iterate for cells/columns inside rows
@@ -606,16 +609,19 @@ function gridData() {
 			data[row].push({
 				x: xpos,
 				y: ypos,
-				width: width,
-				height: height
+				width: widthBox,
+				height: heightBox,
+				text: index
 			})
 			// increment the x position. I.e. move it over by 50 (width variable)
-			xpos += margin;
+			xpos += xmargin*2;
+			index++;
 		}
 		// reset the x position after a row is complete
 		xpos = 1;
+		index++;
 		// increment the y position for the next row. Move it down 50 (height variable)
-		ypos += margin;	
+		ypos += ymargin*2;	
 	}
 	return data;
 }
@@ -625,23 +631,80 @@ console.log(gridData);
 
 var grid = d3.select("#dataviz2")
 	.append("svg")
-	.attr("width",rect.width)
-	.attr("height","510px");
-	
+	.attr("width",rect.width-10)
+	.attr("height",gridH*4)
+	.attr('transform',`translate(${10}, ${0})`)
+
+
 var row = grid.selectAll(".row")
-	.data(gridData)
-	.enter().append("g")
-	.attr("class", "row");
-	
-var column = row.selectAll(".square")
+	.data(gridData).join("g").attr("class","row");
+var column = row.selectAll(".group")
 	.data(function(d) { return d; })
-	.enter().append("rect")
-	.attr("class","square")
-	.attr("x", function(d) { return d.x; })
-	.attr("y", function(d) { return d.y; })
-	.attr("width", function(d) { return d.width; })
-	.attr("height", function(d) { return d.height; })
-	.style("fill", "#fff")
-	.style("stroke", "#222")
+	.enter().append("g")
+	.attr("class",function(d){
+		return d.text})
+	.attr('transform',function(d,i){
+		return `translate(${d.x}, ${d.y})` 
+	})
+var wordArray = [
+"Questions about IDENTITY","","Questions about WORK THEMES","","",
+"what best describes where you are in your career?",
+"are you paid for your work on AI/data ethics?",
+"how would you define the broad topic?",
+"who else is involved in your work on this theme?","",
+"what best describes where you are in your career?",
+"are you paid for your work on AI/data ethics?",
+"how would you define the broad topic?",
+"who else is involved in your work on this theme?","",
+"what best describes where you are in your career?",
+"are you paid for your work on AI/data ethics?",
+"how would you define the broad topic?",
+"who else is involved in your work on this theme?",""]
+
+var numArray=[
+"","","","","",
+"1.","4.","7.","10.","",
+"2.","5.","8.","11.","",
+"3.","6.","9.","12.",""
+]
+
+var text = column //.selectAll(".legend")
+	.append("foreignObject")
+    .attr("width", function(d){
+    	if(d.text==0 ||d.text==2){
+    		return xmargin*2;
+    	}else{
+    		return xmargin*1.5;
+    	}
+    })
+    .attr("height", 50)
+    .attr("x",function(d){
+    	if(d.text==0 ||d.text==2){
+    		return 0;
+    	}
+    	if(parseInt(d.text)==8 || parseInt(d.text)==13|| parseInt(d.text)==18){
+    		return 20;
+    	}else{
+    		return 15;
+    	}
+    })
+  .append("xhtml:body")
+    .html(function(d){
+    	if(d.text==0||d.text==2){
+    		return "<h1>"+wordArray[d.text]+""
+    	} 
+    	return "<p>"+wordArray[d.text]+""
+    });
+var text = column //.selectAll(".legend")
+	.append("text")
+  	.attr("x",0)
+  	.attr("dx",10)
+  	.attr("dy",15)
+    .text(function(d){
+    	return numArray[d.text];
+    });
+
+
+
 
 })
