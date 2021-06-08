@@ -1,5 +1,6 @@
 ALTER TABLE data
 ADD COLUMN created date
+,ADD COLUMN created_time timestamp default NOW()
 ,ADD COLUMN email text
 ,ADD COLUMN response_id text
 ,ADD COLUMN q1 text

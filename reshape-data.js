@@ -12,7 +12,7 @@
 // Q37/143/159 - Types of outputs
 // Q51/144/160 - Types of audiences
 
-export function getSelfEthicist(data) {
+export function getSelfEthicist(latest,data) {
     // Possible values, text has to match the options
     const values = {
         Yes: 1,
@@ -56,7 +56,7 @@ export function getSelfEthicist(data) {
     return [...generated, ...defaultOptions]
 }
 
-export function getOthersEthicist(data) {
+export function getOthersEthicist(latest,data) {
     // Possible values, text has to match the options
     const values = {
         Yes: 1,
@@ -101,8 +101,9 @@ export function getOthersEthicist(data) {
 }
 
 
-export function getFunding(data) {
-    // Possible values, text has to match the options
+export function getFunding(latest,data) {
+    // TODO change this, because value reflect only latest picked
+    console.log(latest);
     const values = {
         Yes: 1,
         No: 0,
