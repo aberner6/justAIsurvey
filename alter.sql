@@ -2,7 +2,6 @@ ALTER TABLE data
 ADD COLUMN created date
 ,ADD COLUMN email text
 ,ADD COLUMN response_id text
-,ADD COLUMN questions jsonb
 ,ADD COLUMN q1 text
 ,ADD COLUMN q2 text
 ,ADD COLUMN q3 text
@@ -12,9 +11,9 @@ ADD COLUMN created date
 ,ADD COLUMN q18 text
 ,ADD COLUMN q19 text
 ,ADD COLUMN q20 text
-,ADD COLUMN q120 jsonb
-,ADD COLUMN q64 jsonb
-,ADD COLUMN q65 jsonb
+,ADD COLUMN q120 text
+,ADD COLUMN q64 text
+,ADD COLUMN q65 text
 ,ADD COLUMN q7 text
 ,ADD COLUMN q8 text
 ,ADD COLUMN q70 text
@@ -34,8 +33,8 @@ ADD COLUMN created date
 ,ADD COLUMN q57 text
 ,ADD COLUMN q58 text
 ,ADD COLUMN q23 text
-,ADD COLUMN q24 jsonb
-,ADD COLUMN q121 jsonb
+,ADD COLUMN q24 text
+,ADD COLUMN q121 text
 ,ADD COLUMN q31 text
 ,ADD COLUMN q123 text
 ,ADD COLUMN q32 jsonb
@@ -48,7 +47,7 @@ ADD COLUMN created date
 ,ADD COLUMN q36 jsonb
 ,ADD COLUMN q37 jsonb
 ,ADD COLUMN q51 jsonb
-,ADD COLUMN q52 jsonb
+,ADD COLUMN q52 text
 ,ADD COLUMN q133 jsonb
 ,ADD COLUMN q134 text
 ,ADD COLUMN q135 text
@@ -61,7 +60,7 @@ ADD COLUMN created date
 ,ADD COLUMN q142 jsonb
 ,ADD COLUMN q143 jsonb
 ,ADD COLUMN q144 jsonb
-,ADD COLUMN q145 jsonb
+,ADD COLUMN q145 text
 ,ADD COLUMN q146 jsonb
 ,ADD COLUMN q149 jsonb
 ,ADD COLUMN q150 text
@@ -75,12 +74,12 @@ ADD COLUMN created date
 ,ADD COLUMN q158 jsonb
 ,ADD COLUMN q159 jsonb
 ,ADD COLUMN q160 jsonb
-,ADD COLUMN q161 jsonb
+,ADD COLUMN q161 text
 ,ADD COLUMN q162 jsonb
 ,ADD COLUMN q76 text
 ,ADD COLUMN q130 jsonb
 ,ADD COLUMN q81 text
-,ADD COLUMN q53 text
+,ADD COLUMN q53 jsonb
 ,ADD COLUMN q54 text
 ,ADD COLUMN q56 text
 ,ADD COLUMN q55 text

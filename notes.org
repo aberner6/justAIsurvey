@@ -21,3 +21,32 @@ If the question has #other option, instead of returning text what user wrote, it
    CLOCK: [2021-06-04 Fri 09:00]--[2021-06-04 Fri 15:00] =>  6:00
    :END:
    If there is need it is possible to create function which transforms empty "" into null for better performance. This can be done in quadratix survey code, but working in survey platform is painfully slow, and hard to test, error-prone.
+
+** Api to JSON transformation (5h)
+:LOGBOOK:
+CLOCK: [2021-06-07 Mon 16:00]--[2021-06-07 Mon 19:15] =>  3:15
+CLOCK: [2021-06-07 Mon 10:00]--[2021-06-07 Mon 11:45] =>  1:45
+:END:
+  - DONE Double check if "funding" section should be from question 65! - should be q14
+  - DONE edit Views in db, to remove null and empty strings. - jsonb array are good to work with
+   It is hard to do multi option group by with text field, changing these to jsonb and saving data as list instead of text create possibility for group by item
+
+#    SELECT jsonb_array_elements(a.genres) AS genre, COUNT(1) AS popularity
+# FROM artists AS a
+# GROUP BY genre
+
+** Building JSON
+:LOGBOOK:
+CLOCK: [2021-06-08 Tue 9:00]--[2021-06-08 Tue 16:00] =>  7:00
+:END:
+- DONE Array needs to be clean from "", it is hard to build SQL query to without grouping on "" as well.
+- Value is always from last respondent
+  - for Null or "" do -1 as value
+  - When there are 3 questions which are grouped to 1, each answer represent with number value
+    - 1 if first question was answered with this keyword
+    - 2 if second question was answered with this keyword
+    - 3 if third question was answered with keyword.
+    this could mean that you have
+    name: "other"
+    value: 23 // second and third was answered
+    total: count of 2 + count of 3 question
