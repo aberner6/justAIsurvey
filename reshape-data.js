@@ -12,12 +12,27 @@
 // Q37/143/159 - Types of outputs
 // Q51/144/160 - Types of audiences
 
-export function getSelfEthicist(latest,data) {
-    // Possible values, text has to match the options
-    const values = {
-        Yes: 1,
+// calculateValues :: String -> String -> Object
+const calculateValues = (initValues) => (q) => {
+    if (q === null || q === '')
+        return Object.keys(initValues).reduce(
+            (last_obj, key) => ({ ...last_obj, [key]: -1 }), // -1 on all values if skipped question
+            {}
+        )
+    else {
+        const latestChoice = { [q]: 1 } // 1 if picked
+        return { ...initValues, ...latestChoice } // build values with default
+    }
+}
+
+//q70
+export function getSelfEthicist(latest, data) {
+    const initVal = {
+        Yes: 0,
         No: 0,
     }
+
+    const values = calculateValues(initVal)(latest.q70)
     const template = {
         q: 'do you identify as an ethicist?',
         parent: 'self-ethicist',
@@ -56,12 +71,15 @@ export function getSelfEthicist(latest,data) {
     return [...generated, ...defaultOptions]
 }
 
-export function getOthersEthicist(latest,data) {
-    // Possible values, text has to match the options
-    const values = {
-        Yes: 1,
+//q71
+export function getOthersEthicist(latest, data) {
+    const initVal = {
+        Yes: 0,
         No: 0,
     }
+
+    const values = calculateValues(initVal)(latest.q71)
+
     const template = {
         q: 'do others identify you as an ethicist?',
         parent: 'others-ethicist',
@@ -100,14 +118,15 @@ export function getOthersEthicist(latest,data) {
     return [...generated, ...defaultOptions]
 }
 
-
-export function getFunding(latest,data) {
-    // TODO change this, because value reflect only latest picked
-    console.log(latest);
-    const values = {
-        Yes: 1,
+// q14
+export function getFunding(latest, data) {
+    const initVal = {
+        Yes: 0,
         No: 0,
     }
+
+    const values = calculateValues(initVal)(latest.q14)
+
     const template = {
         q: 'are you funded?',
         parent: 'funding',

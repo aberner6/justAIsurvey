@@ -40,6 +40,7 @@ const main = async () => {
         console.error('API-ERROR:\n', error)
         return
     }
+    // console.log(data)
 
     const selfEthicist = getSelfEthicist(data, q70) // :: Array
     const othersEthicist = getOthersEthicist(data, q71) // :: Array
