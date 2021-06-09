@@ -13,7 +13,7 @@ var radius = width / 2;
 // .attr("transform","translate(" + (width+100) + ","+(20)+")");
 
 // append the svg object to the body of the page
-var svg = d3.select("#dataviz1")
+var dsvg = d3.select("#dataviz1")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -50,7 +50,7 @@ d3.json("../data/totals_variation.json").then(function(data) {
 
   var root = stratify(sortData)
 
-  svg.append("g")
+  dsvg.append("g")
       .attr("fill", "none")
       .attr("class","thedraw")
     .selectAll("path")
@@ -97,7 +97,7 @@ d3.json("../data/totals_variation.json").then(function(data) {
         }
       });
 
-  svg.append("g")
+  dsvg.append("g")
       .selectAll("circle")
       .data(root.descendants())
       .join("circle")
@@ -115,7 +115,7 @@ d3.json("../data/totals_variation.json").then(function(data) {
           return d.data.name;
         })
 
-    svg.append("g")
+    dsvg.append("g")
         // .attr("font-family", "sans-serif")
         .attr("font-size", 8)
         .attr("stroke-linejoin", "round")
