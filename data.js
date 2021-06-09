@@ -6,6 +6,7 @@ import {
     getFunding,
     getYearsInField,
     getEducation,
+    getCareer,
 } from './reshape-data.js'
 
 config() // load env
@@ -54,6 +55,7 @@ const main = async () => {
     const funding = getFunding(data, q14) // :: Array
     const yearsInField = getYearsInField(data, q7) // :: Array
     const education = getEducation(data, q9) // :: Array
+    const career = getCareer(data, q65) // :: Array
 
     const result = {
         name: '',
@@ -66,7 +68,7 @@ const main = async () => {
                     { name: 'funding', children: funding },
                     { name: 'years in field', children: yearsInField },
                     { name: 'education', children: education },
-                    { name: 'career path', children: [] },
+                    { name: 'career path', children: career },
                 ],
             },
             {

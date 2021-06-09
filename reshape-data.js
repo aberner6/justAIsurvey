@@ -331,3 +331,60 @@ export function getEducation(latest, data) {
         name: it.name.replace('#', ''),
     }))
 }
+
+// q65
+export function getCareer(latest, data) {
+    const initVal = {
+        'Undergraduate student': 0,
+        'Masters student': 0,
+        'PhD student': 0,
+        Postdoc: 0,
+        'University faculty': 0,
+        'Industry employee': 0,
+        'Government employee': 0,
+        'Non-profit employee': 0,
+        'Other: (please describe below)': 0,
+    }
+
+    const values = calculateValues(initVal)(latest.q65)
+
+    const template = {
+        q: 'career',
+        parent: 'career path',
+    }
+
+    let needDefault = Object.keys(values)
+
+    const generated = data.map(({ answer, count }) => {
+        const val = values[answer]
+        if (typeof val === 'undefined') {
+            throw new Error(
+                `Missing value type, make sure to add all possible values. value searched: (${answer})`
+            )
+        }
+        // removing values which are taken from db
+        needDefault = needDefault.filter((it) => it !== answer)
+
+        return {
+            ...template,
+            value: val,
+            name: answer,
+            total: count,
+        }
+    })
+
+    // In the situation where there are not even 1 answer for certain option,
+    // we need to add default for this option which is not in db
+
+    const defaultOptions = needDefault.map((it) => ({
+        ...template,
+        value: values[it],
+        name: it,
+        total: 0,
+    }))
+
+    return [...generated, ...defaultOptions].map((it) => ({
+        ...it,
+        name: it.name === 'Other: (please describe below)' ? 'Other' : it.name,
+    }))
+}
