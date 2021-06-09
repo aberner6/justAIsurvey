@@ -107,7 +107,7 @@ const main = async () => {
                 children: [
                     { name: 'self-ethicist', children: selfEthicist },
                     { name: 'others-ethicist', children: othersEthicist },
-                    { name: 'funding', children: funding },
+                    { name: 'paid work', children: funding },
                     { name: 'years in field', children: yearsInField },
                     { name: 'education', children: education },
                     { name: 'career path', children: career },

@@ -208,7 +208,7 @@ export function getFunding(latest, data) {
 
     const template = {
         q: 'are you funded?',
-        parent: 'funding',
+        parent: 'paid work',
     }
 
     let needDefault = Object.keys(values)
