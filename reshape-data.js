@@ -207,7 +207,7 @@ export function getFunding(latest, data) {
     const values = calculateValues(initVal)(latest.q14)
 
     const template = {
-        q: 'are you funded?',
+        q: 'are you paid for your work on AI/data ethics?',
         parent: 'paid work',
     }
 
