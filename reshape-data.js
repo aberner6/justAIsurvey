@@ -777,3 +777,72 @@ export function getCollabType(latest, data) {
 
     return [...generated, ...defaultOptions]
 }
+
+// q36 q142 q158
+export function getCollabField(latest, data) {
+    const initVal = {
+        'Researchers - Social Science': 0,
+        'Researchers - Humanities': 0,
+        'Researchers - Law': 0,
+        'Researchers - Medicine': 0,
+        'Researchers - Science': 0,
+        'Artists and creative practitioners': 0,
+        'Computer/Data Scientists': 0,
+        'Tech developers and Engineers': 0,
+        'General public': 0,
+        Regulators: 0,
+        NGOs: 0,
+        'Affected individuals': 0,
+        'Government officials': 0,
+        'Community organizations': 0,
+        'Industry representatives': 0,
+        'Others:': 0,
+    }
+
+    const values = calculateValuesMultiple(initVal)(
+        latest.q36,
+        latest.q142,
+        latest.q158
+    )
+
+    const template = {
+        q: 'collab field?',
+        parent: 'collab field',
+    }
+
+    let needDefault = Object.keys(values)
+
+    const generated = data.map(({ answer, count }) => {
+        console.log(answer)
+        const val = values[answer]
+        if (typeof val === 'undefined') {
+            throw new Error(
+                `Missing value type, make sure to add all possible values. value searched: (${answer})`
+            )
+        }
+        // removing values which are taken from db
+        needDefault = needDefault.filter((it) => it !== answer)
+
+        return {
+            ...template,
+            value: val,
+            name: answer,
+            total: count,
+        }
+    })
+
+    // In the situation where there are not even 1 answer for certain option,
+    // we need to add default for this option which is not in db
+
+    const defaultOptions = needDefault.map((it) => ({
+        ...template,
+        value: values[it],
+        name: it,
+        total: 0,
+    }))
+
+    return [...generated, ...defaultOptions].map((it) => ({
+        ...it,
+        name: it.name === 'Others:' ? 'Other' : it.name,
+    }))
+}

@@ -12,6 +12,7 @@ import {
     getOutput,
     getAudience,
     getCollabType,
+    getCollabField,
 } from './reshape-data.js'
 
 config() // load env
@@ -41,6 +42,7 @@ const main = async () => {
     const q37q143q159P = api.from('group_by_37_143_159').select()
     const q51q144q160P = api.from('group_by_51_144_160').select()
     const q35q141q157P = api.from('group_by_35_141_157').select()
+    const q36q142q158P = api.from('group_by_36_142_158').select()
 
     // await the promises
     // data :: Object
@@ -58,6 +60,7 @@ const main = async () => {
     const { data: q37_q143_q159, error: err10 } = await q37q143q159P
     const { data: q51_q144_q160, error: err11 } = await q51q144q160P
     const { data: q35_q141_q157, error: err12 } = await q35q141q157P
+    const { data: q36_q142_q158, error: err13 } = await q36q142q158P
 
     const error =
         err ||
@@ -72,7 +75,8 @@ const main = async () => {
         err9 ||
         err10 ||
         err11 ||
-        err12
+        err12 ||
+        err13
 
     if (error) {
         console.error('API-ERROR:\n', error)
@@ -94,6 +98,7 @@ const main = async () => {
     const output = getOutput(data, q37_q143_q159) // :: Array
     const audience = getAudience(data, q51_q144_q160) // :: Array
     const collabtype = getCollabType(data, q35_q141_q157) // :: Array
+    const collabfield = getCollabField(data, q36_q142_q158) // :: Array
 
     const result = {
         name: '',
@@ -117,7 +122,7 @@ const main = async () => {
                     { name: 'outputs', children: output },
                     { name: 'audiences', children: audience },
                     { name: 'collab type', children: collabtype },
-                    { name: 'collab field', children: [] },
+                    { name: 'collab field', children: collabfield },
                 ],
             },
             { responses: count },
