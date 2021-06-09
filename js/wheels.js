@@ -589,16 +589,16 @@ d3.selectAll("circle").attr("stroke-width",.3)
 
 
 var xmargin = 80;//rect.width/4;
-var ymargin = 33;
+var ymargin = 20;
 var gridH = 400;
 var widthBox = 85;
-var heightBox = 22;
+var heightBox = 50;
 // var margin = 
 function gridData() {
 	var data = new Array();
 	var xpos = 0; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
 
-	var ypos = heightBox;
+	var ypos = heightBox/2;
 	var index = 0;
 	// iterate for rows	
 	for (var row = 0; row < 4; row++) {
@@ -606,13 +606,13 @@ function gridData() {
 		
 		// iterate for cells/columns inside rows
 		for (var column = 0; column < 4; column++) {
-			data[row].push({
-				x: xpos,
-				y: ypos,
-				width: widthBox,
-				height: heightBox,
-				text: index
-			})
+				data[row].push({
+					x: xpos,
+					y: ypos,
+					width: widthBox,
+					height: heightBox,
+					text: index
+				})		
 			// increment the x position. I.e. move it over by 50 (width variable)
 			xpos += xmargin*2;
 			index++;
@@ -629,11 +629,12 @@ function gridData() {
 var gridData = gridData();	
 console.log(gridData);
 
+var gridLMarg = 40;
 var grid = d3.select("#dataviz2")
 	.append("svg")
-	.attr("width",rect.width-10)
+	.attr("width",rect.width-gridLMarg)
 	.attr("height",gridH*4)
-	.attr('transform',`translate(${10}, ${0})`)
+	.attr('transform',`translate(${gridLMarg}, ${0})`)
 
 
 var row = grid.selectAll(".row")
@@ -644,10 +645,14 @@ var column = row.selectAll(".group")
 	.attr("class",function(d){
 		return d.text})
 	.attr('transform',function(d,i){
-		return `translate(${d.x}, ${d.y})` 
+    	if(d.text==0 ||d.text==2){
+				return `translate(${d.x}, ${d.y})` 
+    	}else{
+				return `translate(${d.x}, ${d.y-10})` 
+    	}
 	})
 var wordArray = [
-"Questions about IDENTITY","","Questions about WORK THEMES","","",
+"IDENTITY","","WORK THEMES","","",
 "what best describes where you are in your career?",
 "are you paid for your work on AI/data ethics?",
 "how would you define the broad topic?",
@@ -677,15 +682,18 @@ var text = column //.selectAll(".legend")
     		return xmargin*1.5;
     	}
     })
-    .attr("height", 50)
+    .attr("height", function(d){
+    		return d.height;
+    })
+    .attr("y",-15)
     .attr("x",function(d){
     	if(d.text==0 ||d.text==2){
     		return 0;
     	}
     	if(parseInt(d.text)==8 || parseInt(d.text)==13|| parseInt(d.text)==18){
-    		return 20;
+    		return 25;
     	}else{
-    		return 15;
+    		return 20;
     	}
     })
   .append("xhtml:body")
@@ -698,13 +706,43 @@ var text = column //.selectAll(".legend")
 var text = column //.selectAll(".legend")
 	.append("text")
   	.attr("x",0)
+  	.attr("y",0)
   	.attr("dx",10)
-  	.attr("dy",15)
     .text(function(d){
     	return numArray[d.text];
     });
 
 
+var legColors=[
+"","","","","",
+"#4EA8BA","#7B9FE3","#CB9AC6","#CB9AC6","",
+"#4EA8BA","#9A99FF","#CB9AC6","#CB9AC6","",
+"#46AAB3","#65A4CF","#CB9AC6","#CB9AC6",""
+]
 
+var bars = column 
+	.append("rect")
+  	.attr("x",10)
+  	.attr("y",5)
+  	.attr("width",barwide*4)
+  	.attr("height",barwide*2)
+    .attr("fill",function(d){
+    	if(d.text<=4 || parseInt(d.text)==8 || parseInt(d.text)==13|| parseInt(d.text)==18 || parseInt(d.text)==7 || parseInt(d.text)==12 || parseInt(d.text)==17){
+  			return "none"
+  		}
+    	return legColors[d.text];
+    })
+    .attr("stroke", function(d){
+  		if(parseInt(d.text)==8 || parseInt(d.text)==13|| parseInt(d.text)==18 || parseInt(d.text)==7 || parseInt(d.text)==12 || parseInt(d.text)==17){
+	    	return legColors[d.text];
+			}else{
+				return "none";
+			}
+    })
 
 })
+
+
+  	// var idNames = ["self-ethicist","others-ethicist","funding","years in field","education","career path"]
+// var themeColors = ["#CB9AC6","#FDCC9A","#B668AA","#D66B6E","#DC9AA2","#8B6BAA","#EB9C84","#CB9AC6"]
+// var themeNums = [0,1,2,3,12,23, 13, 123]
