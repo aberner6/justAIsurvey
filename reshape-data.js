@@ -67,6 +67,43 @@ const calculateValuesMultiple = (initValues) => (q, q2, q3) => {
     }
 }
 
+// calculateValuesMultipleText :: String -> (String,String,String) -> Object
+const calculateValuesMultipleText = (initValues) => (q, q2, q3) => {
+    if (
+        (q === null || q === '') &&
+        (q2 === null || q2 === '') &&
+        (q3 === null || q3 === '')
+    )
+        return Object.keys(initValues).reduce(
+            (last_obj, key) => ({ ...last_obj, [key]: -1 }), // -1 on all values if skipped question
+            {}
+        )
+    else {
+        let latestChoice = {}
+        if (q !== null && q !== '') {
+            latestChoice = { ...latestChoice, [q]: 1 }
+        }
+        if (q2 !== null && q2 !== '') {
+            if (latestChoice.hasOwnProperty(q2))
+                latestChoice = {
+                    ...latestChoice,
+                    [q2]: parseInt(`${latestChoice[q2]}2`, 10),
+                }
+            else latestChoice = { ...latestChoice, [q2]: 2 }
+        }
+        if (q3 !== null && q3 !== '') {
+            if (latestChoice.hasOwnProperty(q3))
+                latestChoice = {
+                    ...latestChoice,
+                    [q3]: parseInt(`${latestChoice[q3]}3`, 10),
+                }
+            else latestChoice = { ...latestChoice, [q3]: 3 }
+        }
+
+        return { ...initValues, ...latestChoice } // build values with default
+    }
+}
+
 //q70
 export function getSelfEthicist(latest, data) {
     const initVal = {
@@ -685,4 +722,58 @@ export function getAudience(latest, data) {
         ...it,
         name: it.name.replace('#', ''),
     }))
+}
+
+// q35 q141 q157
+export function getCollabType(latest, data) {
+    const initVal = {
+        'Yes, within my organization': 0,
+        'Yes, with others outside my organization': 0,
+        'Yes, both within and outside my organization': 0,
+        No: 0,
+    }
+
+    const values = calculateValuesMultipleText(initVal)(
+        latest.q35,
+        latest.q141,
+        latest.q157
+    )
+
+    const template = {
+        q: 'collab type?',
+        parent: 'collab type',
+    }
+
+    let needDefault = Object.keys(values)
+
+    const generated = data.map(({ answer, count }) => {
+        console.log(answer)
+        const val = values[answer]
+        if (typeof val === 'undefined') {
+            throw new Error(
+                `Missing value type, make sure to add all possible values. value searched: (${answer})`
+            )
+        }
+        // removing values which are taken from db
+        needDefault = needDefault.filter((it) => it !== answer)
+
+        return {
+            ...template,
+            value: val,
+            name: answer,
+            total: count,
+        }
+    })
+
+    // In the situation where there are not even 1 answer for certain option,
+    // we need to add default for this option which is not in db
+
+    const defaultOptions = needDefault.map((it) => ({
+        ...template,
+        value: values[it],
+        name: it,
+        total: 0,
+    }))
+
+    return [...generated, ...defaultOptions]
 }
