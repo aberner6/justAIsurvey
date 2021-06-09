@@ -7,6 +7,7 @@ import {
     getYearsInField,
     getEducation,
     getCareer,
+    getTopics,
 } from './reshape-data.js'
 
 config() // load env
@@ -31,6 +32,8 @@ const main = async () => {
     const q7P = api.from('group_by_7').select()
     const q9P = api.from('group_by_9').select()
 
+    const q30q133q149P = api.from('group_by_30_133_149').select()
+
     // await the promises
     // data :: Object
     const { data: data, error: err } = await dataP
@@ -42,7 +45,10 @@ const main = async () => {
     const { data: q7, error: err6 } = await q7P
     const { data: q9, error: err7 } = await q9P
 
-    const error = err || err1 || err2 || err3 || err4 || err5 || err6 || err7
+    const { data: q30_q133_q149, error: err8 } = await q30q133q149P
+
+    const error =
+        err || err1 || err2 || err3 || err4 || err5 || err6 || err7 || err8
 
     if (error) {
         console.error('API-ERROR:\n', error)
@@ -50,12 +56,16 @@ const main = async () => {
     }
     console.log(data)
 
+    //identity
     const selfEthicist = getSelfEthicist(data, q70) // :: Array
     const othersEthicist = getOthersEthicist(data, q71) // :: Array
     const funding = getFunding(data, q14) // :: Array
     const yearsInField = getYearsInField(data, q7) // :: Array
     const education = getEducation(data, q9) // :: Array
     const career = getCareer(data, q65) // :: Array
+
+    //theme
+    const topic = getTopics(data, q30_q133_q149) // :: Array
 
     const result = {
         name: '',
@@ -74,7 +84,7 @@ const main = async () => {
             {
                 name: 'theme',
                 children: [
-                    { name: 'topics', children: [] },
+                    { name: 'topics', children: topic },
                     { name: 'domain', children: [] },
                     { name: 'outputs', children: [] },
                     { name: 'audiences', children: [] },
@@ -86,6 +96,7 @@ const main = async () => {
         ],
     }
 
+    // console.dir(result.children[1].children, { depth: null })
     console.dir(result, { depth: null })
 }
 

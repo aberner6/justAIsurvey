@@ -24,6 +24,49 @@ const calculateValues = (initValues) => (q) => {
     }
 }
 
+// calculateValuesMultiple :: String -> (Array,Array,Array) -> Object
+const calculateValuesMultiple = (initValues) => (q, q2, q3) => {
+    if (
+        (q || []).length === 0 &&
+        (q2 || []).length === 0 &&
+        (q3 || []).length === 0
+    )
+        return Object.keys(initValues).reduce(
+            (last_obj, key) => ({ ...last_obj, [key]: -1 }), // -1 on all values if skipped question
+            {}
+        )
+    else {
+        let latestChoice = {}
+        if (q.length > 0) {
+            q.map((key) => {
+                latestChoice = { ...latestChoice, [key]: 1 }
+            })
+        }
+        if (q2.length > 0) {
+            q2.map((key) => {
+                if (latestChoice.hasOwnProperty(key))
+                    latestChoice = {
+                        ...latestChoice,
+                        [key]: parseInt(`${latestChoice[key]}2`, 10),
+                    }
+                else latestChoice = { ...latestChoice, [key]: 2 }
+            })
+        }
+        if (q3.length > 0) {
+            q3.map((key) => {
+                if (latestChoice.hasOwnProperty(key))
+                    latestChoice = {
+                        ...latestChoice,
+                        [key]: parseInt(`${latestChoice[key]}3`, 10),
+                    }
+                else latestChoice = { ...latestChoice, [key]: 3 }
+            })
+        }
+
+        return { ...initValues, ...latestChoice } // build values with default
+    }
+}
+
 //q70
 export function getSelfEthicist(latest, data) {
     const initVal = {
@@ -387,4 +430,55 @@ export function getCareer(latest, data) {
         ...it,
         name: it.name === 'Other: (please describe below)' ? 'Other' : it.name,
     }))
+}
+
+// q30 q133 q149
+export function getTopics(latest, data) {
+    const initVal = {
+        '': 0,
+    }
+
+    const values = calculateValuesMultiple(initVal)(
+        latest.q30,
+        latest.q133,
+        latest.q149
+    )
+
+    const template = {
+        q: 'bias',
+        parent: 'topics',
+    }
+
+    let needDefault = Object.keys(values)
+
+    const generated = data.map(({ answer, count }) => {
+        console.log(answer)
+        const val = values[answer]
+        if (typeof val === 'undefined') {
+            throw new Error(
+                `Missing value type, make sure to add all possible values. value searched: (${answer})`
+            )
+        }
+        // removing values which are taken from db
+        needDefault = needDefault.filter((it) => it !== answer)
+
+        return {
+            ...template,
+            value: val,
+            name: answer,
+            total: count,
+        }
+    })
+
+    // In the situation where there are not even 1 answer for certain option,
+    // we need to add default for this option which is not in db
+
+    const defaultOptions = needDefault.map((it) => ({
+        ...template,
+        value: values[it],
+        name: it,
+        total: 0,
+    }))
+
+    return [...generated, ...defaultOptions]
 }
