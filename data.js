@@ -8,6 +8,7 @@ import {
     getEducation,
     getCareer,
     getTopics,
+    getDomain,
 } from './reshape-data.js'
 
 config() // load env
@@ -33,6 +34,7 @@ const main = async () => {
     const q9P = api.from('group_by_9').select()
 
     const q30q133q149P = api.from('group_by_30_133_149').select()
+    const q33q139q155P = api.from('group_by_33_139_155').select()
 
     // await the promises
     // data :: Object
@@ -46,9 +48,19 @@ const main = async () => {
     const { data: q9, error: err7 } = await q9P
 
     const { data: q30_q133_q149, error: err8 } = await q30q133q149P
+    const { data: q33_q139_q155, error: err9 } = await q33q139q155P
 
     const error =
-        err || err1 || err2 || err3 || err4 || err5 || err6 || err7 || err8
+        err ||
+        err1 ||
+        err2 ||
+        err3 ||
+        err4 ||
+        err5 ||
+        err6 ||
+        err7 ||
+        err8 ||
+        err9
 
     if (error) {
         console.error('API-ERROR:\n', error)
@@ -66,6 +78,7 @@ const main = async () => {
 
     //theme
     const topic = getTopics(data, q30_q133_q149) // :: Array
+    const domain = getDomain(data, q33_q139_q155) // :: Array
 
     const result = {
         name: '',
@@ -85,7 +98,7 @@ const main = async () => {
                 name: 'theme',
                 children: [
                     { name: 'topics', children: topic },
-                    { name: 'domain', children: [] },
+                    { name: 'domain', children: domain },
                     { name: 'outputs', children: [] },
                     { name: 'audiences', children: [] },
                     { name: 'collab type', children: [] },
@@ -96,8 +109,8 @@ const main = async () => {
         ],
     }
 
-    // console.dir(result.children[1].children, { depth: null })
-    console.dir(result, { depth: null })
+    console.dir(result.children[1].children, { depth: null })
+    // console.dir(result, { depth: null })
 }
 
 main().catch(console.error)

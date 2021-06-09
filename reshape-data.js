@@ -490,3 +490,70 @@ export function getTopics(latest, data) {
         name: it.name.replace('#', ''),
     }))
 }
+
+// q33 q139 q155
+export function getDomain(latest, data) {
+    const initVal = {
+        health: 0,
+        finance: 0,
+        'urban dynamics': 0,
+        transport: 0,
+        military: 0,
+        'social media': 0,
+        'welfare and social care': 0,
+        policing: 0,
+        'judicial system': 0,
+        accessibility: 0,
+        education: 0,
+        other: 0,
+        'N/A': 0,
+    }
+
+    const values = calculateValuesMultiple(initVal)(
+        latest.q33,
+        latest.q139,
+        latest.q155
+    )
+
+    const template = {
+        q: 'domain',
+        parent: 'domain',
+    }
+
+    let needDefault = Object.keys(values)
+
+    const generated = data.map(({ answer, count }) => {
+        console.log(answer)
+        const val = values[answer]
+        if (typeof val === 'undefined') {
+            throw new Error(
+                `Missing value type, make sure to add all possible values. value searched: (${answer})`
+            )
+        }
+        // removing values which are taken from db
+        needDefault = needDefault.filter((it) => it !== answer)
+
+        return {
+            ...template,
+            value: val,
+            name: answer,
+            total: count,
+        }
+    })
+
+    // In the situation where there are not even 1 answer for certain option,
+    // we need to add default for this option which is not in db
+
+    const defaultOptions = needDefault.map((it) => ({
+        ...template,
+        value: values[it],
+        name: it,
+        total: 0,
+    }))
+
+    return [...generated, ...defaultOptions]
+    //     .map((it) => ({
+    //     ...it,
+    //     name: it.name.replace('#', ''),
+    // }))
+}

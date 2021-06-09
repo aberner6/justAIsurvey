@@ -33,3 +33,5 @@ CREATE VIEW group_by_53 AS SELECT jsonb_array_elements(data.q53) AS answer, COUN
 CREATE VIEW group_by_74 AS SELECT jsonb_array_elements(data.q74) AS answer, COUNT(1) AS count FROM data GROUP BY answer;
 
 CREATE VIEW group_by_30_133_149 AS SELECT jsonb_array_elements(comb.q) AS answer, COUNT(1) AS count FROM (SELECT data.q30 as q from data UNION ALL   SELECT data.q133 as q from data UNION all   SELECT data.q149 as q from data) as comb GROUP BY answer;
+
+CREATE VIEW group_by_33_139_155 AS SELECT jsonb_array_elements(comb.q) AS answer, COUNT(1) AS count FROM (SELECT data.q33 as q from data UNION ALL   SELECT data.q139 as q from data UNION all   SELECT data.q155 as q from data) as comb GROUP BY answer;
