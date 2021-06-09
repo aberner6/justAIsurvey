@@ -82,7 +82,6 @@ const main = async () => {
         console.error('API-ERROR:\n', error)
         return
     }
-    console.log(data)
 
     //identity
     const selfEthicist = getSelfEthicist(data, q70) // :: Array
@@ -129,8 +128,7 @@ const main = async () => {
         ],
     }
 
-    console.dir(result.children[1].children, { depth: null })
-    // console.dir(result, { depth: null })
+    console.dir(result, { depth: null })
 }
 
 main().catch(console.error)

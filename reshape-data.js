@@ -494,7 +494,6 @@ export function getTopics(latest, data) {
     let needDefault = Object.keys(values)
 
     const generated = data.map(({ answer, count }) => {
-        console.log(answer)
         const val = values[answer]
         if (typeof val === 'undefined') {
             throw new Error(
@@ -560,7 +559,6 @@ export function getDomain(latest, data) {
     let needDefault = Object.keys(values)
 
     const generated = data.map(({ answer, count }) => {
-        console.log(answer)
         const val = values[answer]
         if (typeof val === 'undefined') {
             throw new Error(
@@ -626,7 +624,6 @@ export function getOutput(latest, data) {
     let needDefault = Object.keys(values)
 
     const generated = data.map(({ answer, count }) => {
-        console.log(answer)
         const val = values[answer]
         if (typeof val === 'undefined') {
             throw new Error(
@@ -690,7 +687,6 @@ export function getAudience(latest, data) {
     let needDefault = Object.keys(values)
 
     const generated = data.map(({ answer, count }) => {
-        console.log(answer)
         const val = values[answer]
         if (typeof val === 'undefined') {
             throw new Error(
@@ -747,7 +743,6 @@ export function getCollabType(latest, data) {
     let needDefault = Object.keys(values)
 
     const generated = data.map(({ answer, count }) => {
-        console.log(answer)
         const val = values[answer]
         if (typeof val === 'undefined') {
             throw new Error(
@@ -813,7 +808,6 @@ export function getCollabField(latest, data) {
     let needDefault = Object.keys(values)
 
     const generated = data.map(({ answer, count }) => {
-        console.log(answer)
         const val = values[answer]
         if (typeof val === 'undefined') {
             throw new Error(
