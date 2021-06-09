@@ -5,6 +5,7 @@ import {
     getOthersEthicist,
     getFunding,
     getYearsInField,
+    getEducation,
 } from './reshape-data.js'
 
 config() // load env
@@ -27,8 +28,10 @@ const main = async () => {
     const q65P = api.from('group_by_65').select()
     const q14P = api.from('group_by_14').select()
     const q7P = api.from('group_by_7').select()
+    const q9P = api.from('group_by_9').select()
 
     // await the promises
+    // data :: Object
     const { data: data, error: err } = await dataP
     const { error: err1, count } = await countP
     const { data: q70, error: err2 } = await q70P
@@ -36,8 +39,9 @@ const main = async () => {
     const { data: q65, error: err4 } = await q65P
     const { data: q14, error: err5 } = await q14P
     const { data: q7, error: err6 } = await q7P
+    const { data: q9, error: err7 } = await q9P
 
-    const error = err || err1 || err2 || err3 || err4 || err5 || err6
+    const error = err || err1 || err2 || err3 || err4 || err5 || err6 || err7
 
     if (error) {
         console.error('API-ERROR:\n', error)
@@ -49,6 +53,7 @@ const main = async () => {
     const othersEthicist = getOthersEthicist(data, q71) // :: Array
     const funding = getFunding(data, q14) // :: Array
     const yearsInField = getYearsInField(data, q7) // :: Array
+    const education = getEducation(data, q9) // :: Array
 
     const result = {
         name: '',
@@ -60,7 +65,7 @@ const main = async () => {
                     { name: 'others-ethicist', children: othersEthicist },
                     { name: 'funding', children: funding },
                     { name: 'years in field', children: yearsInField },
-                    { name: 'education', children: [] },
+                    { name: 'education', children: education },
                     { name: 'career path', children: [] },
                 ],
             },

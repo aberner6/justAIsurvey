@@ -1,8 +1,6 @@
-// Q70 - ethicist
 // Q71 - seen by others as ethicist
-// q14 - funded
+// Q14 Paid work @Daniel update there - forgot to add it before
 // Q65 - Career stage
-// Q7 - Number of years in the field? this is a free-form response I think and has to be converted to numbers
 // Q9 - #education ;
 // Q30/133/149 - topic ;
 // Q33/139/155 - #domain
@@ -11,6 +9,7 @@
 // Q14 - Works on data ethics as paid work (y/n)
 // Q37/143/159 - Types of outputs
 // Q51/144/160 - Types of audiences
+// Q7 - Number of years in the field? this is a free-form response I think and has to be converted to numbers
 
 // calculateValues :: String -> String -> Object
 const calculateValues = (initValues) => (q) => {
@@ -259,4 +258,76 @@ export function getYearsInField(latest, data) {
     }))
 
     return [...generated, ...defaultOptions]
+}
+
+// q9
+export function getEducation(latest, data) {
+    const initVal = {
+        '#agriculture': 0,
+        '#architecture': 0,
+        '#biology': 0,
+        '#business': 0,
+        '#computer science': 0,
+        '#data science': 0,
+        '#design & art': 0,
+        '#economics': 0,
+        '#education': 0,
+        '#engineering & technology': 0,
+        '#health': 0,
+        '#history': 0,
+        '#information management': 0,
+        '#languages': 0,
+        '#law': 0,
+        '#mathematics': 0,
+        '#media': 0,
+        '#environmental science': 0,
+        '#politics': 0,
+        '#psychology': 0,
+        '#philosophy': 0,
+        '#social sciences': 0,
+        '#sports': 0,
+        '#other': 0,
+    }
+
+    const values = calculateValues(initVal)(latest.q9)
+
+    const template = {
+        q: 'education',
+        parent: 'education',
+    }
+
+    let needDefault = Object.keys(values)
+
+    const generated = data.map(({ answer, count }) => {
+        const val = values[answer]
+        if (typeof val === 'undefined') {
+            throw new Error(
+                `Missing value type, make sure to add all possible values. value searched: (${answer})`
+            )
+        }
+        // removing values which are taken from db
+        needDefault = needDefault.filter((it) => it !== answer)
+
+        return {
+            ...template,
+            value: val,
+            name: answer,
+            total: count,
+        }
+    })
+
+    // In the situation where there are not even 1 answer for certain option,
+    // we need to add default for this option which is not in db
+
+    const defaultOptions = needDefault.map((it) => ({
+        ...template,
+        value: values[it],
+        name: it,
+        total: 0,
+    }))
+
+    return [...generated, ...defaultOptions].map((it) => ({
+        ...it,
+        name: it.name.replace('#', ''),
+    }))
 }
