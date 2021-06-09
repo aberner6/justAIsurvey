@@ -588,15 +588,15 @@ d3.selectAll("circle").attr("stroke-width",.3)
 // d3.selectAll("text").attr("fill","none")
 
 
-var xmargin = 80;//rect.width/4;
+var xmargin = 80//rect.width/10;//80;
 var ymargin = 20;
 var gridH = 400;
-var widthBox = 85;
+var widthBox = xmargin*1.5; 
 var heightBox = 50;
 // var margin = 
 function gridData() {
 	var data = new Array();
-	var xpos = 0; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
+	var xpos = heightBox/2; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
 
 	var ypos = heightBox/2;
 	var index = 0;
@@ -632,13 +632,12 @@ console.log(gridData);
 var gridLMarg = 40;
 var grid = d3.select("#dataviz2")
 	.append("svg")
-	.attr("width",rect.width-gridLMarg)
+	.attr("width",rect.width)
 	.attr("height",gridH*4)
-	.attr('transform',`translate(${gridLMarg}, ${0})`)
-
 
 var row = grid.selectAll(".row")
-	.data(gridData).join("g").attr("class","row");
+	.data(gridData).join("g").attr("class","row")
+	.attr('transform',`translate(${rect.width/2-xmargin*4.1}, ${0})`)
 var column = row.selectAll(".group")
 	.data(function(d) { return d; })
 	.enter().append("g")
@@ -648,7 +647,7 @@ var column = row.selectAll(".group")
     	if(d.text==0 ||d.text==2){
 				return `translate(${d.x}, ${d.y})` 
     	}else{
-				return `translate(${d.x}, ${d.y-10})` 
+				return `translate(${d.x+22}, ${d.y-10})` 
     	}
 	})
 var wordArray = [
@@ -677,9 +676,9 @@ var text = column //.selectAll(".legend")
 	.append("foreignObject")
     .attr("width", function(d){
     	if(d.text==0 ||d.text==2){
-    		return xmargin*2;
+    		return d.width*2; //xmargin*2;
     	}else{
-    		return xmargin*1.5;
+    		return d.width; //xmargin*1.5;
     	}
     })
     .attr("height", function(d){
