@@ -9,6 +9,8 @@ import {
     getCareer,
     getTopics,
     getDomain,
+    getOutput,
+    getAudience,
 } from './reshape-data.js'
 
 config() // load env
@@ -35,6 +37,8 @@ const main = async () => {
 
     const q30q133q149P = api.from('group_by_30_133_149').select()
     const q33q139q155P = api.from('group_by_33_139_155').select()
+    const q37q143q159P = api.from('group_by_37_143_159').select()
+    const q51q144q160P = api.from('group_by_51_144_160').select()
 
     // await the promises
     // data :: Object
@@ -49,6 +53,8 @@ const main = async () => {
 
     const { data: q30_q133_q149, error: err8 } = await q30q133q149P
     const { data: q33_q139_q155, error: err9 } = await q33q139q155P
+    const { data: q37_q143_q159, error: err10 } = await q37q143q159P
+    const { data: q51_q144_q160, error: err11 } = await q51q144q160P
 
     const error =
         err ||
@@ -60,7 +66,9 @@ const main = async () => {
         err6 ||
         err7 ||
         err8 ||
-        err9
+        err9 ||
+        err10 ||
+        err11
 
     if (error) {
         console.error('API-ERROR:\n', error)
@@ -79,6 +87,8 @@ const main = async () => {
     //theme
     const topic = getTopics(data, q30_q133_q149) // :: Array
     const domain = getDomain(data, q33_q139_q155) // :: Array
+    const output = getOutput(data, q37_q143_q159) // :: Array
+    const audience = getAudience(data, q51_q144_q160) // :: Array
 
     const result = {
         name: '',
@@ -99,8 +109,8 @@ const main = async () => {
                 children: [
                     { name: 'topics', children: topic },
                     { name: 'domain', children: domain },
-                    { name: 'outputs', children: [] },
-                    { name: 'audiences', children: [] },
+                    { name: 'outputs', children: output },
+                    { name: 'audiences', children: audience },
                     { name: 'collab type', children: [] },
                     { name: 'collab field', children: [] },
                 ],

@@ -50,3 +50,9 @@ CLOCK: [2021-06-08 Tue 9:00]--[2021-06-08 Tue 16:00] =>  7:00
     name: "other"
     value: 23 // second and third was answered
     total: count of 2 + count of 3 question
+
+
+** JSON themes
+:LOGBOOK:
+CLOCK: [2021-06-09 Wed 09:00]
+:END:
