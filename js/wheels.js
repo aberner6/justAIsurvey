@@ -591,7 +591,7 @@ d3.selectAll("circle").attr("stroke-width",.3)
 var xmargin = 80//rect.width/10;//80;
 var ymargin = 20;
 var gridH = 400;
-var widthBox = xmargin*1.5; 
+var widthBox = xmargin*1.8; 
 var heightBox = 50;
 // var margin = 
 function gridData() {
@@ -621,7 +621,7 @@ function gridData() {
 		xpos = 1;
 		index++;
 		// increment the y position for the next row. Move it down 50 (height variable)
-		ypos += ymargin*2;	
+		ypos += ymargin*2.5;	
 	}
 	return data;
 }
@@ -634,10 +634,42 @@ var grid = d3.select("#dataviz2")
 	.append("svg")
 	.attr("width",rect.width)
 	.attr("height",gridH*4)
+var arrow1 = grid.append('image')
+    .attr('xlink:href', 'arrow2.svg')
+    .attr('width', 40)
+    .attr('height',40)
+    .attr("x",heightBox/2-1)
+    .attr("y",ymargin*9.5)
+var arrow2 = grid.append('image')
+    .attr('xlink:href', 'arrow2.svg')
+    .attr('width', 40)
+    .attr('height',40)
+    .attr("x",rect.width/2)
+    .attr("y",ymargin*9.5)
+var descriptorID = "Identity COLOR = denotes separate question types";
+var descriptorTH = "Theme COLOR = answers about your 1st work theme will show up in the light yellow of theme 1, etc.";
+var text1 = grid
+	.append("foreignObject")
+    .attr("width", 140)
+    .attr("height",80)
+    .attr("y",ymargin*11)
+    .attr("x",heightBox)
+  .append("xhtml:body")
+    .html("<p>"+descriptorID+"")
+var text2 = grid
+	.append("foreignObject")
+    .attr("width", 110)
+    .attr("height",120)
+    .attr("x",rect.width-130)
+    .attr("y",ymargin*10.5)
+  .append("xhtml:body")
+    .html("<p>"+descriptorTH+"")
+
+
 
 var row = grid.selectAll(".row")
 	.data(gridData).join("g").attr("class","row")
-	.attr('transform',`translate(${rect.width/2-xmargin*4.1}, ${0})`)
+	.attr('transform',`translate(${0}, ${0})`)
 var column = row.selectAll(".group")
 	.data(function(d) { return d; })
 	.enter().append("g")
@@ -656,14 +688,14 @@ var wordArray = [
 "are you paid for your work on AI/data ethics?",
 "how would you define the broad topic?",
 "who else is involved in your work on this theme?","",
-"what best describes where you are in your career?",
-"are you paid for your work on AI/data ethics?",
-"how would you define the broad topic?",
-"who else is involved in your work on this theme?","",
-"what best describes where you are in your career?",
-"are you paid for your work on AI/data ethics?",
-"how would you define the broad topic?",
-"who else is involved in your work on this theme?",""]
+"do your colleagues see you as an ethicist?",
+"which fields are closest to your education or training?",
+"is there a particular domain you look at?",
+"what outputs is this work producing?","",
+"do you see yourself as an ethicist?",
+"how many years have you been in the field of AI ethics?",
+"do you collaborate with others in this work?",
+"who is the audience of your work?",""]
 
 var numArray=[
 "","","","","",
@@ -684,7 +716,7 @@ var text = column //.selectAll(".legend")
     .attr("height", function(d){
     		return d.height;
     })
-    .attr("y",-15)
+    .attr("y",-20)
     .attr("x",function(d){
     	if(d.text==0 ||d.text==2){
     		return 0;
@@ -737,6 +769,121 @@ var bars = column
 			}else{
 				return "none";
 			}
+    })
+
+
+
+
+
+
+
+function tinyGrid() {
+	var xmargin = 20;
+	var ymargin = 20;
+	var widthBox = xmargin*4; 
+	var heightBox = xmargin*2;
+	var index = 0;
+	var data = new Array();
+	var xpos = 0; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
+	var ypos = 0;
+	// iterate for rows	
+	for (var row = 0; row < 4; row++) {
+		data.push( new Array() );
+		
+		// iterate for cells/columns inside rows
+		for (var column = 0; column < 2; column++) {
+				data[row].push({
+					x: xpos,
+					y: ypos,
+					width: widthBox,
+					height: heightBox,
+					text: index
+				})		
+			// increment the x position. I.e. move it over by 50 (width variable)
+			xpos += widthBox;
+			index++;
+		}
+		// reset the x position after a row is complete
+		xpos = 1;
+		index++;
+		// increment the y position for the next row. Move it down 50 (height variable)
+		ypos += ymargin;	
+	}
+	return data;
+}
+
+var tinyGrid = tinyGrid();	
+console.log(tinyGrid);
+
+var trow = grid.selectAll(".trow")
+	.data(tinyGrid).join("g").attr("class","trow")
+	.attr('transform',`translate(${rect.width/2}, ${220})`)
+var tcolumn = trow.selectAll(".tgroup")
+	.data(function(d) { return d; })
+	.enter().append("g")
+	.attr("class",function(d){
+		return d.text
+	})
+	.attr('transform',function(d,i){
+		return `translate(${d.x+30}, ${d.y})`
+	})
+var twordArray = [
+"theme 1","theme 1+2","",
+"theme 2","theme 2+3","",
+"theme 3","theme 1+3","",
+"theme 1,2,3"
+,""]
+
+var thmText = tcolumn 
+	.append("foreignObject")
+    .attr("width", function(d){
+    	if(d.text==9){
+    		return d.width*2; 
+    	}else{
+    		return d.width;
+    	}
+    })
+    .attr("height", function(d){
+    		return d.height;
+    })
+    .attr("y",-10)
+  	.attr("x",function(d){
+  		if(d.text==9){
+  			return 50;
+  		}else{
+  			return 20;
+  		}
+  	})
+  .append("xhtml:body")
+    .html(function(d){
+    	return "<p>"+twordArray[d.text]+""
+    });
+
+var tlegColors=[
+"#FDCC9A","#DC9AA2","",
+"#B668AA","#8B6BAA","",
+"#D66B6E","#EB9C84","",
+"#CB9AC6","",""
+]
+
+var tbars = tcolumn 
+	.append("rect")
+  	.attr("x",function(d){
+  		if(d.text==9){
+  			return 40;
+  		}else{
+  			return 9;
+  		}
+  	})
+  	.attr("y",5)
+  	.attr("width",barwide*4)
+  	.attr("height",barwide*2)
+    .attr("fill",function(d){
+    	if(d.text==10){
+    		return "none";
+    	}else{
+    		return tlegColors[d.text];
+    	}
     })
 
 })
