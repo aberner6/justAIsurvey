@@ -33,7 +33,7 @@ var maxBar = minRad*4;
 
 
 var idColors = ["#4EA8BA","#4EA8BA","#46AAB3","#7B9FE3","#9A99FF","#65A4CF"] 
-var idNames = ["self-ethicist","others-ethicist","funding","years in field","education","career path"]
+var idNames = ["self-ethicist","others-ethicist","paid work","years in field","education","career path"]
 var themeColors = ["#CB9AC6","#FDCC9A","#B668AA","#D66B6E","#DC9AA2","#8B6BAA","#EB9C84","#CB9AC6"]
 var themeNums = [0,1,2,3,12,23, 13, 123]
 var strokeHighlight = .5;
@@ -63,7 +63,7 @@ var posID = [
 		"x":centerEX+paddingX+smallMarg*2,
 		"y":centerEH-smallMarg,
 		"rot":80,
-		"id":"funding"
+		"id":"paid work"
 	},
 	{
 		"x":centerEX-paddingX/2,
@@ -177,7 +177,7 @@ function measureText(string, fontSize = ft) {
     .reduce((cur, acc) => acc + cur) * fontSize
 }
 
-d3.json("totals_variation.json").then(function(data) {
+d3.json("../data/totals_variation.json").then(function(data) {
 
 	console.log(data);
 	sdata = data.children;
@@ -302,7 +302,7 @@ d3.json("totals_variation.json").then(function(data) {
 			if(d.parent=="career path"){ 
 				return "rotate("+(180+(barwide*barSpaceCa)*i)+", 0, 0)";
 			}
-			if(d.parent=="self-ethicist"||d.parent=="others-ethicist"||d.parent=="funding"){ 
+			if(d.parent=="self-ethicist"||d.parent=="others-ethicist"||d.parent=="paid work"){ 
 				return "rotate("+(180+(barwide*barSpaceSm)*i)+", 0, 0)";
 			}
 			else{
@@ -387,7 +387,7 @@ d3.json("totals_variation.json").then(function(data) {
 			if(d.parent=="career path"){ 
 				return "rotate("+(180+(barwide*barSpaceCa)*i)+", 0, 0)";
 			}
-			if(d.parent=="self-ethicist"||d.parent=="others-ethicist"||d.parent=="funding"){ 
+			if(d.parent=="self-ethicist"||d.parent=="others-ethicist"||d.parent=="paid work"){ 
 				return "rotate("+(180+(barwide*barSpaceSm)*i)+", 0, 0)";
 			}
 			else{
@@ -635,13 +635,13 @@ var grid = d3.select("#dataviz2")
 	.attr("width",rect.width)
 	.attr("height",gridH*4)
 var arrow1 = grid.append('image')
-    .attr('xlink:href', 'arrow2.svg')
+    .attr('xlink:href', '../img/arrow2.svg')
     .attr('width', 40)
     .attr('height',40)
     .attr("x",heightBox/2-1)
     .attr("y",ymargin*9.5)
 var arrow2 = grid.append('image')
-    .attr('xlink:href', 'arrow2.svg')
+    .attr('xlink:href', '../img/arrow2.svg')
     .attr('width', 40)
     .attr('height',40)
     .attr("x",rect.width/2)

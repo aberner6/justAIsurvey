@@ -27,7 +27,7 @@ var svg = d3.select("#dataviz1")
 var stratify = d3.cluster().size([2 * Math.PI, radius - 100])
 
 var idColors = ["#4EA8BA","#4EA8BA","#46AAB3","#7B9FE3","#9A99FF","#65A4CF"] 
-var idNames = ["self-ethicist","others-ethicist","funding","years in field","education","career path"]
+var idNames = ["self-ethicist","others-ethicist","paid work","years in field","education","career path"]
 
 var themeColors = ["#CB9AC6","#FDCC9A","#B668AA","#D66B6E","#DC9AA2","#8B6BAA","#EB9C84","#CB9AC6"]
 var themeNums = [0,1,2,3,12,23, 13, 123]
@@ -42,7 +42,7 @@ var colTHEME = d3.scaleOrdinal()
 
 var sdata;
 // read json data
-d3.json("totals_variation.json").then(function(data) {
+d3.json("../data/totals_variation.json").then(function(data) {
 
   data.children.pop();
   sortData = d3.hierarchy(data)
