@@ -435,7 +435,12 @@ export function getCareer(latest, data) {
 // q30 q133 q149
 export function getTopics(latest, data) {
     const initVal = {
-        '': 0,
+        '#bias': 0,
+        '#fairness': 0,
+        '#accountability': 0,
+        '#transparency': 0,
+        '#explainability': 0,
+        other: 0,
     }
 
     const values = calculateValuesMultiple(initVal)(
@@ -480,5 +485,8 @@ export function getTopics(latest, data) {
         total: 0,
     }))
 
-    return [...generated, ...defaultOptions]
+    return [...generated, ...defaultOptions].map((it) => ({
+        ...it,
+        name: it.name.replace('#', ''),
+    }))
 }
