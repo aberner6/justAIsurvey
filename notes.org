@@ -1,6 +1,22 @@
 #+TITLE: Notes
 
-* Work schedule log
+* Backend API & Survey Integration & JSON Forming
+
+#+BEGIN: clocktable :scope subtree :maxlevel 2
+#+CAPTION: Clock summary at [2021-06-09 Wed 17:52]
+| Headline                                     | Time       |      |
+|----------------------------------------------+------------+------|
+| *Total time*                                 | *1d 19:00* |      |
+|----------------------------------------------+------------+------|
+| Backend API & Survey Integration &...        | 1d 19:00   |      |
+| \_  Creation of database and testing...      |            | 8:00 |
+| \_  Setting up hook on survey to plug get... |            | 8:00 |
+| \_  Forming data from API to graph format    |            | 6:00 |
+| \_  Api to JSON transformation (5h)          |            | 5:00 |
+| \_  Building JSON                            |            | 7:00 |
+| \_  JSON themes                              |            | 9:00 |
+#+END:
+
 ** Creation of database and testing sending data to backend
 :LOGBOOK:
 CLOCK: [2021-06-02 Wed 9:00]--[2021-06-02 Wed 17:00] =>  8:00
@@ -54,5 +70,9 @@ CLOCK: [2021-06-08 Tue 9:00]--[2021-06-08 Tue 16:00] =>  7:00
 
 ** JSON themes
 :LOGBOOK:
-CLOCK: [2021-06-09 Wed 09:00]
+CLOCK: [2021-06-09 Wed 09:00]--[2021-06-09 Wed 18:00] =>  9:00
 :END:
+Done with forming json
+
+
+* Website
